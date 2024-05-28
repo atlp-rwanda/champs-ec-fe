@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/b587cbf0ba4c569d8f4f/maintainability)](https://codeclimate.com/github/atlp-rwanda/champs-ec-fe/maintainability) 
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b587cbf0ba4c569d8f4f/test_coverage)](https://codeclimate.com/github/atlp-rwanda/champs-ec-fe/test_coverage)
 
 <img alt="Next JS" src="./public/andela.webp"/>
 
