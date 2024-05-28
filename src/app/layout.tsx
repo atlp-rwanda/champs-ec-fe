@@ -1,12 +1,9 @@
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { Metadata } from "next";
+import ClientProvider from '../app/clientProvider'; // new file to handle client-side provider
 
-const poppin = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Champs E-Commerce",
@@ -20,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppin.className}>{children}</body>
+      <body className={inter.className}>
+        <ClientProvider>{children}</ClientProvider>
+      </body>
     </html>
   );
 }
