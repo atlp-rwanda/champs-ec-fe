@@ -16,7 +16,7 @@ afterEach(async () => {
 },timeout);
 
 
-describe('Test page title and header', () => {
+describe('Test page title', () => {
     test('page title', async () => {        
         await page.setViewport({ width: 1200, height: 1024 });
         const title = await page.title();
