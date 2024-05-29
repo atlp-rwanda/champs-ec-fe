@@ -1,16 +1,15 @@
-"use client";
-import React, { useEffect } from "react";
-import Image from "next/image";
-import Button from "./Button";
+'use client';
+import React, { useEffect } from 'react';
+import Image from 'next/image';
+import Button from './Button';
 
 interface Properties {
   topText: string;
   bodyText: string;
   iconImagelink: string;
-  handleShowModal?: () => void;
-  handleButton?: () => void;
+  handleShowModal: () => void;
+  handleButton: () => void;
 }
-
 const PopUpModels: React.FC<Properties> = ({
   handleButton,
   handleShowModal,
@@ -19,11 +18,12 @@ const PopUpModels: React.FC<Properties> = ({
   iconImagelink,
 }) => {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     };
   }, []);
+
   return (
     <div
       className="w-full flex justify-center  items-center absolute h-screen top-0 backdrop-filter backdrop-brightness-75 backdrop-blur-md"
@@ -37,14 +37,14 @@ const PopUpModels: React.FC<Properties> = ({
           <Image
             src={iconImagelink}
             alt="icons"
-            className="shadow "
+            className=""
             width={50}
             height={50}
           />
         </div>
         <div className="flex justify-center items-center flex-col gap-2">
           <h1 className="font-bold text-blue-900">{topText}</h1>
-          <p className="mb-6 text-[red] text-[13px] text-center px-9">
+          <p className="mb-6 text-blue-600 text-[13px] text-center px-9">
             {bodyText}
           </p>
           <Button name="Continue >>" handle={handleButton} />

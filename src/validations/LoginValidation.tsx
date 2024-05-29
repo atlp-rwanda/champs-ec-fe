@@ -5,7 +5,7 @@ const loginValidation = z.object({
     .string()
     .nonempty({ message: "Email is required" })
     .email({ message: "Enter in proper email format" }),
-  passwd: z
+  password: z
     .string()
     .nonempty({ message: "Password is required" })
     .min(6, { message: "Password must be at least 6 characters long" })
