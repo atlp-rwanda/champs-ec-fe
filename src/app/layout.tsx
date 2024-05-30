@@ -1,9 +1,10 @@
-import { Inter } from "next/font/google";
+//import { Inter } from "next/font/google";
+import React from 'react';
 import "./globals.css";
 import { Metadata } from "next";
 import ClientProvider from '../app/clientProvider'; // new file to handle client-side provider
 
-const inter = Inter({ subsets: ["latin"] });
+//const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Champs E-Commerce",
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
