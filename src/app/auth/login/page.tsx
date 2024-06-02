@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { z } from 'zod';
@@ -11,8 +12,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useLogin from '@/hooks/useLogin';
 
 type loginField = z.infer<typeof loginValidation>;
+
 export default function Login() {
   const { Login, errorMessage, setErrorMessage, loading } = useLogin();
+
   const {
     register,
     handleSubmit,
@@ -21,10 +24,12 @@ export default function Login() {
   } = useForm<loginField>({
     resolver: zodResolver(loginValidation),
   });
+
   const onSubmit: SubmitHandler<loginField> = (data) => {
     setErrorMessage('');
     Login(data);
   };
+
   return (
     <>
       <main
@@ -44,15 +49,15 @@ export default function Login() {
         </div>
         <div className="sm:w-[90%] sm:max-w-[350px] w-[90%] p-4  shadow-lg bg-white pb-10">
           <div className="w-[100%] justify-center flex flex-col gap-1 items-center mt-6">
-            <h1 className="text-blue-500 font-medium mb-3">Register with</h1>
-            <Image
+            <h1 className="text-blue-500 font-medium mb-3">Login with</h1>
+            <img
               src="/google.jpg"
               alt="Google"
               className="cursor-pointer"
               width={50}
               height={50}
             />
-            <h1 className="text-black text-[10px] mt-2">Or</h1>
+            <h1 className="text-black text-[10px] mt-2">OR</h1>
           </div>
           <div className="flex flex-col justify-center items-center gap-1 mt-4 ">
             <form
