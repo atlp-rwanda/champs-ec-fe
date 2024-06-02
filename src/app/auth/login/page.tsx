@@ -49,7 +49,7 @@ export default function Login() {
         </div>
         <div className="sm:w-[90%] sm:max-w-[350px] w-[90%] p-4  shadow-lg bg-white pb-10">
           <div className="w-[100%] justify-center flex flex-col gap-1 items-center mt-6">
-            <h1 className="text-blue-500 font-medium mb-3">Login with</h1>
+            <h1 className="text-blue-500 font-medium mb-3">Log In with</h1>
             <img
               src="/google.jpg"
               alt="Google"

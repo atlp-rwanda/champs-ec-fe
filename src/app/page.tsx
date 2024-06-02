@@ -5,10 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
-  // const authState = useAppSelector((state) => state.auth.message);
-  // console.log(authState);
-  // console.log('.......................................................');
-  // console.log('Testing Redux implementation...');
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

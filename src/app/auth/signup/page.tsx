@@ -10,7 +10,7 @@ import PopUpModels from '@/components/PopUpModels';
 import useSignup from '@/hooks/useSignup';
 import { signUpVAlidation } from '@/validations/validationSchema';
 
-const Page = () => {
+const Signup = () => {
   const {
     submit,
     handleShowModal,
@@ -32,7 +32,6 @@ const Page = () => {
 
   const onSubmit = (data: FormData) => {
     setError('');
-    console.log(data);
     submit(data);
   };
   return (
@@ -55,7 +54,7 @@ const Page = () => {
         <div className="sm:w-[90%] sm:max-w-[350px]   w-[90%] h-[80%] p-4  shadow-lg bg-white sm:h-[80%] min-h-[590px]">
           {/* Top section of name and google */}
           <div className="w-[100%] h-fit justify-center flex flex-col gap-1 items-center mt-6">
-            <h1 className="text-blue-500 font-medium mb-3">Register with</h1>
+            <h1 className="text-blue-500 font-medium mb-3">Sign Up with</h1>
             <img
               src="/google.jpg"
               alt="Google"
@@ -117,17 +116,14 @@ const Page = () => {
                   {error}
                 </h1>
               </div>
+              <div className="w-full mt-5">
+                <Button name="Sign Up" loading={loading} />
+              </div>
             </form>
 
-            <div className="w-[90%] mt-3">
-              <Button
-                name="Register"
-                handle={handleSubmit(onSubmit)}
-                loading={loading}
-              />
-
+            <div className="w-[90%] mt-0">
               <div className="w-[100%] flex justify-center items-center flex-col mt-5">
-                <p className="text-[13px] mb-0">Already have an account? </p>
+                <p className="text-sm mb-0">Already have an account? </p>
                 <Link
                   href="/auth/login"
                   className="text-blue-500 text-[13px] font-medium hover:text-blue-700"
@@ -143,6 +139,7 @@ const Page = () => {
           <PopUpModels
             handleShowModal={handleShowModal}
             handleButton={handlemoduleButton}
+            data-testid="result"
             bodyText=" But before continuing to log in, make sure you verify your email
             through the link we sent you !"
             topText="You signed up successfully ✅"
@@ -154,4 +151,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Signup;

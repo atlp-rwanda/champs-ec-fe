@@ -1,6 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
-import { welcomeReducer } from "./slices/welcomeSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
+import { welcomeReducer } from './slices/welcomeSlice';
 
 export const store = configureStore({
   reducer: { auth: welcomeReducer },
