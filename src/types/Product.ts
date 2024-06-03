@@ -6,8 +6,14 @@ export interface Seller {
   phone: string;
 }
 export interface ReviewType {
+  buyerId:string;
   rating: number;
   feedback: string;
+  userProfile:{
+    firstName:string;
+    lastName:string;
+    profileImage:string;
+  }
 }
 export interface imageType {
   imgId: string;
@@ -30,7 +36,7 @@ export interface ProductType {
   productPictures: imageType[]
   productPrice: number;
   productThumbnail: string;
-  reviews: ReviewType;
+  reviews: ReviewType[];
   related: any;
   seller?: Seller;
   sellerId?: string; 
@@ -51,6 +57,8 @@ export interface ProductType {
     productPrice: number;
     productThumbnail: string;
     productDescription: string;
+    reviews:ReviewType[];
+    productName:string;
   }
   export interface TableType {
     product: string;

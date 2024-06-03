@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import ProductList from '@/components/ProductList';
 import { checkIsAdmin } from '@/components/isAdmin';
 
+
 function Page() {
   // const isAdmin = checkIsAdmin();
   
@@ -14,9 +15,11 @@ function Page() {
   // } else {
   //   console.log('User is not an admin.');
   // }
+
   return (
     <>
-      <Header />
+      <Header/>
+      
       <div className="w-full h-[50%] flex flex-col px-10 py-5">
         <div className="w-full flex justify-between px-10">
           <h1>All Products</h1>
@@ -35,6 +38,7 @@ function Page() {
         </div>
       </div>
       <Footer />
+     
     </>
   );
 }

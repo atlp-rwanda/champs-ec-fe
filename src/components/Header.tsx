@@ -5,8 +5,12 @@ import { VscAccount } from 'react-icons/vsc';
 import logo from '../../public/logo.svg';
 import Image from 'next/image';
 import Link from 'next/link';
+import OrdersContainer from './OrdersContainer';
+import OrdersOverlay from '@/hooks/ordersOverlay';
+
 
 const Header = () => {
+  const{ isOrdersOverlayOpen, toggleOrdersSlider }= OrdersOverlay();
   return (
     <div className="sticky top-0 z-10 w-full border ">
       <div className="flex justify-between px-5 py-5 bg-blue-600">
@@ -18,6 +22,7 @@ const Header = () => {
           <FaRegHeart className="hover:bg-black text-white cursor-pointer" />
           <FaRegBell className="hover:bg-black text-white cursor-pointer" />
         </div>
+     
       </div>
       <div className="flex justify-center items-center bg-gray-100 py-5">
         <nav className=" hidden w-full max-w-1/2 sm:flex justify-center  ">
@@ -36,8 +41,8 @@ const Header = () => {
             <li className="text-black hover:text-blue-600">
               <Link href="/reservation">Reservation</Link>
             </li>
-            <li className="text-black hover:text-blue-600">
-              <Link href="/order">Order</Link>
+            <li className="text-black hover:text-blue-600" onClick={toggleOrdersSlider}>
+              Order
             </li>
             <li className="text-black hover:text-blue-600">
               <Link href="/admin" className="">
@@ -54,6 +59,10 @@ const Header = () => {
           </Link>
         </div>
       </div>
+      {isOrdersOverlayOpen ?
+        <OrdersContainer isOrdersOverlayOpen={isOrdersOverlayOpen} toggleOrdersSlider={toggleOrdersSlider}/>
+       :""
+      }
     </div>
   );
 };

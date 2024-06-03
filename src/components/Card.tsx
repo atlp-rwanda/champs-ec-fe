@@ -1,37 +1,55 @@
 import React from 'react';
-import { MdOutlineRemoveRedEye, MdOutlineShoppingCart } from 'react-icons/md';
-import { FaRegHeart } from 'react-icons/fa6';
-import { Cards } from '@/types/Product';
+import { MdOutlineRemoveRedEye, MdOutlineShoppingCart } from "react-icons/md";
+import Image from 'next/image';//@ts-ignore
+import ReactStars from "react-rating-stars-component";
+import { FaRegHeart } from "react-icons/fa6";
+import { Cards } from "../types/Product";
+import image from "../../public/product.png";
 import Link from 'next/link';
+import { averageReviews } from '@/utils/averageReviews';
 // import { useRouter } from 'next/router';
 
 function Card({
+  productName,
   productDescription,
   productPrice,
   productThumbnail,
   id,
+  reviews
 }: Cards) {
   return (
-    <div className="w-full sm:max-w-48 max-w-[80%] sm:mb-10 mb-3 sm:h-[17rem] h-[19rem] flex flex-col gap-3 bg-white border border-gray-100 shadow relative">
+    <div className="w-full sm:max-w-48 sm:mb-10 mr-3  ml-0 my-3 sm:h-[17rem] h-[19rem] flex flex-col bg-white border border-gray-100 shadow relative">
       <div className="flex justify-center h-[180px]">
         {productThumbnail && productThumbnail.length > 0 ? (
           <img
             src={productThumbnail}
             alt="default image"
-            width={200}
-            height={0}
+            className='w-full h-[150px] text-[12px]'
           />
         ) : (
           <img src="./force.png" alt={'no image found'} />
         )}
       </div>
       <div className="sm:px-4 flex flex-col gap-1">
-        <h5 className="max-w-1xl sm:text-[12px] text-[17px] sm:text-left sm:mx-0  mx-3 w font-semibold tracking-tight text-gray-900">
-          {productDescription.substr(0, 50) + '...'}
+        <h5 className="max-w-1xl sm:text-[12px] text-[30px] sm:text-left sm:mx-0  mx-3 w font-semibold tracking-tight text-black-900">
+          {productName.length < 30 ? productName : productName.substring(0,30)+'...' }
         </h5>
-        <div className="flex items-center justify-between">
-          <span className="text-1xl sm:m-0 m-3 font-bold text-blue-400">
+        <div className='block text-[12px] text-muted'>
+          {productDescription.length < 50 ? productDescription : productDescription.substring(0,50)+'...' }
+        </div>
+        <div className="flex items-center justify-between pb-3">
+          <span className="text-1xl sm:m-0 m-3 font-bold text-green-400">
             ${productPrice}
+          </span>
+          <span className='block'>
+            <ReactStars
+                count={5}
+                value={averageReviews(reviews)}
+                isHalf={true}
+                size={13}
+                activeColor="#ffd700"
+                edit={false}
+            />
           </span>
         </div>
       </div>

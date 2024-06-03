@@ -34,6 +34,7 @@ const UsersPageAdmin = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [isDeactivateUserModalOpen, setIsDeactivateUserModalOpen] = useState(false);
 
+
   const { isLoading, refetch, error, data } = useQuery<any>({
     queryKey: ['AdminUserList'],
     queryFn: () => requestAxios.get('/users'),
@@ -96,6 +97,7 @@ const UsersPageAdmin = () => {
     setUserId(id);
     setIsDeactivateUserModalOpen(true);
   };
+ 
   const handleClosePopup = () => {
     setIsDeactivateUserModalOpen(false);
     setUserId(null);

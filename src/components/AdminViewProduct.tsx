@@ -1,25 +1,21 @@
 // BuyerProductView
 'use client';
 
-import Image from 'next/image';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart } from 'react-icons/fa6';
 import { useParams } from 'next/navigation';
 import { Product } from '@/utils/requests';
 import { useQuery } from '@tanstack/react-query';
 import { ProductType, ReviewType, Cards, imageType } from '@/types/Product';
-import Card from '@/components/Card';
-import Review from '@/components/ReviewProduct';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Key } from 'react';
 import {
-  BackButton,
-  Button,
   GreenButton,
   BlueBorderButton,
   DeleteButton,
 } from '@/components/Button';
+import ReviewCard from './ReviewCard';
 // import Slides from '@/components/slides';
 
 function Page() {
@@ -113,14 +109,16 @@ function Page() {
             </div>
           </div>
           <div className="w-full flex flex-col">
-            <h2 className="font-medium text-2xl">Reviews:</h2>
+            <h2 className="font-medium text-2xl">Reviewsbbbbbbb:</h2>
             <div>
               {reviews && reviews.length > 0 ? (
                 reviews.map((review: ReviewType) => (
-                  <Review
-                    // key={review.id}
+                  <ReviewCard
                     rating={review.rating}
                     feedback={review.feedback}
+                    image={review.userProfile.profileImage}
+                    firstName={review.userProfile.firstName}
+                    lastName={review.userProfile.lastName}
                   />
                 ))
               ) : (

@@ -93,7 +93,7 @@ export const createProduct = createAsyncThunk(
   }
 );
 
-const productsSlice = createSlice({
+export const productsSlice = createSlice({
   name: 'products',
   initialState: {
     products: [] as IProduct[],

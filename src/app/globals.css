@@ -36,8 +36,12 @@ body {}
   scrollbar-width: none;  /* Firefox */
 }
 
-
-
+.border-black-1 {
+  border: 1px solid black;
+}
+.capitalize{
+  text-transform: capitalize !important;
+}
 
 .inputOtp::-webkit-outer-spin-button,
 .inputOtp::-webkit-inner-spin-button {
@@ -52,7 +56,25 @@ body {}
   color: rgb(59, 158, 70) !important;
 }
 .border-green:hover{
-  background: green;
+  background: rgb(59, 158, 70);
+  color: white !important;
+}
+.btn-border-blue{
+  border: 2px solid rgb(22, 44, 212) !important;
+  border-radius: 4px;
+  color: rgb(22, 44, 212) !important;
+}
+.btn-border-blue:hover{
+  background: rgb(22, 44, 212);
+  color: white !important;
+}
+.btn-bg-blue{
+  background: rgb(22, 44, 212) !important;
+  border-radius: 4px;
+  color: white !important;
+}
+.btn-bg-blue:hover{
+  background: rgb(6, 26, 170);
   color: white !important;
 }
 .border-red:hover{
@@ -66,6 +88,17 @@ body {}
 .btn-green{
   background: rgb(60, 161, 48);
   color: white;
+}
+.text-muted{
+  color: rgb(174, 173, 173);
+}
+.text-red{
+  color: rgb(213, 58, 58) !important;
+}
+.double-grid{
+  display: grid;
+  gap:1px;
+  grid-template-columns:1fr 3fr;
 }
 @layer utilities {
   .text-balance {
