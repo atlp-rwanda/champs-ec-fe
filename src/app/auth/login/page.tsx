@@ -10,12 +10,12 @@ import loginValidation from '@/validations/LoginValidation';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useLogin from '@/hooks/useLogin';
+import OtpVerify from '@/components/2faVerification';
 
 type loginField = z.infer<typeof loginValidation>;
 
 export default function Login() {
-  const { Login, errorMessage, setErrorMessage, loading } = useLogin();
-
+  const { Login, errorMessage, setErrorMessage, loading ,isOpen} = useLogin();
   const {
     register,
     handleSubmit,
@@ -106,6 +106,7 @@ export default function Login() {
           </div>
         </div>
       </main>
+      <OtpVerify isOpen={isOpen}/>
     </>
   );
 }
