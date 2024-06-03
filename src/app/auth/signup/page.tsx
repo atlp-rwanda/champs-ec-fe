@@ -116,7 +116,7 @@ const Signup = () => {
                 </h1>
               </div>
               <div className="w-full mt-5">
-                <Button name="Sign Up" loading={loading} />
+                <Button name="Sign Up" loading={loading} background='blue'/>
               </div>
             </form>
 

@@ -52,7 +52,7 @@ const PopUpModels: React.FC<Properties> = ({
           >
             {bodyText}
           </p>
-          <Button name="Continue >>" handle={handleButton} />
+          <Button name="Continue >>" handle={handleButton} background='blue'/>
         </div>
       </div>
     </div>
