@@ -2,6 +2,9 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b587cbf0ba4c569d8f4f/test_coverage)](https://codeclimate.com/github/atlp-rwanda/champs-ec-fe/test_coverage)
 [![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/champs-ec-fe/badge.svg?branch=development)](https://coveralls.io/github/atlp-rwanda/champs-ec-fe?branch=development)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/atlp-rwanda/champs-ec-fe/tree/ft-tests-setup.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/atlp-rwanda/champs-ec-fe/tree/ft-tests-setup)
+
+[![Vercel Preview Deployment](https://github.com/atlp-rwanda/champs-ec-fe/actions/workflows/preview.yaml/badge.svg)](https://github.com/atlp-rwanda/champs-ec-fe/actions/workflows/preview.yaml)
+
 <img alt="Next JS" src="./public/andela.webp"/>
 
 # champs-ec-fe
