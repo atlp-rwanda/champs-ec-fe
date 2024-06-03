@@ -73,6 +73,7 @@ const Signup = () => {
             >
               <div className="flex justify-between gap-2">
                 <InputBox
+                  data-testid="fname"
                   nameuse="First Name"
                   type="text"
                   placeholder="Enter First Name"
@@ -80,6 +81,7 @@ const Signup = () => {
                   error={errors.firstName?.message as string}
                 />
                 <InputBox
+                data-testid="lname"
                   nameuse="Last Name"
                   // name="lasttName"
                   type="text"
@@ -89,6 +91,7 @@ const Signup = () => {
                 />
               </div>
               <InputBox
+              data-testid="email"
                 nameuse="Email"
                 type="email"
                 placeholder="Enter Email"
@@ -96,6 +99,7 @@ const Signup = () => {
                 error={errors.email?.message as string}
               />
               <InputBox
+              data-testid="password"
                 nameuse="Password"
                 type="password"
                 placeholder="Enter Password"
@@ -103,6 +107,7 @@ const Signup = () => {
                 error={errors.password?.message as string}
               />
               <InputBox
+                data-testid="confirmp"
                 nameuse="Confirm Password"
                 // name="confirmPassword"
                 type="Password"
@@ -135,8 +140,10 @@ const Signup = () => {
           </div>
         </div>
         {/* THE MODELS POP-UP FOR THE REMIENDER */}
+         {/* <p data-testid="result">But before continuing to log in, make sure you verify your email through the link we sent you !</p> */}
         {showModal && (
           <PopUpModels
+            testid="result"
             handleShowModal={handleShowModal}
             handleButton={handlemoduleButton}
             data-testid="result"

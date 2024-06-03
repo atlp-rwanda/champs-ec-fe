@@ -75,8 +75,8 @@ describe('Signup Components', () => {
         topText="success"
         bodyText="its work"
         data-testid="result"
-        iconImagelink="/Verified.png"
-      />,
+        iconImagelink="/Verified.png" 
+        testid={''}      />,
     );
     expect(() => getByTestId('result')).toThrow();
   });

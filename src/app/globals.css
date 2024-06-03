@@ -20,6 +20,12 @@ body {
  
 }
 
+.inputOtp::-webkit-outer-spin-button,
+.inputOtp::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
