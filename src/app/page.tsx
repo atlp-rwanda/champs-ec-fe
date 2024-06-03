@@ -63,6 +63,12 @@ export default function Home() {
         >
           change password
         </button>
+
+        <button className="bg-primaryBlue w-[80px] h-[40px]">
+          <Link href="/admin" className="text-white">
+            Admin
+          </Link>
+        </button>
       </div>
       {showlModal && (
         <GlobarPopUp handleShowModel={handleshow}>

@@ -16,14 +16,10 @@
   }
 }
 
-body {
- 
-}
+body {}
 
-.inputOtp::-webkit-outer-spin-button,
-.inputOtp::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.shadow {
+  box-shadow: 0px 0px 4px 2px rgba(58, 36, 36, 0.2) !important;
 }
 
 @layer utilities {
