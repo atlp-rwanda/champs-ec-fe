@@ -56,7 +56,7 @@ const Page = () => {
           {/* Top section of name and google */}
           <div className="w-[100%] h-fit justify-center flex flex-col gap-1 items-center mt-6">
             <h1 className="text-blue-500 font-medium mb-3">Register with</h1>
-            <Image
+            <img
               src="/google.jpg"
               alt="Google"
               className=" cursor-pointer"

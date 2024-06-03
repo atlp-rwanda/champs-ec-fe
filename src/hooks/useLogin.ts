@@ -6,17 +6,20 @@ import loginValidation from '@/validations/LoginValidation';
 import { z } from 'zod';
 
 type loginField = z.infer<typeof loginValidation>;
+
 function useLogin() {
+
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const URL = process.env.NEXT_PUBLIC_URL;
   const router = useRouter();
-  const HandleLogin = async (userEmail: string, userPasswd: string) => {
+
+  const HandleLogin = async (email: string, password: string) => {
     setLoading(true);
     try {
       const res = await axios.post(`${URL}/users/login`, {
-        email: userEmail,
-        password: userPasswd,
+        email,
+        password,
       });
       if (res.status == 201) {
         setLoading(false);
@@ -27,13 +30,14 @@ function useLogin() {
       await router.push('/');
     } catch (error: any) {
       setLoading(false);
-      if (error.response.data.message) {
+      if (error.response?.data?.message) {
         setErrorMessage(error.response.data.message);
         return;
       }
-      setErrorMessage(error.response.data.error);
+      setErrorMessage(error.response?.data?.error);
     }
   };
+
   const Login = async (data: loginField) => {
     try {
       HandleLogin(data.email, data.password);
@@ -48,4 +52,5 @@ function useLogin() {
     loading,
   };
 }
+
 export default useLogin;
