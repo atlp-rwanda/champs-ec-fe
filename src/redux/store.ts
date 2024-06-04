@@ -1,20 +1,31 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
-import { welcomeReducer } from './slices/welcomeSlice';
+
+
 import twoFactorAuthSlice from './slices/2faAuthenticationSlice';
 import updatePasswordReducer from './slices/UpdatePasswordSlice';
 
+
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
+import auth from "./slices/authSlice";
+import productsAddReducers from "./slices/productSlice"; 
+import { welcomeReducer } from './slices/welcomeSlice';
+
+
+const rootReducer = combineReducers({
+  auth: auth,
+  productsAddReducers,
+  sellerOTP: twoFactorAuthSlice,
+  updatePassword: updatePasswordReducer,
+
+});
+
 export const store = configureStore({
-  reducer: {
-    auth: welcomeReducer,
-    updatePassword: updatePasswordReducer,
-    sellerOTP: twoFactorAuthSlice,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
