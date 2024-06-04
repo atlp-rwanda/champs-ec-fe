@@ -13,7 +13,6 @@ import {
 import { configureStore } from '@reduxjs/toolkit';
 import twoFactorAuthSlice from '../redux/slices/2faAuthenticationSlice';
 import axios from 'axios';
-
 jest.mock('axios');
 const URL = process.env.NEXT_PUBLIC_URL;
 const store: any = configureStore({
@@ -21,10 +20,8 @@ const store: any = configureStore({
     sellerOTP: twoFactorAuthSlice,
   },
 });
-
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
-
 jest.mock('next/navigation', () => ({
   useRouter() {
     return {
@@ -32,16 +29,13 @@ jest.mock('next/navigation', () => ({
     };
   },
 }));
-
 let mockedAxios: any;
-
 beforeEach(() => {
   mockedAxios = new MockAdapter(axios);
   localStorage.clear();
   localStorage.setItem('email', 'ericer@gmail.com');
   localStorage.setItem('password', 'Password123!');
 });
-
 describe('Login Tests', () => {
   it('renders OtpVerify component and shows dialog when isOpen is true', () => {
     //const useRefSpy = jest.spyOn(React, 'useRef').mockReturnValueOnce({ current: document.createElement('dialog') });
@@ -51,10 +45,8 @@ describe('Login Tests', () => {
       </Provider>,
     );
   });
-
   // it('should handle OTP verification fulfilled action', async () => {
   //     const {getByTestId}=render(<Provider store={store}><OtpVerify isOpen={true} /></Provider>);
-
   //     const otpToken = 'token-login';
   //     const result= mockedAxios.onPost(`${URL}/users/otp/${otpToken}`).reply(201, {token:otpToken })
   //     await act(async () => {
@@ -70,7 +62,6 @@ describe('Login Tests', () => {
   //     expect(state.sellerOTP.newOtp).toBe(false);
   //     expect(localStorage.getItem('token')).toBe(otpToken);
   //   });
-
   it('should handle OTP verification pending action', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
@@ -92,14 +83,12 @@ describe('Login Tests', () => {
     expect(state.sellerOTP.loading).toBe(true);
     expect(localStorage.getItem('token')).toBe(null);
   });
-
   it('should handle OTP verification rejected action', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <OtpVerify isOpen={true} />
       </Provider>,
     );
-
     const otpToken = 'token-login';
     const result = mockedAxios
       .onPost(`${URL}/users/otp/${otpToken}`)
@@ -116,14 +105,12 @@ describe('Login Tests', () => {
     expect(state.sellerOTP.error).toContain(otpToken);
     expect(localStorage.getItem('token')).toBe(null);
   });
-
   it('should test resend OTP verification pending action', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <OtpVerify isOpen={true} />
       </Provider>,
     );
-
     const otpToken = 'token-login';
     const result = mockedAxios
       .onPost(`${URL}/users/login`)
@@ -139,14 +126,12 @@ describe('Login Tests', () => {
     expect(state.sellerOTP.loading).toBe(true);
     expect(state.sellerOTP.newOtp).toBe(true);
   });
-
   it('should test resend OTP verification fulfilled action', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
         <OtpVerify isOpen={true} />
       </Provider>,
     );
-
     const otpToken = 'token-login';
     const result = mockedAxios
       .onPost(`${URL}/users/login`)
@@ -163,3 +148,9 @@ describe('Login Tests', () => {
     expect(state.sellerOTP.newOtp).toBe(false);
   });
 });
+
+
+
+
+
+

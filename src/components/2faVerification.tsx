@@ -31,7 +31,7 @@ const OtpVerify: React.FC<OtpVerifyInterface> = ({ isOpen }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/sellers');
+      router.push('/seller/dashboard/products');
     }
   }, [isAuthenticated]);
 

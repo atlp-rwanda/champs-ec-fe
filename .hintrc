@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "button-type": "off",
+    "axe/text-alternatives": "off",
+    "no-inline-styles": "off"
+=======
+    "button-type": "off"
+>>>>>>> 9dfc60a (ft(seller-createProduct))
+=======
+    "button-type": "off",
+    "axe/text-alternatives": "off",
+    "no-inline-styles": "off"
+>>>>>>> 6e054fb (ft(seller-createProduct))
+  }
+}
