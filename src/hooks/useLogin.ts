@@ -8,15 +8,14 @@ import { z } from 'zod';
 type loginField = z.infer<typeof loginValidation>;
 
 function useLogin() {
-
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const URL = process.env.NEXT_PUBLIC_URL;
+  const URL = process.env.URL;
   const router = useRouter();
-
   const HandleLogin = async (email: string, password: string) => {
     setLoading(true);
     try {
+      ('use server');
       const res = await axios.post(`${URL}/users/login`, {
         email,
         password,
@@ -30,20 +29,13 @@ function useLogin() {
       await router.push('/');
     } catch (error: any) {
       setLoading(false);
-      if (error.response?.data?.message) {
-        setErrorMessage(error.response.data.message);
-        return;
-      }
-      setErrorMessage(error.response?.data?.error);
+      setErrorMessage('Invalid Email Or Password');
+      return;
     }
   };
 
   const Login = async (data: loginField) => {
-    try {
-      HandleLogin(data.email, data.password);
-    } catch (error) {
-      console.log(error);
-    }
+    HandleLogin(data.email, data.password);
   };
   return {
     errorMessage,

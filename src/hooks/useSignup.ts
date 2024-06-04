@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 function useSignup() {
+  const router = useRouter();
   const [showModal, setShowmodal] = useState(false);
   const [loading, setLoading] = useState(false);
+
   // const [FormData, setFormData] = useState(initial);
   const [error, setError] = useState('');
+
   //BUTTON MODEL HANDLERS
   const handlemoduleButton = () => {
-    window.location.href = '/auth/login';
+    router.push('/auth/login');
   };
+
   //show models handle function
   const handleShowModal = () => {
     setShowmodal(!showModal);
@@ -18,8 +23,9 @@ function useSignup() {
     setLoading(true);
 
     try {
+      ('use server');
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/users/signup`,
+        `${process.env.URL}/users/signup`,
         {
           firstName: FormData.firstName,
           lastName: FormData.lasttName,
@@ -39,7 +45,7 @@ function useSignup() {
     } catch (error: any) {
       setLoading(false);
       setError(error.response.data.error);
-      return console.log('error here', error.response.data.error);
+      return;
     }
   };
 

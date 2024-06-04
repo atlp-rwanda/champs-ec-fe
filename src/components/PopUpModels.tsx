@@ -7,8 +7,8 @@ interface Properties {
   topText: string;
   bodyText: string;
   iconImagelink: string;
-  handleShowModal: () => void;
-  handleButton: () => void;
+  handleShowModal?: () => void;
+  handleButton?: () => void;
 }
 const PopUpModels: React.FC<Properties> = ({
   handleButton,
@@ -34,7 +34,7 @@ const PopUpModels: React.FC<Properties> = ({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-center items-center mb-6">
-          <Image
+          <img
             src={iconImagelink}
             alt="icons"
             className=""
