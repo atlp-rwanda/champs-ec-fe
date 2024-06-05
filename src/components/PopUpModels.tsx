@@ -6,7 +6,7 @@ import Button from './Button';
 interface Properties {
   topText: string;
   bodyText: string;
-  testid:string;
+  testid?: string;
   iconImagelink: string;
   handleShowModal?: () => void;
   handleButton?: () => void;
@@ -46,7 +46,10 @@ const PopUpModels: React.FC<Properties> = ({
         </div>
         <div className="flex justify-center items-center flex-col gap-2">
           <h1 className="font-bold text-blue-900">{topText}</h1>
-          <p className="mb-6 text-blue-600 text-[13px] text-center px-9" data-testid={testid}>
+          <p
+            className="mb-6 text-blue-600 text-[13px] text-center px-9"
+            data-testid={testid}
+          >
             {bodyText}
           </p>
           <Button name="Continue >>" handle={handleButton} />

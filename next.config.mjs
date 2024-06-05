@@ -5,7 +5,11 @@ import { resolve } from 'path';
 config({ path: resolve(process.cwd(), '.env.local') });
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  env: {
+    URL: process.env.URL,
+  },
+};
 // next.config.js
 
 export default nextConfig;

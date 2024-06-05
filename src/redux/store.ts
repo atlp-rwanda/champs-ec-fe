@@ -1,14 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
-import { welcomeReducer } from "./slices/welcomeSlice";
-import twoFactorAuthSlice from "./slices/2faAuthenticationSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
+import { welcomeReducer } from './slices/welcomeSlice';
+import twoFactorAuthSlice from './slices/2faAuthenticationSlice';
+import updatePasswordReducer from './slices/UpdatePasswordSlice';
 
 export const store = configureStore({
-  reducer: { 
+  reducer: {
     auth: welcomeReducer,
-    sellerOTP:twoFactorAuthSlice
-
-   },
+    sellerOTP: twoFactorAuthSlice,
+    updatePassword: updatePasswordReducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),
 });

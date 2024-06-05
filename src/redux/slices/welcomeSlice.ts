@@ -1,15 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+
 export interface IAuthState {
   message: string;
 }
 
-const initialState: IAuthState = {
-  message: "welcome to champs Redux setup",
+export const initialState: IAuthState = {
+  message: 'welcome to champs Redux setup',
 };
 
 export const welcomeSlice = createSlice({
-  name: "message",
+  name: 'message',
   initialState,
   reducers: {
     setWelcomeState: (state, action: PayloadAction<string>) => {

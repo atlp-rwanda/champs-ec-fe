@@ -25,7 +25,7 @@ function useSignup() {
     try {
       ('use server');
       const response = await axios.post(
-        `${process.env.URL}/users/signup`,
+        `${process.env.NEXT_PUBLIC_URL}/users/signup`,
         {
           firstName: FormData.firstName,
           lastName: FormData.lasttName,
