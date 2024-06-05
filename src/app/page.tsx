@@ -64,7 +64,6 @@ export default function Home() {
           change password
         </button>
       </div>
-
       {showlModal && (
         <GlobarPopUp handleShowModel={handleshow}>
           <div className="flex justify-center flex-col  mx-6 py-20">
@@ -90,7 +89,6 @@ export default function Home() {
                 {...register('confirmPassword')}
                 error={errors.confirmPassword?.message as string}
               />
-
               <h1 className="text-red-400"> {error}</h1>
               <div className="w-full mt-5">
                 <Button name="Save" loading={loading} />
