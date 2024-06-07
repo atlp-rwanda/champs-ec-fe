@@ -3,12 +3,12 @@ import React from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
 import InputBox from '@/components/InputBox';
 import Button from '@/components/Button';
 import PopUpModels from '@/components/PopUpModels';
 import useSignup from '@/hooks/useSignup';
 import { signUpVAlidation } from '@/validations/validationSchema';
+import GoogleButton from '@/components/GoogleButton';
 
 const Signup = () => {
   const {
@@ -55,13 +55,7 @@ const Signup = () => {
           {/* Top section of name and google */}
           <div className="w-[100%] h-fit justify-center flex flex-col gap-1 items-center mt-6">
             <h1 className="text-blue-500 font-medium mb-3">Sign Up with</h1>
-            <img
-              src="/google.jpg"
-              alt="Google"
-              className=" cursor-pointer"
-              width={50}
-              height={50}
-            />
+            <GoogleButton />
             <h1 className="text-black text-[10px] mt-2">Or</h1>
           </div>
           {/* Form section */}
