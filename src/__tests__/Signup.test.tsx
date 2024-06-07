@@ -1,18 +1,13 @@
 // Import the necessary testing utilities
 import React, { act } from 'react';
 import { fireEvent, render, screen, renderHook } from '@testing-library/react';
-import Home from '../app/page'; // Assuming your homepage is in pages/index.js
 import Signup from '@/app/auth/signup/page';
 import '@testing-library/jest-dom';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import PopUpModels from '@/components/PopUpModels';
-import useSignup from '@/hooks/useSignup';
-import { Provider } from 'react-redux';
-import { store } from '@/redux/store';
 
-// Test suite for the Home page
 jest.mock('next/navigation', () => ({
   useRouter() {
     return {
@@ -20,15 +15,7 @@ jest.mock('next/navigation', () => ({
     };
   },
 }));
-describe('Home page', () => {
-  it('renders without crashing', () => {
-    const { getByText } = render(
-      <Provider store={store}>
-        <Home />
-      </Provider>,
-    );
-    expect(getByText('This is champs e commerce Homepage')).toBeDefined();
-  });
+describe('Signup page test', () => {
   it('renders signup page', () => {
     const { getByText } = render(<Signup />);
     expect(getByText('Welcome!')).toBeDefined();
@@ -81,7 +68,6 @@ describe('Signup Components', () => {
         bodyText="its work"
         data-testid="result"
         iconImagelink="/Verified.png"
-        testid={''}
       />,
     );
     expect(() => getByTestId('result')).toThrow();

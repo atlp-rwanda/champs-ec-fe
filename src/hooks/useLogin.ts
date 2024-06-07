@@ -36,7 +36,9 @@ function useLogin() {
       await router.push('/');
     } catch (error: any) {
       setLoading(false);
-      setErrorMessage('Invalid Email Or Password');
+      setErrorMessage(
+        `Invalid Email or Password`,
+      );
       return;
     }
   };
