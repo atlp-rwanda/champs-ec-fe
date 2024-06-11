@@ -1,17 +1,19 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-export const api_base_URL = process.env.URL;
+export const api_base_url = process.env.URL;
+// export const api_base_url = 'http://localhost:5500/api';
+// console.log(api_base_url);
 
 const responseBody = <T>(response: AxiosResponse<T>): T => response.data;
 
-axios.defaults.baseURL = api_base_URL;
+axios.defaults.baseURL = api_base_url;
 
 axios.interceptors.request.use(
   (config) => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
       if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+        config.headers['Authorization'] = `${token}`;
       }
     }
     return config;

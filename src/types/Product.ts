@@ -12,6 +12,7 @@ export interface ReviewType {
 export interface imageType {
   imgId: string;
   URL: string;
+  url?: string;
 }
 export interface ProductType {
   createdAt?: string;
