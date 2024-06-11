@@ -38,7 +38,7 @@ describe('Signup Components', () => {
     expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
   });
   it('displays error message on Signup failure', async () => {
-    mockaxios.onPost(`${process.env.NEXT_PUBLIC_URL}/users/signup`).reply(409, {
+    mockaxios.onPost(`${process.env.URL}/users/signup`).reply(409, {
       message: 'User with this email already exists',
     });
     render(<Signup />);

@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export const api_base_url = process.env.URL;
+// export const api_base_url = 'http://localhost:5500/api';
+// console.log(api_base_url);
 
 const responseBody = <T>(response: AxiosResponse<T>): T => response.data;
 

@@ -11,7 +11,7 @@ function useLogin() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const URL = process.env.NEXT_PUBLIC_URL;
+  const URL = process.env.URL;
   const router = useRouter();
   const HandleLogin = async (email: string, password: string) => {
     setLoading(true);
@@ -23,22 +23,20 @@ function useLogin() {
       });
       if (res.status == 201) {
         setLoading(false);
-    
-        localStorage.setItem('email', email)  
-        localStorage.setItem('password', password)  
-        localStorage.setItem('token', res.data.otpToken)     ;
-        HandleSellerLogin()
+
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+        localStorage.setItem('token', res.data.otpToken);
+        HandleSellerLogin();
         setErrorMessage('THIS IS A SELLER'); //Here logic for two factor authentication
         return;
       }
-      
+
       localStorage.setItem('token', res.data.token);
       await router.push('/');
     } catch (error: any) {
       setLoading(false);
-      setErrorMessage(
-        `Invalid Email or Password`,
-      );
+      setErrorMessage(`Invalid Email or Password`);
       return;
     }
   };
@@ -49,17 +47,17 @@ function useLogin() {
 
   const HandleSellerLogin = async () => {
     try {
-        setIsOpen(true)
+      setIsOpen(true);
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-};
+  };
   return {
     errorMessage,
     Login,
     setErrorMessage,
     loading,
-    isOpen
+    isOpen,
   };
 }
 

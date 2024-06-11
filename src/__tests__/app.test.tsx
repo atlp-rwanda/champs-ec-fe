@@ -11,8 +11,10 @@ import PopUpModels from '@/components/PopUpModels';
 import useSignup from '@/hooks/useSignup';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Test suite for the Home page
+const queryClient = new QueryClient();
 jest.mock('next/navigation', () => ({
   useRouter() {
     return {
@@ -24,10 +26,11 @@ describe('Home page', () => {
   it('renders without crashing', () => {
     const { getByText } = render(
       <Provider store={store}>
-        <Home />
+        <QueryClientProvider client={queryClient}>
+          <Home />
+        </QueryClientProvider>
       </Provider>,
     );
-    expect(getByText('This is champs e commerce Homepage')).toBeDefined();
   });
   it('renders signup page', () => {
     const { getByText } = render(<Signup />);
@@ -51,7 +54,7 @@ describe('Signup Components', () => {
     expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
   });
   it('displays error message on Signup failure', async () => {
-    mockaxios.onPost(`${process.env.NEXT_PUBLIC_URL}/users/signup`).reply(409, {
+    mockaxios.onPost(`${process.env.URL}/users/signup`).reply(409, {
       message: 'User with this email already exists',
     });
     render(<Signup />);

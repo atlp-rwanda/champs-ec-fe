@@ -9,9 +9,10 @@ const config: Config = {
   collectCoverage: true,
   coverageDirectory: 'coverage',
   collectCoverageFrom: ['src/**'],
-  coveragePathIgnorePatterns: ['src/components/'],
+  coveragePathIgnorePatterns: ['src/components/', 'src/types/'],
   coverageReporters: ['json-summary', 'text', 'lcov'],
   preset: 'ts-jest',
+  setupFiles: ['./testconfig.js'],
 };
 
 export default createJestConfig(config);
