@@ -39,6 +39,7 @@ function useLogin() {
       }
 
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('isLogged', 'true');
       await router.push('/');
     } catch (error: any) {
       setLoading(false);
@@ -58,6 +59,7 @@ function useLogin() {
       console.log(error);
     }
   };
+  
   return {
     errorMessage,
     Login,

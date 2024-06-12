@@ -56,7 +56,12 @@ interface RequestMethods {
     params?: Record<string, any>,
     config?: AxiosRequestConfig,
   ) => Promise<T>;
-  patch: <T>(URL: string, body: any, config?: AxiosRequestConfig) => Promise<T>;
+  patch: <T>(
+    URL: string,
+    body?: any,
+    params?: any,
+    config?: AxiosRequestConfig,
+  ) => Promise<T>;
 }
 
 const request: RequestMethods = {
@@ -65,7 +70,8 @@ const request: RequestMethods = {
   put: (url, body) => axiosInstance.put(url, body).then(responseBody),
   delete: (url, params) =>
     axiosInstance.delete(url, { params }).then(responseBody),
-  patch: (url, body) => axiosInstance.patch(url, body).then(responseBody),
+  patch: (url, body, params) =>
+    axios.patch(url, body, params).then(responseBody),
 };
 
 export default request;
