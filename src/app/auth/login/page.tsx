@@ -83,7 +83,7 @@ export default function Login() {
             </form>
             <div className="w-[90%] mt-3">
               <div className="w-[100%] flex  items-center justify-between mt-5">
-                <Link href="#" className="text-[13px] mb-4 text-blue-500">
+                <Link href="/auth/forgotpassword" className="text-[13px] mb-4 text-blue-500">
                   Forgot Password?
                 </Link>
               </div>
