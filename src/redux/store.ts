@@ -7,8 +7,8 @@ import updatePasswordReducer from './slices/UpdatePasswordSlice';
 export const store = configureStore({
   reducer: {
     auth: welcomeReducer,
-    sellerOTP: twoFactorAuthSlice,
     updatePassword: updatePasswordReducer,
+    sellerOTP: twoFactorAuthSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

@@ -3,6 +3,7 @@ import React from 'react';
 import "./globals.css";
 import { Metadata } from "next";
 import ClientProvider from '../app/clientProvider'; // new file to handle client-side provider
+import Providers from './providers';
 
 //const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClientProvider>{children}</ClientProvider>
+        <Providers>
+          <ClientProvider>
+            {children}
+          </ClientProvider>
+        </Providers>
       </body>
-    </html>
+    </html >
   );
 }

@@ -15,6 +15,9 @@ const config: Config = {
         greenHover: "#3B8422",
         warningRed: "#C92B08",
         black: "#000000",
+        primaryGrey: "#F0F8FF",
+        textBlack: "#151D48",
+        secondaryGrey: "#737791"
       },
     },
   },
