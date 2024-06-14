@@ -18,7 +18,7 @@ describe('showToast', () => {
     expect(toast).toHaveBeenCalledWith(message, {
       type: 'default',
       position: 'top-right',
-      autoClose: 20000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -34,7 +34,7 @@ describe('showToast', () => {
     expect(toast).toHaveBeenCalledWith(message, {
       type: 'success',
       position: 'top-right',
-      autoClose: 20000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

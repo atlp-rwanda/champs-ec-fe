@@ -15,11 +15,24 @@ import twoFactorAuthSlice from '../redux/slices/2faAuthenticationSlice';
 import axios from 'axios';
 jest.mock('axios');
 const URL = process.env.URL;
+console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",URL)
 const store: any = configureStore({
   reducer: {
     sellerOTP: twoFactorAuthSlice,
   },
 });
+
+jest.mock('../utils/axios', () => {
+  return {
+    create: jest.fn(() => ({
+      interceptors: {
+        request: { use: jest.fn() },
+        response: { use: jest.fn() },
+      },
+    })),
+  };
+});
+
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 jest.mock('next/navigation', () => ({
@@ -45,23 +58,6 @@ describe('Login Tests', () => {
       </Provider>,
     );
   });
-  // it('should handle OTP verification fulfilled action', async () => {
-  //     const {getByTestId}=render(<Provider store={store}><OtpVerify isOpen={true} /></Provider>);
-  //     const otpToken = 'token-login';
-  //     const result= mockedAxios.onPost(`${URL}/users/otp/${otpToken}`).reply(201, {token:otpToken })
-  //     await act(async () => {
-  //         await store.dispatch(handleOTPVerification('12345'));
-  //           await store.dispatch({
-  //             type: handleOTPVerification.fulfilled.type,
-  //             payload: otpToken,
-  //           })
-  //       });
-  //     const state:RootState= store.getState();
-  //     console.log('state', state);
-  //     expect(state.sellerOTP.loading).toBe(false);
-  //     expect(state.sellerOTP.newOtp).toBe(false);
-  //     expect(localStorage.getItem('token')).toBe(otpToken);
-  //   });
   it('should handle OTP verification pending action', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
@@ -147,6 +143,7 @@ describe('Login Tests', () => {
     expect(state.sellerOTP.loading).toBe(false);
     expect(state.sellerOTP.newOtp).toBe(false);
   });
+ 
 });
 
 

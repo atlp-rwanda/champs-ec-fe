@@ -7,6 +7,8 @@ import Card from '@/components/Card';
 // import { SkeletonProduct } from '@/components/Skeleton';
 import { unstable_noStore as noStore } from 'next/cache';
 import { SkeletonProduct } from '@/components/Skeleton';
+import { storeAllProduct } from '@/redux/slices/userCartSlice';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 
 interface ProdductProps {
   activeNav?: String;
@@ -31,14 +33,20 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
     }
   };
 
+  const dispatch = useAppDispatch();
+
   const { data, isLoading, error } = useQuery<any>({
     queryKey: ['products', activeNav, activeButton],
     queryFn: async () => {
       noStore();
       const response: any = await request.get(fetchUrl(activeNav as string));
+    
+      
       let data;
       if (response.products) {
+       
         data = response.products;
+          dispatch(storeAllProduct(data))
         return data;
       } else if (response.data) {
         const allProduct: any = await request.get(`/products`);
@@ -47,10 +55,13 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
         );
         data = filterdeArray;
       }
+     
+     // const data = response.products;
+    
       return data;
     },
   });
-
+ 
   if (isLoading) {
     return (
       <div data-testid="loading">

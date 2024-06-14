@@ -7,6 +7,9 @@ import { Cards } from "../types/Product";
 import image from "../../public/product.png";
 import Link from 'next/link';
 import { averageReviews } from '@/utils/averageReviews';
+import { RootState, useAppDispatch, useAppSelector } from '@/redux/store';
+import { handleUserAddCart } from '@/redux/slices/userCartSlice';
+
 // import { useRouter } from 'next/router';
 
 function Card({
@@ -17,6 +20,14 @@ function Card({
   id,
   reviews
 }: Cards) {
+  
+const productId=id
+
+const dispatch = useAppDispatch();
+const handleNewItem=()=>{
+
+dispatch(handleUserAddCart({productPrice,productId}));
+}
   return (
     <div className="w-full sm:max-w-48 sm:mb-10 mr-3  ml-0 my-3 sm:h-[17rem] h-[19rem] flex flex-col bg-white border border-gray-100 shadow relative">
       <div className="flex justify-center h-[180px]">
@@ -39,7 +50,7 @@ function Card({
         </div>
         <div className="flex items-center justify-between pb-3">
           <span className="text-1xl sm:m-0 m-3 font-bold text-green-400">
-            ${productPrice}
+            {productPrice} RWF
           </span>
           <span className='block'>
             <ReactStars
@@ -58,7 +69,7 @@ function Card({
           <MdOutlineRemoveRedEye className="text-gray-700 mr-4 hover:text-blue-400 cursor-pointer" />
         </Link>
         <FaRegHeart className="text-gray-700 mr-4 hover:text-red-500 cursor-pointer" />
-        <MdOutlineShoppingCart className="text-gray-700 hover:text-green-500 cursor-pointer" />
+        <MdOutlineShoppingCart className="text-gray-700 hover:text-green-500 cursor-pointer"  onClick={() =>{handleNewItem()}} />
       </div>
     </div>
   );

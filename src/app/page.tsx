@@ -24,6 +24,8 @@ export interface FormDataType {
 }
 
 export default function Home() {
+
+  
   const [showlModal, setShowmodal] = useState(false);
   const {
     register,

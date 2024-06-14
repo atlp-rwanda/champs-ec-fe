@@ -18,6 +18,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import ProductPage from '@/app/products/[id]/page';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProductList from '@/components/ProductList';
+import Providers from '@/app/providers';
 // Test suite for the Home page
 const queryClient = new QueryClient();
 
@@ -65,7 +66,9 @@ describe('Home page', () => {
   it('renders without crashing', () => {
     const { getByText } = render(
         <QueryClientProvider client={queryClient}>
+         <Providers>
           <ProductList />
+          </Providers> 
         </QueryClientProvider>
     );
   });

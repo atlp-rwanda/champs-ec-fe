@@ -22,6 +22,8 @@ import { useQuery } from '@tanstack/react-query';
 import ReviewCard from '@/components/ReviewCard';
 import Button from '@/components/Button';
 import { averageReviews } from '@/utils/averageReviews';
+import { useAppDispatch } from '@/redux/store';
+import { handleUserAddCart } from '@/redux/slices/userCartSlice';
 
 function Page() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -47,7 +49,6 @@ function Page() {
   if (error) return <span>Error: {error.message}</span>;
 
   const {
-    productThumbnail,
     productPictures,
     productName,
     productPrice,
@@ -57,6 +58,11 @@ function Page() {
   console.log('this is reviews >>>>>>>>>', reviews);
   console.log(' this is average reviews', averageReviews(reviews));
   const { relatedProducts } = data;
+const dispatch = useAppDispatch();
+const handleNewItem=()=>{
+  const productId=data.product.id
+dispatch(handleUserAddCart({productPrice,productId}));
+}
   
   return (
     <div>
@@ -77,7 +83,7 @@ function Page() {
                     {productPictures.map((image:imageType) => {
                       return (
                         <SwiperSlide key={image.imgId}>
-                          <Image src={image.URL} alt='image' />
+                          <img src={image.url} alt='image' />
                         </SwiperSlide>
                       );
                     })}
@@ -101,7 +107,7 @@ function Page() {
                       {productPictures.map((image:imageType) => {
                         return (
                           <SwiperSlide key={image.imgId}>
-                            <Image src={image.URL} alt='image'/>
+                            <img src={image.url} alt='image'/>
                           </SwiperSlide>
                         );
                       })}
@@ -122,7 +128,7 @@ function Page() {
                     <FaRegHeart />
                   </div>
                   <div className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer">
-                    <MdOutlineShoppingCart />
+                    <MdOutlineShoppingCart onClick={() =>{handleNewItem()}}  />
                   </div>
                 </div>
                 <span className="font-medium text-2xl text-blue-300">
@@ -148,7 +154,7 @@ function Page() {
           <div className="w-full flex flex-col ">
             <h2 className="font-medium text-2xl">Related products:</h2>
             <div className="w-full">
-              <div className="product-grid flex justify-between mt-5 mx-0">
+              <div className="product-grid flex justify-left gap-5 mt-5 mx-0">
                 {relatedProducts && relatedProducts.length > 0 ? (
                   relatedProducts.map((product:ProductType) => (
                     <Card
