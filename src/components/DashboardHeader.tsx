@@ -18,7 +18,6 @@ interface userData {
 }
 
 const DashboardHeader: React.FC<HeaderInterface> = ({ pageName }) => {
-
   const { isLoading, error, data } = useQuery<any>({
     queryKey: ['userProfile'],
     queryFn: () => request.get('/users/profile'),

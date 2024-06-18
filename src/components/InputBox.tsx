@@ -4,6 +4,7 @@ interface Properties {
   type: string;
   placeholder?: string;
   error?: string;
+ 
 }
 const InputBox = forwardRef<HTMLInputElement, Properties>(
   ({ nameuse, type, placeholder, error, ...rest }, ref) => {
@@ -17,7 +18,7 @@ const InputBox = forwardRef<HTMLInputElement, Properties>(
           className={`border rounded-s-sm border-black/30 text-[12px] w-[100%] p-2 ${error && 'border-red-400'}`}
           {...rest}
         />
-        {error && <p className="text-red-500 text-xs ">{error}</p>}
+        {error && <p className="text-red-500 text-[10px] ">{error}</p>}
       </div>
     );
   },

@@ -46,7 +46,7 @@ const AssigningRole: React.FC<AssignRoleInterface> = ({ id, currentRole, refetch
             <div className="border-t-4 border-b-4 border-black rounded-full w-5 h-5 animate-spin m-auto"></div>
           </div>
         ) : (
-          <select ref={select} value={currentRole} className='capitalize focus:outline-none border border-blue-500 text-center text-black shadow outline-none text-lg  font-medium  border-2 focus:ring-black
+          <select ref={select} value={currentRole} className='capitalize focus:outline-none border border-blue-500 text-center text-black shadow outline-none text-[15px]  font-medium  border-2 focus:ring-black
               focus:border-black w-[15vh] p-[5px] cursor-pointer rounded-md py-1.5 ' onChange={Assign}>
             {Array.isArray(roles) &&
               roles.map((value, index) => (

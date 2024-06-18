@@ -78,7 +78,7 @@ export default function Login() {
                 </h1>
               </div>
               <div className="w-[100%] mt-5">
-                <Button name="Log in" loading={loading} />
+                <Button name="Log in" loading={loading} background='blue'/>
               </div>
             </form>
             <div className="w-[90%] mt-3">
