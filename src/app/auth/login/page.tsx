@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { z } from 'zod';
-import Button from '@/components/Button';
+import { Button } from '@/components/Button';
 import InputBox from '@/components/InputBox';
 import loginValidation from '@/validations/LoginValidation';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -35,7 +35,7 @@ export default function Login() {
       <main
         className="h-screen w-screen  bg-no-repeat bg-cover flex justify-center items-center  flex-col "
         style={{
-          backgroundImage: "url('/Background.png')",
+          backgroundImage: "URL('/Background.png')",
         }}
       >
         <div className="max-w-[200px] justify-center items-center mb-5 ">
@@ -78,7 +78,7 @@ export default function Login() {
                 </h1>
               </div>
               <div className="w-[100%] mt-5">
-                <Button name="Log in" loading={loading} />
+                <Button name="Log in" loading={loading} background='blue'/>
               </div>
             </form>
             <div className="w-[90%] mt-3">

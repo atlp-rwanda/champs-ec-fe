@@ -9,6 +9,15 @@ const nextConfig = {
   env: {
     URL: process.env.URL,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        port: ''
+      },
+    ],
+  }
 };
 // next.config.js
 

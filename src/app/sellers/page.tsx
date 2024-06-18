@@ -1,20 +1,97 @@
-'use client';
-import React from 'react';
-import { useAppSelector } from '@/redux/store';
-import Image from 'next/image';
-import Link from 'next/link';
+"use client"
 
-export default function SellerDashboard() {
- 
+import React, { Suspense, useEffect } from "react";
+import DashboardHeader from "@/components/DashboardHeader";
+import UsersPageAdmin from "@/components/UsersAdmin";
+import AdminDashboard from "@/hooks/useAdminDashboard";
+import SellerProductView from "@/app/sellers/products_/page";
+
+function Dashboard() {
+  const {
+    handleItemClick,
+    header,
+    setDisplay,
+    display,
+    menu,
+    open,
+    setOpen } = AdminDashboard()
+
+  useEffect(() => {
+    switch (header) {
+      case "Users":
+        setDisplay(<UsersPageAdmin />);
+        break;
+      case "Products":
+        setDisplay(<SellerProductView />);
+        break;
+      default:
+        setDisplay(<h1>Welcome to the seller dashboard</h1>);
+        break;
+    }
+  }, [header]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="bg-white rounded-md shadow-lg mx-auto px-10">
-        <p className="text-[40px] p-4 font-semibold">Welcome to champs e commerce Seller Dashboard</p>
-       
-        <p className="text-[24px] p-8 text-center">you are successful logged in  </p> 
-        <a href='/' className="w-[150px] float-right bg-primaryBlue  p-2 mb-10 hover:shadow-lg duration-200 cursor-pointer hover:scale-110 text-center text-[#FFF]">Back to index</a>
+    <div className="flex">
+      <div
+        className={`${open ? "w-72" : "w-20"
+          } h-screen p-5 sticky top-0 pt-4 hidden sm:block relative duration-300 bg-primaryBlue`}
+      >
+        <img
+          src="/control.png"
+          alt="Control Button"
+          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple border-2 rounded-full ${!open && "rotate-180"
+            }`}
+          onClick={() => setOpen(!open)}
+        />
+        <div className="flex items-center">
+          <img
+            src="/logo.png"
+            className={`cursor-pointer duration-500 ${open && "rotate-[360deg]" && "min-w-[30px]"
+              }`}
+          />
+          <h1
+            className={`text-white text-2xl origin-left font-medium duration-200 ${!open && "scale-0"
+              }`}
+          >
+            Champs Bay
+          </h1>
+        </div>
+        <ul className="pt-6">
+          {menu.map((Menu, index) => (
+            <li
+              key={index}
+              className={`flex ${Menu.clicked ? "bg-primary/80 text-white" : "bg-transparent"
+                } rounded-md ${!open && "hover:bg-primary"} p-2 cursor-pointer hover:bg-light-white text-white text-[25px] items-center gap-x-4 ${Menu.gap ? "mt-10" : "mt-2"
+                } ${index === 0 && "bg-light-white"}`}
+              onClick={() => handleItemClick(index)}
+            >
+              {React.createElement(Menu.src)}
+              <span
+                className={`${!open && "hidden"} origin-left duration-200 hover:text-primary hover:text-[20px]`}
+              >
+                {Menu.title}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
-    
-    </main>
+
+      <div className="h-screen flex-1 p-0 sm:p-7">
+        <div className="flex flex-col">
+          <DashboardHeader pageName={header} />
+          <div className="p-2 sm:p-0">{display}</div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+function Page() {
+  return (
+    <Suspense>
+      <Dashboard />
+    </Suspense>
+  )
+}
+
+export default Page;

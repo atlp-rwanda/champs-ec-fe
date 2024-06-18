@@ -11,7 +11,7 @@ function useLogin() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const URL = process.env.NEXT_PUBLIC_URL;
+  const URL = process.env.URL;
   const router = useRouter();
   const HandleLogin = async (email: string, password: string) => {
     setLoading(true);
@@ -20,6 +20,7 @@ function useLogin() {
       const res = await axios.post(`${URL}/users/login`, {
         email,
         password,
+
       });
       if (res.status == 201) {
         setLoading(false);

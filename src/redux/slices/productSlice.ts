@@ -32,7 +32,7 @@ interface ICreateProductInput {
   productPictures: File[];
 }
 
-const URL = process.env.NEXT_PUBLIC_URL;
+const URL = process.env.URL;
 
 export const fetchCategories = createAsyncThunk(
   'products/fetchCategories',

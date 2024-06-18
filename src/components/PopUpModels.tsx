@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import Button from './Button';
+import { Button } from './Button';
 
 interface Properties {
   topText: string;
@@ -52,7 +52,7 @@ const PopUpModels: React.FC<Properties> = ({
           >
             {bodyText}
           </p>
-          <Button name="Continue >>" handle={handleButton} />
+          <Button name="Continue >>" handle={handleButton} background='blue'/>
         </div>
       </div>
     </div>

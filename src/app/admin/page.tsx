@@ -3,6 +3,7 @@ import React, { Suspense, useEffect } from "react";
 import DashboardHeader from "@/components/DashboardHeader";
 import UsersPageAdmin from "@/components/UsersAdmin";
 import AdminDashboard from "@/hooks/useAdminDashboard";
+import SellerProductView from "@/app/sellers/products_/page";
 
 function Dashboard() {
   const {
@@ -18,6 +19,9 @@ function Dashboard() {
     switch (header) {
       case "Users":
         setDisplay(<UsersPageAdmin />);
+        break;
+      case "Products":
+        setDisplay(<SellerProductView />);
         break;
       default:
         setDisplay(<h1>Welcome to the dashboard</h1>);

@@ -35,7 +35,7 @@ describe("recover Tests", () => {
 
     
     it('displays success message on recover account', async () => {
-        mockedAxios.onPost(`${process.env.NEXT_PUBLIC_URL}/users/reset-password`);
+        mockedAxios.onPost(`${process.env.URL}/users/reset-password`);
         render(<ForgotPassword />);
     
         fireEvent.change(screen.getByPlaceholderText('example@example.com'), {

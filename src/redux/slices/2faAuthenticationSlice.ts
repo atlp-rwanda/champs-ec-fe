@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-const URL =process.env.NEXT_PUBLIC_URL;
+const URL =process.env.URL;
 
 export interface ISELLEROTP {
   loading: boolean;

@@ -23,7 +23,7 @@ export const updatePassword = createAsyncThunk(
 
         try {
             const response = await axios.patch(
-                `${process.env.NEXT_PUBLIC_URL}/users/passwordUpdate`,
+                `${process.env.URL}/users/passwordUpdate`,
                 {
                     oldPassword: FormData.oldPassword,
                     newPassword: FormData.newPassword,

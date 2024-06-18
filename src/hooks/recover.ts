@@ -11,7 +11,7 @@ function recover() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const URL = process.env.NEXT_PUBLIC_URL;
+  const URL = process.env.URL;
   const router = useRouter();
 
   const handlemoduleButton = () => {

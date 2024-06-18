@@ -1,4 +1,4 @@
-import { api_base_url } from '@/utils/axios';
+import { api_base_URL } from '@/utils/axios';
 import React from 'react';
 
 const GoogleButton: React.FC = () => {
@@ -9,7 +9,7 @@ const GoogleButton: React.FC = () => {
       className=" cursor-pointer"
       width={50}
       height={50}
-      onClick={() => (window.location.href = `${api_base_url}/users/google`)}
+      onClick={() => (window.location.href = `${api_base_URL}/users/google`)}
     />
   );
 };

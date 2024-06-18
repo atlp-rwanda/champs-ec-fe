@@ -38,7 +38,7 @@ describe("Reset Tests", () => {
     //     const token='reset-token'
     //     console.log()
     //     mockedAxios
-    //         .onPatch(`${process.env.NEXT_PUBLIC_URL}/users/reset-password/${token}`)
+    //         .onPatch(`${process.env.URL}/users/reset-password/${token}`)
     //         .reply(200);
 
     //     render(renderReset);
