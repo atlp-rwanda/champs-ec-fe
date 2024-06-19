@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react';
 import Dashboard from '@/components/Sidebar';
-import ProductPopup from '../../../../components/AddProducts';
+import ProductPopup from '@/components/AddProducts';
 
-const Page = () => {
+const CreateProducts = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   return (
     <div className="flex">
-      <Dashboard />
       <div className="flex flex-col items-center justify-center flex-grow">
         <button
           onClick={() => setIsPopupOpen(true)}
@@ -22,4 +21,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default CreateProducts;

@@ -8,7 +8,7 @@ import productsAddReducers from '@/redux/slices/productSlice';
 import '@testing-library/jest-dom';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import Page from '../app/seller/dashboard/products/page';
+import Page from '@/components/ProductsAdmin';
 
 // Mock the useRouter function from next/navigation
 jest.mock('next/navigation', () => ({

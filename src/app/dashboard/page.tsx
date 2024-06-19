@@ -1,8 +1,10 @@
 "use client"
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect,useState } from "react";
 import DashboardHeader from "@/components/DashboardHeader";
 import UsersPageAdmin from "@/components/UsersAdmin";
 import AdminDashboard from "@/hooks/useAdminDashboard";
+import  CreateProducts from '@/components/ProductsAdmin'
+
 
 function Dashboard() {
   const {
@@ -13,12 +15,16 @@ function Dashboard() {
     menu,
     open,
     setOpen } = AdminDashboard()
+  const [state,setState] =useState(false)
 
   useEffect(() => {
     switch (header) {
       case "Users":
         setDisplay(<UsersPageAdmin />);
         break;
+      case "Product":     
+      setDisplay(< CreateProducts />);
+      break;
       default:
         setDisplay(<h1>Welcome to the dashboard</h1>);
         break;
@@ -26,10 +32,10 @@ function Dashboard() {
   }, [header]);
 
   return (
-    <div className="flex">
+    <div className="flex fixed  w-full">
       <div
         className={`${open ? "w-72" : "w-20"
-          } h-screen p-5 sticky top-0 pt-4 hidden sm:block relative duration-300 bg-primaryBlue`}
+          } h-screen p-5 relative  top-0 pt-4 hidden sm:block  duration-300 bg-primaryBlue`}
       >
         <img
           src="/control.png"
@@ -71,8 +77,8 @@ function Dashboard() {
         </ul>
       </div>
 
-      <div className="h-screen flex-1 p-0 sm:p-7">
-        <div className="flex flex-col">
+      <div className="h-screen flex-1 p-0 sm:p-7 w-[100%] overflow-scroll ">
+        <div className="flex flex-col  w-full">
           <DashboardHeader pageName={header} />
           <div className="p-2 sm:p-0">{display}</div>
         </div>
