@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { useRouter } from 'next/navigation';
-import Dashboard from '@/app/admin/page';
-import AdminDashboard from '@/hooks/useAdminDashboard';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import Dashboard from '@/app/dashboard/page';
 import { useQuery } from '@tanstack/react-query';
-import ReactQueryProvider from '@/utils/ReactQueryProvider';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event'
 import Providers from '@/app/providers';
