@@ -169,11 +169,14 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={onClose}>
-      <div className="bg-white rounded-lg p-6 w-full max-w-3xl max-h-screen overflow-y-auto relative" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white max-h-[95%] rounded-lg p-6 w-full max-w-3xl  overflow-y-auto relative" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2 z-50"
+          className="absolute top-2 right-2 bg-white-500 rounded-full p-2 z-50"
+          style={{ color: 'red',fontSize:'45px',top: '-10px', right: '9px' 
+       
+        }}
         >
           &times;
         </button>
@@ -287,7 +290,8 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
                 <img src={picture} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
                 <button
                   type="button"
-                  className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 right-2 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity text-red-500"
+  style={{ fontSize: '30px', top: '-10px',right: '-1px' }}
                   onClick={() => handleDeletePicture(index)}
                 >
                   &times;
