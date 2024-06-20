@@ -8,8 +8,10 @@ import Card from '@/components/Card';
 import { unstable_noStore as noStore } from 'next/cache';
 interface ProdductProps {
   activeNav: String;
+
+  searchResults: ProductObj[];
 }
-const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
+const ProductList: React.FC<ProdductProps> = ({ activeNav,searchResults }) => {
   const [activeButton, setActiveButton] = useState(1);
 
   const fetchUrl = (nav: string) => {
@@ -34,6 +36,7 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
       noStore();
       const response: any = await request.get(fetchUrl(activeNav as string));
       let data;
+      console.log(activeNav)
       if (response.products) {
         data = response.products;
         return data;
@@ -69,7 +72,7 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
     setActiveButton((prev) => (prev === 1 ? prev : prev - 1));
   };
   if (isLoading) {
-    return <div>{/* <SkeletonProduct /> */}</div>;
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -79,14 +82,19 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
   if (!data) {
     return <div>No products found.</div>;
   }
+  if (!data && !searchResults.length) {
+    return <div>No products found.</div>;
+  }
 
-  return (
+  const productsToDisplay = searchResults.length ? searchResults : data;
+  console.log(searchResults)
+  return ( 
     <>
       <div className="mt-5  sm:pl-20 w-full">
         {data && (
           <>
             <ul className="sm:ml-2 flex flex-row sm:justify-between justify-center gap-2 flex-wrap items-center">
-              {data.map(
+              {productsToDisplay.map(
                 (
                   product: {
                     id: string;

@@ -38,6 +38,9 @@ export interface ProductType {
 }
 
 export interface ProductObj {
+  id: string;
+  productDescription: string;
+  productPrice: number;
   currentPage: number;
   products: ProductType[];
   totalItems: number;
