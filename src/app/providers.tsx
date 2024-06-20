@@ -5,10 +5,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import { ToastContainer } from 'react-toastify';
+import { SessionProvider } from 'next-auth/react';
 
 const Providers = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   return (
+    <SessionProvider>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         {children}
@@ -16,6 +18,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
         <ReactQueryDevtools />
       </QueryClientProvider>
     </Provider>
+    </SessionProvider>
   );
 };
 

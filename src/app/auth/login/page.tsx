@@ -11,11 +11,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useLogin from '@/hooks/useLogin';
 import OtpVerify from '@/components/2faVerification';
 import GoogleButton from '@/components/GoogleButton';
-
+import { signIn, useSession } from 'next-auth/react';
+import { redirect, useRouter } from 'next/navigation';
 type loginField = z.infer<typeof loginValidation>;
 
 export default function Login() {
-  const { Login, errorMessage, setErrorMessage, loading, isOpen } = useLogin();
+  const { status, data: session } = useSession();
+  const router = useRouter();
+  const { errorMessage, setErrorMessage, loading, isOpen } = useLogin();
+  if (status=='authenticated') router.push("/");
   const {
     register,
     handleSubmit,
@@ -25,11 +29,17 @@ export default function Login() {
     resolver: zodResolver(loginValidation),
   });
 
-  const onSubmit: SubmitHandler<loginField> = (data) => {
+  const onSubmit: SubmitHandler<loginField> = async (data) => {
     setErrorMessage('');
-    Login(data);
+    try {
+      const response = await signIn('credentials', { email: data.email, password: data.password, redirect: false });
+      console.log(response)
+    } catch (error) {
+      console.log("Error occurred while signing in: ", error)
+    }
+    // Login(data);
   };
-
+  if (status === "loading") return <div>Loading...</div>
   return (
     <>
       <main
@@ -78,7 +88,7 @@ export default function Login() {
                 </h1>
               </div>
               <div className="w-[100%] mt-5">
-                <Button name="Log in" loading={loading} background='blue'/>
+                <Button name="Log in" loading={loading} background='blue' />
               </div>
             </form>
             <div className="w-[90%] mt-3">
