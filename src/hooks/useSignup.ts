@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
@@ -6,6 +6,13 @@ function useSignup() {
   const router = useRouter();
   const [showModal, setShowmodal] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      router.push('/');
+    }
+  }, []);
 
   // const [FormData, setFormData] = useState(initial);
   const [error, setError] = useState('');
