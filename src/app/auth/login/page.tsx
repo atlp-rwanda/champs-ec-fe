@@ -15,7 +15,7 @@ import GoogleButton from '@/components/GoogleButton';
 type loginField = z.infer<typeof loginValidation>;
 
 export default function Login() {
-  const { Login, errorMessage, setErrorMessage, loading ,isOpen} = useLogin();
+  const { Login, errorMessage, setErrorMessage, loading, isOpen } = useLogin();
   const {
     register,
     handleSubmit,
@@ -83,7 +83,10 @@ export default function Login() {
             </form>
             <div className="w-[90%] mt-3">
               <div className="w-[100%] flex  items-center justify-between mt-5">
-                <Link href="/auth/forgotpassword" className="text-[13px] mb-4 text-blue-500">
+                <Link
+                  href="/auth/forgotpassword"
+                  className="text-[13px] mb-4 text-blue-500"
+                >
                   Forgot Password?
                 </Link>
               </div>
@@ -100,7 +103,7 @@ export default function Login() {
           </div>
         </div>
       </main>
-      <OtpVerify isOpen={isOpen}/>
+      <OtpVerify isOpen={isOpen} />
     </>
   );
 }

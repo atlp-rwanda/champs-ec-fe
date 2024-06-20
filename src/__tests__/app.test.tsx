@@ -11,8 +11,10 @@ import PopUpModels from '@/components/PopUpModels';
 import useSignup from '@/hooks/useSignup';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Test suite for the Home page
+const queryClient = new QueryClient();
 jest.mock('next/navigation', () => ({
   useRouter() {
     return {
@@ -21,14 +23,15 @@ jest.mock('next/navigation', () => ({
   },
 }));
 describe('Home page', () => {
-  // it('renders without crashing', () => {
-  //   const { getByText } = render(
-  //     <Provider store={store}>
-  //       <Home />
-  //     </Provider>,
-  //   );
-  //   expect(getByText('This is champs e commerce Homepage')).toBeDefined();
-  // });
+  it('renders without crashing', () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <Home />
+        </QueryClientProvider>
+      </Provider>,
+    );
+  });
   it('renders signup page', () => {
     const { getByText } = render(<Signup />);
     expect(getByText('Welcome!')).toBeDefined();

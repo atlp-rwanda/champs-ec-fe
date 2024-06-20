@@ -1,48 +1,130 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+const data = [
+  {
+    title: 'Navigate',
+    links: [
+      { name: 'About', link: '#' },
+      { name: 'Messages', link: '#' },
+      { name: 'Order', link: '#' },
+      { name: 'Contact Us', link: '#' },
+      { name: 'Join Us', link: '#' },
+    ],
+  },
+  {
+    title: 'Categories',
+    links: [
+      { name: 'Home appliances', link: '#' },
+      { name: 'Groceries', link: '#' },
+      { name: 'Fashion', link: '#' },
+      { name: 'Electronics', link: '#' },
+    ],
+  },
+  {
+    links: [
+      { name: 'KG 000 street ', link: '#' },
+      { name: 'Kigali, Rwanda', link: '#' },
+      { name: '(250) 788 100 000', link: '#' },
+      { name: 'champsbay@gmail.com', link: '#' },
+    ],
+  },
+];
+const Icons = [
+  { Icon: './insta.png', link: '#' },
+  { Icon: './fb.png', link: '#' },
+  { Icon: './X.png', link: '#' },
+];
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <>
-      <div className='bg-black text-white'>
-         <div className='w-full max-w-1/2 flex justify-evenly py-5'>
-             <div className='flex flex-col justify-center items-center'>
-                 <div className='font-medium text-base'>Navigate</div>
-                 <div className='flex flex-col gap-3'>
-                     <Link href="/about">About</Link>
-                     <Link href="/messages">Messages</Link>
-                     <Link href="/order">Order</Link>
-                     <Link href="/contact">Contant Us</Link>
-                     <Link href="/join">Join Us</Link>
-                 </div>
-             </div>
-             <div>
-                 <div className='font-medium text-base'>Categories</div>
-                 <div className='flex flex-col gap-3'>
-                     <Link href="/appliances">Home appliances</Link>
-                     <Link href="/groceries">Groceries</Link>
-                     <Link href="/fashion">Fashion</Link>
-                     <Link href="/electronics">Electronics</Link>
-                 </div>
-             </div>
-             <div>
-             <div className='font-medium text-base'>Categories</div>
-             <div className='flex flex-col gap-3'>
-                 <p>KG 000 street</p>
-                 <p>Kigali, Rwanda</p>
-                 <p>(250) 788 100 000</p>
-                 <p>champsbay@gmail.com</p>
-             </div>
-             </div>
-         </div>
-         </div>
-         <div>
-         <div className='border-t-[1px] border-white flex justify-center items-center'>
-             <p className='py-3'> Copyright © 2024 Champs bay. All rights reserved</p>
-         </div>
+    <footer className="bg-black text-white pt-10 w-full ">
+      {/* <ItemsContainer /> */}
+      <div className="w-full  max-w-[1400px] flex justify-center items-center">
+        {/* Center section  */}
+        <div className="flex sm:justify-between sm:gap-20 sm:py-4 sm:flex-row  gap-5 flex-col-reverse">
+          <div className="flex flex-col sm:flex-row gap-2 mb-5">
+            <div className="min-w-[300px]">
+              <ul>
+                <h1 className="mb-1 font-semibold">{data[0].title}</h1>
+                {data[0].links.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      className="text-gray-400 hover:text-white duration-300
+        text-sm cursor-pointer leading-6"
+                      href={link.link}
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className=" min-w-[300px]">
+              <ul>
+                <h1 className="mb-1 font-semibold">{data[1].title}</h1>
+                {data[1].links.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      className="text-gray-400 hover:text-white duration-300
+        text-sm cursor-pointer leading-6"
+                      href={link.link}
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className=" min-w-[300px]">
+            <ul>
+              <img
+                src="./logofull.png"
+                alt="Logo_Image"
+                className="h-[40px] "
+              />
+              {data[2].links.map((link) => (
+                <li key={link.name}>
+                  <a
+                    className="text-gray-400 hover:text-white duration-300
+        text-sm cursor-pointer leading-6"
+                    href={link.link}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+              <li className="mt-3 h-[20px]">
+                <div className="flex gap-4 rounded-full">
+                  {Icons.map((link) => (
+                    <div key={link.Icon}>
+                      <a
+                        className="text-gray-400 hover:text-white duration-300
+        text-sm cursor-pointer leading-6"
+                        href={link.link}
+                      >
+                        <img
+                          src={link.Icon}
+                          alt=""
+                          className="w-6 hover:w-7 duration-200"
+                        />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </>
-  )
-}
+      <div className=" border-t-4 border-white items-center justify-center flex text-center  text-gray-400 text-sm p-4">
+        <span>
+          {' '}
+          Copyright © {new Date().getFullYear()} Champs bay. All rights
+          reserved
+        </span>
 
-export default Footer
+        {/* <SocialIcons Icons={Icons} /> */}
+      </div>
+    </footer>
+  );
+}
