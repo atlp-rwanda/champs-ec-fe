@@ -14,7 +14,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import twoFactorAuthSlice from '../redux/slices/2faAuthenticationSlice';
 import axios from 'axios';
 jest.mock('axios');
-const URL = process.env.NEXT_PUBLIC_URL;
+const URL = process.env.URL;
 const store: any = configureStore({
   reducer: {
     sellerOTP: twoFactorAuthSlice,

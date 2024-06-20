@@ -4,14 +4,11 @@ import "./globals.css";
 import { Metadata } from "next";
 import ClientProvider from '../app/clientProvider'; // new file to handle client-side provider
 import Providers from './providers';
-
 //const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Champs E-Commerce",
-  description: "Your favorite marketplace",
+  title: 'Champs E-Commerce',
+  description: 'Your favorite marketplace',
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{

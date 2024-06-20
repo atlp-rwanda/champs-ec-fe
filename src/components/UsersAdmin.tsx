@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import Button, { BackButton, DisableButton } from '@/components/Button';
+import { BackButton, DisableButton } from '@/components/Button';
 import AssigningRole from '@/components/AssigningRoles';
 import requestAxios from '@/utils/axios';
 import { useQuery } from "@tanstack/react-query";

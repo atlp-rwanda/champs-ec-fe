@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { MdDashboard } from "react-icons/md";
-import { IoPersonOutline } from "react-icons/io5";
+import { IoCartOutline, IoPersonOutline } from "react-icons/io5";
+import { FaChartLine } from "react-icons/fa6";
 import { IconType } from "react-icons";
 import { useSearchParams } from "next/navigation";
+import product from '../../public/product.svg'
 import { useRouter } from "next/navigation";
 
 interface MenuInterface {
@@ -15,6 +17,8 @@ interface MenuInterface {
 const Menus: MenuInterface[] = [
   { title: "Dashboard", src: MdDashboard, clicked: true },
   { title: "Users", src: IoPersonOutline, clicked: false },
+  { title:"Products", src: IoCartOutline, clicked: false },
+  { title:"Chart", src: FaChartLine, clicked: false}
 ];
 
 function AdminDashboard() {

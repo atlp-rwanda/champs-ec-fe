@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import Button from '@/components/Button';
+import {Button} from '@/components/Button';
 import { otpValidation } from '@/validations/otpValidations';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ const OtpVerify: React.FC<OtpVerifyInterface> = ({ isOpen }) => {
   const [input, setInput] = useState(Array(6).fill(''));
   const itemsRef = useRef<(HTMLInputElement | null)[]>([]);
 
-  const URL = process.env.NEXT_PUBLIC_URL;
+  const URL = process.env.URL;
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { loading, error, newOtp, isAuthenticated } = useAppSelector(

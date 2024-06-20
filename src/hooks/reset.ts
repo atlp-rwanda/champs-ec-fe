@@ -11,7 +11,7 @@ type FormField = z.infer<typeof passwordValidation>;
 const ResetPassword = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const URL = process.env.NEXT_PUBLIC_URL;
+    const URL = process.env.URL;
     const router=useRouter()
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
@@ -29,7 +29,7 @@ const ResetPassword = () => {
     try {
         ('use server');
         const response = await axios.patch(
-          `${process.env.NEXT_PUBLIC_URL}/users/reset-password/${token}`,
+          `${process.env.URL}/users/reset-password/${token}`,
           {
             
                 newPassword: password,

@@ -13,13 +13,12 @@ interface Properties {
   btnColor?:string;
 }
 
-const Button: React.FC<Properties> = ({ name, handle, loading, isDisabled, rotate, background, btnColor }) => {
-  const buttonClassName = ` relative min-h-[40px] w-[100%] bg-${background?background:'primaryBlue'}-600 ${btnColor? btnColor : ''} text-white p-1.5 px-8 border rounded-b-sm rounded-s-sm hover:bg-${background?background:'primaryBlue'}-700`
+export const Button: React.FC<Properties> = ({ name, handle, loading}) => {
   return (
     <div>
       <button
-        className={buttonClassName } onClick={handle}
-        style={{background:background?background:'primaryBlue'}}
+        className="bg-blue-600 min-h-[40px] w-full max-w-[100%] text-white px-10 rounded-s-sm hover:bg-blue-700 relative"
+        onClick={handle}
       >
         {!loading && name}
         {loading && (
@@ -65,4 +64,51 @@ export const DisableButton: React.FC<Properties> = ({ name, handle, loading, bor
     </div>
   );
 };
-export default Button;
+
+export const BlueBorderButton: React.FC<Properties> = ({ name, handle, loading}) => {
+  return (
+    <div>
+      <button
+        className="border border-blue-500 min-h-[40px] w-full max-w-[100%] px-10 rounded-s-sm text-blue-500 hover:bg-blue-700 hover:text-white relative"
+        onClick={handle}
+      >
+        {!loading && name}
+        {loading && (
+          <div className="border-t-4 border-b-4 border-white rounded-full w-6 h-6 animate-spin m-auto"></div>
+        )}
+      </button>
+    </div>
+  );
+};
+
+export const DeleteButton: React.FC<Properties> = ({ name, handle, loading}) => {
+  return (
+    <div>
+      <button
+        className="bg-red-500 min-h-[40px] w-full max-w-[100%] text-white px-10 rounded-s-sm hover:bg-white hover:text-red-500 hover:border border-red-500 relative"
+        onClick={handle}
+      >
+        {!loading && name}
+        {loading && (
+          <div className="border-t-4 border-b-4 border-white rounded-full w-6 h-6 animate-spin m-auto"></div>
+        )}
+      </button>
+    </div>
+  );
+};
+
+export const GreenButton: React.FC<Properties> = ({ name, handle, loading}) => {
+  return (
+    <div>
+      <button
+        className="bg-green-600 min-h-[40px] w-full max-w-[100%] text-white px-10 rounded-s-sm hover:bg-green-700 relative"
+        onClick={handle}
+      >
+        {!loading && name}
+        {loading && (
+          <div className="border-t-4 border-b-4 border-white rounded-full w-6 h-6 animate-spin m-auto"></div>
+        )}
+      </button>
+    </div>
+  );
+};

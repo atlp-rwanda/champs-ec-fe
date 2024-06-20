@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import InputBox from '@/components/InputBox';
-import Button from '@/components/Button';
+import {Button} from '@/components/Button';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,7 +26,6 @@ const resetpassword = () => {
   const onSubmit: SubmitHandler<FormField> = (data,reset) => {
     setErrorMessage('');
     sendPassword(data.password,data.confirmPassword);
-    console.log(data)
   };
 
 

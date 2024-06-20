@@ -1,5 +1,5 @@
 'use client'
-import Button from '@/components/Button'
+import { Button } from '@/components/Button'
 import InputBox from '@/components/InputBox'
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form';

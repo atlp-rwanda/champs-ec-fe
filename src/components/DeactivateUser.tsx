@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Button, { BackButton, CloseButton } from './Button';
+import { Button, BackButton, CloseButton } from './Button';
 import request from '@/utils/axios';
 import { useQuery, useMutation, useQueryClient, RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
 import InputBox from './InputBox';

@@ -26,7 +26,7 @@ describe("Login Tests", () => {
     beforeEach(() => {
         mockedAxios.reset()
     })
-    const URL = process.env.NEXT_PUBLIC_URL
+    const URL = process.env.URL
 
     it("Test should view the input button", async () => {
         const { getByText, getByPlaceholderText } = render(renderLogin)

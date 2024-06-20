@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputBox from '@/components/InputBox';
-import Button from '@/components/Button';
+import { Button } from '@/components/Button';
 import PopUpModels from '@/components/PopUpModels';
 import useSignup from '@/hooks/useSignup';
 import { signUpVAlidation } from '@/validations/validationSchema';
@@ -39,7 +39,7 @@ const Signup = () => {
       <main
         className="  cover bg-no-repeat bg-cover  pt-10 flex justify-center items-center  flex-col "
         style={{
-          backgroundImage: "url('/Background.png')",
+          backgroundImage: "URL('/Background.png')",
         }}
       >
         <div className="max-w-[200px] justify-center items-center ">

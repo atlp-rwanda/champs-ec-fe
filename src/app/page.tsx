@@ -5,10 +5,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import GlobarPopUp from '@/components/UsablePopUp';
 import PopUpModels from '@/components/PopUpModels';
-import Button from '@/components/Button';
+import {Button} from '@/components/Button';
 import InputBox from '@/components/InputBox';
 import { Updatepassword } from '@/validations/Updatepassword';
 import UpdatePassword from '@/hooks/updatepassword';
+import Header from '@/components/Header';
 
 export interface FormDataType {
   confirmPassword: string;
@@ -40,6 +41,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Header/>
       <div className="bg-primaryBlue  rounded-md shadow-md hover:shadow-lg duration-200 cursor-pointer hover:scale-110">
         <p className="text-lg p-4">This is champs e commerce Homepage</p>
       </div>
