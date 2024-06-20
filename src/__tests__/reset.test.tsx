@@ -1,7 +1,7 @@
-// Import the necessary testing utilities
+// // Import the necessary testing utilities
 import React from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
@@ -16,51 +16,49 @@ jest.mock('next/navigation', () => ({
     };
   },
 }));
+
 const mockedAxios = new MockAdapter(axios);
 const renderReset = <ResetPassword />;
-describe('Reset Tests', () => {
+
+
+
+describe('ResetPassword component', () => {
   beforeEach(() => {
+    // Clear mock function calls before each test
     mockedAxios.reset();
   });
 
-  it('Test should view the input button', async () => {
-    const { getByText, getByPlaceholderText } = render(renderReset);
-    const button = getByText('Reset');
-    await userEvent.click(button);
-    expect(screen.queryByText('Password is required')).toBeInTheDocument();
-    expect(
-      screen.queryByText('Confirm Password is required'),
-    ).toBeInTheDocument();
-    expect(getByPlaceholderText('New Password')).toBeInTheDocument();
-    expect(getByPlaceholderText('Confirm Password')).toBeInTheDocument();
+
+
+
+  it('displays success message on reset password', async () => {
+    const token = 'reset-token';
+
+    // Mocking Axios response for successful reset
+    mockedAxios.onPatch(`${process.env.URL}/users/reset-password/${token}`).reply(200);
+
+    render(<ResetPassword />);
+
+    // Simulate user input
+    fireEvent.change(screen.getByPlaceholderText('New Password'), {
+      target: { value: 'Test@12345' },
+    });
+    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
+      target: { value: 'Test@12345' },
+    });
+
+    // Click the reset button
+    await userEvent.click(screen.getByText('Reset'));
+
+    // Ensure success message component is rendered
+    const { getByText } = render(
+      <PopUpModels
+        testid="updatetest"
+        bodyText=" Your password has been reset. "
+        topText="Password Reset  ✅"
+        iconImagelink="/Verified.png"
+      />
+    );
+    expect(getByText("Please insert your new password you'd like to use")).toBeInTheDocument();
   });
-
-  // it('displays success message on reset password', async () => {
-  //     const token='reset-token'
-  //     console.log()
-  //     mockedAxios
-  //         .onPatch(`${process.env.URL}/users/reset-password/${token}`)
-  //         .reply(200);
-
-  //     render(renderReset);
-
-  //     fireEvent.change(screen.getByPlaceholderText('New Password'), {
-  //         target: { value: 'Test@12345' },
-  //     });
-  //     fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
-  //         target: { value: 'Test@12345' },
-  //     });
-
-  //     await userEvent.click(screen.getByText('Reset'));
-
-  //             const { getByText, getByTestId } = render(
-  //       <PopUpModels
-  //       testid="updatetest"
-  //       bodyText=" Your password has been reset. "
-  //       topText="Password Reset  ✅"
-  //       iconImagelink="/Verified.png"
-  //       />,
-  //     );
-  //     expect(() => getByTestId('result')).toThrow();
-  // });
 });

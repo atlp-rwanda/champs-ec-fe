@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProduct, fetchCategories } from '../redux/slices/productSlice';
+import { createProduct, fetchCategories } from '../../redux/slices/productSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
-import type { AppDispatch, RootState } from '../redux/store';
-import { productSchema } from "../validations/productValidation";
+import type { AppDispatch, RootState } from '../../redux/store';
+import { productSchema } from "../../validations/productValidation";
 import { showToast } from '@/helpers/toast';
-import InputBox from './InputBox';
+import InputBox from '../InputBox';
 
 interface IProduct {
   id: string;

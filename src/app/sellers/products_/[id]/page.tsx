@@ -1,38 +1,50 @@
 // BuyerProductView
 'use client';
 
-import React from "react";
+
+import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart } from 'react-icons/fa6';
 import { useParams } from 'next/navigation';
 import { Product } from '@/utils/requests';
-import { useQuery } from '@tanstack/react-query';
-import { ProductType, ReviewType, Cards, imageType } from '@/types/Product';
-import produ from "../../../../../public/product.png"
+import { useQuery,RefetchOptions } from '@tanstack/react-query';
+import { ProductType, ReviewType, imageType } from '@/types/Product';
 import Review from '@/components/ReviewProduct';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Key } from 'react';//@ts-ignore
 import ReactStars from "react-rating-stars-component";
 
-import {
-  BackButton,
-  Button,
+import Button, {
   GreenButton,
   BlueBorderButton,
   DeleteButton,
 } from '@/components/Button';
 import ReviewCard from "@/components/ReviewCard";
 import { averageReviews } from "@/utils/averageReviews";
+import axios from "axios";
+import request from "@/utils/axios";
+import { showToast } from "@/helpers/toast";
+import UpdateProductPopup from '@/components/Product/editProduct';
+import router from "next/router";
+import ConfirmDelete from "@/components/confirmDeletePopup";
 
 function Page() {
-  const { id } = useParams();
-  if (!id) {
-    return <span>Error: Invalid product ID</span>;
-  }
+  const { id } :any= useParams();
+  const [items, setItems] = useState([]);
+  const [error, setError] = useState<string | null>(null);
+  const [showlModal, setShowmodal] = useState(false);
+
+  useEffect(() => {
+    if (!id) {
+      setError('Invalid product ID');
+    }
+  }, [id]);
+
   const _id: string = id.toString();
-  const { data, isLoading, error } = useQuery<any>({
+
+  const { data, isLoading, error: queryError } = useQuery<any>({
     queryKey: ['product', id],
     queryFn: async () => {
       try {
@@ -43,9 +55,17 @@ function Page() {
       }
     },
   });
-  if (isLoading) return <span>Loading...</span>;
+      const [PopupOpen, setPopupOpen] = useState(false);
+      const [Confirm,setConfirm]=useState(false)
+    const handleOpenPopup = () => {
+      setPopupOpen(true);
+    };
+    const handleClosePopup = () => {
+      setPopupOpen(false);
+    };
 
-  if (error) return <span>Error: {error.message}</span>;
+  if (isLoading) return <span>Loading...</span>;
+  if (queryError) return <span>Error: {queryError.message}</span>;
 
   const {
     productThumbnail,
@@ -56,7 +76,31 @@ function Page() {
     reviews,
   } = data.product;
 
+  const toggleConfirmPopup =()=>{
+   setConfirm(!Confirm) 
+  }
+
+  
+  const handleUpdate= async(id:string)=>{
+   
+    try{
+      const res:any = await request.get(`/products/${id}`);
+      
+      setPopupOpen(true)
+     // console.log(res)
+      console.log('id',id)
+      console.log(res.product)
+     // return res.data
+
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+
+
   const { relatedProducts } = data;
+
   return (
     <>
       <Header />
@@ -124,9 +168,10 @@ function Page() {
               </div>
               <div className="flex space-x-5">
                 <GreenButton name="status" />
-                <BlueBorderButton name="Edit" />
-                <DeleteButton name="Delete" />
+                <BlueBorderButton name="Edit" handle={()=>handleUpdate(_id)}  />
+                <DeleteButton name="Delete" handle={() => toggleConfirmPopup()} />
               </div>
+              {PopupOpen && <UpdateProductPopup isOpen={PopupOpen} onClose={handleClosePopup}  productId={_id} product={data.product} />}
             </div>
           </div>
           <div className="w-full flex flex-col">
@@ -135,6 +180,7 @@ function Page() {
               {reviews && reviews.length > 0 ? (
                 reviews.map((review: ReviewType) => (
                   <ReviewCard
+                    //key={review.id}
                     rating={review.rating}
                     feedback={review.feedback}
                     image={review.userProfile.profileImage}
@@ -149,9 +195,21 @@ function Page() {
           </div>
         </div>
       </div>
+      {Confirm
+      ?
+      <ConfirmDelete
+        isOpen= {Confirm}
+        productId={_id}
+        toggleConfirmPopup={toggleConfirmPopup}
+      //  refetch={refetch}
+      />:''}
       <Footer />
+      
+
     </>
   );
 }
 
+
 export default Page;
+

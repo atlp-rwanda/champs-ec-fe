@@ -14,7 +14,7 @@ describe('Product Validation Schemas', () => {
       stockLevel: '10',
       productCategory: '123e4567-e89b-12d3-a456-426614174000',
       productPrice: '50',
-      productDiscount: '10',
+       discount: '10',
       currency: 'USD',
       description: 'This is a test product description.',
       expireDate: new Date(Date.now() + 86400000).toISOString(),

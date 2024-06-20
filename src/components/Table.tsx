@@ -1,12 +1,10 @@
 'use client';
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import request from '@/utils/axios';
 import { ProductType, ProductObj } from '@/types/Product';
 import { Button, GreenButton } from "./Button"
-
 const ProductsTable = () => {
   const { data, isLoading, error } = useQuery<any>({
     queryKey: ['products'],
@@ -18,11 +16,8 @@ const ProductsTable = () => {
       return data;
     },
   });
-
   if (isLoading) return <span>Loading...</span>;
-
   if (error) return <span>Error: {error.message}</span>;
-
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">

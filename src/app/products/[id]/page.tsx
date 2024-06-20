@@ -32,7 +32,7 @@ import { handleUserAddCart } from '@/redux/slices/userCartSlice';
 
 function Page() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const { id } = useParams();
+  const { id } :any= useParams();
   const handleSwiper = (swiper: any) => {
     setThumbsSwiper(swiper);
   };

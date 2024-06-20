@@ -9,6 +9,7 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import auth from "./slices/authSlice";
 import productsAddReducers from "./slices/productSlice"; 
 import { welcomeReducer } from './slices/welcomeSlice';
+import UpdateProductSlice from './slices/UpdateProductSlice';
 
 
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   productsAddReducers,
   sellerOTP: twoFactorAuthSlice,
   updatePassword: updatePasswordReducer,
-  userCartData:userCartSlice
+  userCartData:userCartSlice,
+  UpdateProducts:UpdateProductSlice
 
 });
 

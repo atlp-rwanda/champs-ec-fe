@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 interface Properties {
   nameuse?: string;
   type: string;
+  value?:string;
   placeholder?: string;
   error?: string;
  

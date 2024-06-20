@@ -19,7 +19,7 @@ import ReviewCard from './ReviewCard';
 // import Slides from '@/components/slides';
 
 function Page() {
-  const { id } = useParams();
+  const { id } :any= useParams();
   const _id: string = id.toLocaleString();
   const { data, isLoading, error } = useQuery<any>({
     queryKey: ['product', id],
