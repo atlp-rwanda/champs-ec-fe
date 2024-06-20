@@ -1,24 +1,51 @@
+'use client';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
 
 export const api_base_url = process.env.URL;
 
 const responseBody = <T>(response: AxiosResponse<T>): T => response.data;
 
-axios.defaults.baseURL = api_base_url;
+const axiosInstance = axios.create({
+  baseURL: api_base_url,
+});
 
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
     if (token) {
       config.headers['Authorization'] = token;
     }
-
     return config;
   },
   (error) => {
     return Promise.reject(error);
   },
 );
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (!error.response) {
+      toast.error('Server Network Error!');
+    }
+    if (error.response.status === 401) {
+      if (typeof window !== 'undefined') {
+        window.location.href = '/auth/login';
+      }
+    }
+    return Promise.reject(error);
+  },
+);
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('offline', () => {
+    toast.error('Network is Offline!');
+    return;
+  });
+}
 
 interface RequestMethods {
   get: <T>(url: string, params?: Record<string, any>) => Promise<T>;
@@ -33,11 +60,12 @@ interface RequestMethods {
 }
 
 const request: RequestMethods = {
-  get: (url, params) => axios.get(url, { params }).then(responseBody),
-  post: (url, body) => axios.post(url, body).then(responseBody),
-  put: (url, body) => axios.put(url, body).then(responseBody),
-  delete: (url, params) => axios.delete(url, { params }).then(responseBody),
-  patch: (url, body) => axios.patch(url, body).then(responseBody),
+  get: (url, params) => axiosInstance.get(url, { params }).then(responseBody),
+  post: (url, body) => axiosInstance.post(url, body).then(responseBody),
+  put: (url, body) => axiosInstance.put(url, body).then(responseBody),
+  delete: (url, params) =>
+    axiosInstance.delete(url, { params }).then(responseBody),
+  patch: (url, body) => axiosInstance.patch(url, body).then(responseBody),
 };
 
 export default request;

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { MdDashboard } from "react-icons/md";
-import { IoPersonOutline } from "react-icons/io5";
-import { IconType } from "react-icons";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from 'react';
+import { MdDashboard } from 'react-icons/md';
+import { IoPersonOutline } from 'react-icons/io5';
+import { IconType } from 'react-icons';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface MenuInterface {
   title: string;
@@ -13,21 +13,21 @@ interface MenuInterface {
 }
 
 const Menus: MenuInterface[] = [
-  { title: "Dashboard", src: MdDashboard, clicked: true },
-  { title: "Users", src: IoPersonOutline, clicked: false },
+  { title: 'Dashboard', src: MdDashboard, clicked: true },
+  { title: 'Users', src: IoPersonOutline, clicked: false },
 ];
 
 function AdminDashboard() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [open, setOpen] = useState(false)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [open, setOpen] = useState(false);
   const [display, setDisplay] = useState<JSX.Element | null>(null);
   const [menu, setMenus] = useState(Menus);
-  const [header, setHeader] = useState("");
+  const [header, setHeader] = useState('');
 
   useEffect(() => {
-    setHeader(searchParams.get("page"?.toString()) || "Dashboard")
-  }, [])
+    setHeader(searchParams.get('page'?.toString()) || 'Dashboard');
+  }, []);
 
   const handleItemClick = (index: number) => {
     const clickedItem = Menus[index];
@@ -39,7 +39,7 @@ function AdminDashboard() {
     });
     setHeader(clickedItem.title);
     setMenus(updatedMenus);
-    router.push(`?page=${clickedItem.title}`)
+    router.push(`?page=${clickedItem.title}`);
   };
 
   return {
@@ -50,6 +50,6 @@ function AdminDashboard() {
     setDisplay,
     header,
     menu,
-  }
+  };
 }
-export default AdminDashboard
+export default AdminDashboard;

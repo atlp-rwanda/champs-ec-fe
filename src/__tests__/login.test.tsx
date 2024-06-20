@@ -4,21 +4,15 @@ import '@testing-library/jest-dom';
 import Login from '@/app/auth/login/page';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import OtpVerify from '../components/2faVerification'
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store';
 
-
 jest.mock('next/navigation', () => ({
-  useRouter() {
-    return {
-      prefetch: () => null,
-    };
-  },
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+  })),
 }));
-
-
 
 const mockedAxios = new MockAdapter(axios)
 const renderLogin=<Provider store={store}><Login /></Provider>
