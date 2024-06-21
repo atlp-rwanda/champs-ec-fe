@@ -1,19 +1,30 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Side from '../../components/Side';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductList from '@/components/ProductList';
-import { checkIsAdmin } from '@/components/isAdmin';
+import { useSearchParams } from 'next/navigation';
+import axios from 'axios';
 
 function Page() {
-  // const isAdmin = checkIsAdmin();
+  const searchParams = useSearchParams();
+  const [searchResults, setSearchResults] = useState([]);
   
-  // if (isAdmin) { 
-  //   console.log('User is an admin!');
-  // } else {
-  //   console.log('User is not an admin.');
-  // }
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      const queryParams = new URLSearchParams(searchParams.toString());
+      try {
+        const response = await axios.get(`http://localhost:8000/api/search?${queryParams.toString()}`);
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      }
+    };
+
+    fetchSearchResults();
+  }, [searchParams]);
+
   return (
     <>
       <Header />
@@ -31,7 +42,7 @@ function Page() {
         </div>
         <div className="w-full flex mx-auto px-10">
           <Side />
-          <ProductList />
+          <ProductList searchResults={searchResults} />
         </div>
       </div>
       <Footer />
