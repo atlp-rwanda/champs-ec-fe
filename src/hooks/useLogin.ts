@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import loginValidation from '@/validations/LoginValidation';
 import { z } from 'zod';
 
@@ -13,6 +13,12 @@ function useLogin() {
   const [isOpen, setIsOpen] = useState(false);
   const URL = process.env.URL;
   const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      router.push('/');
+    }
+  }, []);
   const HandleLogin = async (email: string, password: string) => {
     setLoading(true);
     try {
@@ -20,7 +26,6 @@ function useLogin() {
       const res = await axios.post(`${URL}/users/login`, {
         email,
         password,
-
       });
       if (res.status == 201) {
         setLoading(false);
