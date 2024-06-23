@@ -13,7 +13,9 @@ import produ from "../../../../../public/product.png"
 import Review from '@/components/ReviewProduct';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Key } from 'react';
+import { Key } from 'react';//@ts-ignore
+import ReactStars from "react-rating-stars-component";
+
 import {
   BackButton,
   Button,
@@ -21,6 +23,8 @@ import {
   BlueBorderButton,
   DeleteButton,
 } from '@/components/Button';
+import ReviewCard from "@/components/ReviewCard";
+import { averageReviews } from "@/utils/averageReviews";
 
 function Page() {
   const { id } = useParams();
@@ -104,6 +108,16 @@ function Page() {
                   ${productPrice}
                 </span>
               </div>
+              <div className='block'>
+                <ReactStars
+                    count={5}
+                    value={averageReviews(reviews)}
+                    isHalf={true}
+                    size={30}
+                    activeColor="#ffd700"
+                    edit={false}
+                />
+              </div>
               <div className="flex flex-col gap-2">
                 <h2 className="font-medium text-2xl">Description:</h2>
                 <p className="w-full text-1xl">{productDescription}</p>
@@ -116,14 +130,16 @@ function Page() {
             </div>
           </div>
           <div className="w-full flex flex-col">
-            <h2 className="font-medium text-2xl">Reviews:</h2>
+            <h2 className="font-medium text-2xl">Reviews:</h2><Button name='Add Review' background='blue'></Button>
             <div>
               {reviews && reviews.length > 0 ? (
                 reviews.map((review: ReviewType) => (
-                  <Review
-                    // key={review.id}
+                  <ReviewCard
                     rating={review.rating}
                     feedback={review.feedback}
+                    image={review.userProfile.profileImage}
+                    firstName={review.userProfile.firstName}
+                    lastName={review.userProfile.lastName}
                   />
                 ))
               ) : (

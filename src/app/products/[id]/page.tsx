@@ -7,18 +7,21 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import Image from 'next/image';
+import Image from 'next/image';//@ts-ignore
+import ReactStars from "react-rating-stars-component";
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart } from 'react-icons/fa6';
 import { useParams } from 'next/navigation';
 import { Product } from '@/utils/requests';
 import { ProductObj, ProductType, ReviewType, imageType } from '@/types/Product';
 import Card from '@/components/Card';
-import Review from '@/components/ReviewProduct';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer'; 
 import image from '../../../../public/product.png';
 import { useQuery } from '@tanstack/react-query';
+import ReviewCard from '@/components/ReviewCard';
+import Button from '@/components/Button';
+import { averageReviews } from '@/utils/averageReviews';
 
 function Page() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -51,7 +54,8 @@ function Page() {
     productDescription,
     reviews,
   } = data.product;
-
+  console.log('this is reviews >>>>>>>>>', reviews);
+  console.log(' this is average reviews', averageReviews(reviews));
   const { relatedProducts } = data;
   
   return (
@@ -125,16 +129,26 @@ function Page() {
                   ${productPrice}
                 </span>
               </div>
+              <div className='block'>
+                <ReactStars
+                    count={5}
+                    value={averageReviews(reviews)}
+                    isHalf={true}
+                    size={30}
+                    activeColor="#ffd700"
+                    edit={false}
+                />
+              </div>
               <div className="flex flex-col gap-2">
                 <h2 className="font-medium text-2xl">Description:</h2>
                 <p className="w-full text-1xl">{productDescription}</p>
               </div>
             </div>
           </div>
-          <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col ">
             <h2 className="font-medium text-2xl">Related products:</h2>
-            <div className="w-full max-w-[100%]">
-              <div className="product-grid flex justify-evenly mt-5">
+            <div className="w-full">
+              <div className="product-grid flex justify-between mt-5 mx-0">
                 {relatedProducts && relatedProducts.length > 0 ? (
                   relatedProducts.map((product:ProductType) => (
                     <Card
@@ -143,6 +157,8 @@ function Page() {
                       productPrice={product.productPrice}
                       productThumbnail={product.productThumbnail}
                       productDescription={product.productDescription}
+                      reviews={product.reviews}
+                      productName={product.productName}
                     />
                   ))
                 ) : (
@@ -154,13 +170,19 @@ function Page() {
             </div>
           </div>
           <div className="w-full flex flex-col mt-10">
-            <h2 className="font-medium text-2xl">Reviews:</h2>
+            <div className='flex'>
+              <h2 className="font-medium text-2xl mr-5">Reviews:</h2>
+              <Button name='Add Review' background='blue'></Button>
+            </div>
             <div className="my-10">
               {reviews && reviews.length > 0 ? (
                 reviews.map((review: ReviewType) => (
-                  <Review
+                  <ReviewCard
                     rating={review.rating}
                     feedback={review.feedback}
+                    image={review.userProfile.profileImage}
+                    firstName={review.userProfile.firstName}
+                    lastName={review.userProfile.lastName}
                   />
                 ))
               ) : (

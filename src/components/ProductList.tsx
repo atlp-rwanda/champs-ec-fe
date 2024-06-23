@@ -2,7 +2,7 @@
 import request from '@/utils/axios'; // Assuming request uses axios for HTTP requests
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ProductObj, ProductType } from '@/types/Product';
+import { ProductObj, ProductType, ReviewType } from '@/types/Product';
 import Card from '@/components/Card';
 // import { SkeletonProduct } from '@/components/Skeleton';
 import { unstable_noStore as noStore } from 'next/cache';
@@ -103,6 +103,8 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
                   productPrice: number;
                   productThumbnail: string;
                   productDescription: string;
+                  productName:string;
+                  reviews:ReviewType[];
                 },
                 i: number,
               ) => (
@@ -112,6 +114,8 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
                   productPrice={product.productPrice}
                   productThumbnail={product.productThumbnail}
                   productDescription={product.productDescription}
+                  productName={product.productName}
+                  reviews={product.reviews}
                 />
               ),
             )}
