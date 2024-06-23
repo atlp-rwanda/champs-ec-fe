@@ -4,6 +4,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import loginValidation from '@/validations/LoginValidation';
 import { z } from 'zod';
+import { useDispatch } from 'react-redux';
+import { getUserProfile } from '@/redux/slices/UserProfileSlice';
+import { useAppDispatch } from '@/redux/store';
 
 type loginField = z.infer<typeof loginValidation>;
 
@@ -13,6 +16,9 @@ function useLogin() {
   const [isOpen, setIsOpen] = useState(false);
   const URL = process.env.NEXT_PUBLIC_URL;
   const router = useRouter();
+
+  const dispatch = useAppDispatch();
+
   const HandleLogin = async (email: string, password: string) => {
     setLoading(true);
     try {
@@ -23,22 +29,21 @@ function useLogin() {
       });
       if (res.status == 201) {
         setLoading(false);
-    
-        localStorage.setItem('email', email)  
-        localStorage.setItem('password', password)  
-        localStorage.setItem('token', res.data.otpToken)     ;
-        HandleSellerLogin()
+
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+        localStorage.setItem('token', res.data.otpToken);
+        HandleSellerLogin();
         setErrorMessage('THIS IS A SELLER'); //Here logic for two factor authentication
         return;
       }
-      
       localStorage.setItem('token', res.data.token);
+
+      dispatch(getUserProfile());
       await router.push('/');
     } catch (error: any) {
       setLoading(false);
-      setErrorMessage(
-        `Invalid Email or Password`,
-      );
+      setErrorMessage(`Invalid Email or Password`);
       return;
     }
   };
@@ -49,17 +54,17 @@ function useLogin() {
 
   const HandleSellerLogin = async () => {
     try {
-        setIsOpen(true)
+      setIsOpen(true);
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-};
+  };
   return {
     errorMessage,
     Login,
     setErrorMessage,
     loading,
-    isOpen
+    isOpen,
   };
 }
 

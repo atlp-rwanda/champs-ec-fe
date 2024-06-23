@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -7,7 +7,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-    token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
+  token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
 };
 
 export const authSlice = createSlice({
@@ -17,7 +17,6 @@ export const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
       localStorage.setItem('token', action.payload);
-      console.log(action.payload);
     },
     clearToken: (state) => {
       state.token = null;
@@ -27,6 +26,6 @@ export const authSlice = createSlice({
 });
 
 export const { setToken, clearToken } = authSlice.actions;
-const auth= authSlice.reducer
+const auth = authSlice.reducer;
 
-export default auth
+export default auth;
