@@ -169,11 +169,14 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={onClose}>
-      <div className="bg-white rounded-lg p-6 w-full max-w-3xl max-h-screen overflow-y-auto relative" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white max-h-[95%] rounded-lg p-6 w-full max-w-3xl  overflow-y-auto relative" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2 z-50"
+          className="absolute top-2 right-2 bg-white-500 rounded-full p-2 z-50"
+          style={{ color: 'red',fontSize:'45px',top: '-10px', right: '9px' 
+       
+        }}
         >
           &times;
         </button>
@@ -181,12 +184,11 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <InputBox
-              nameuse="Product Name"
+              value={''} nameuse="Product Name"
               type="text"
               placeholder="Enter product name"
               {...register('productName')}
-              error={errors.productName?.message}
-            />
+              error={errors.productName?.message}            />
             <div>
               <label htmlFor="productCategory" className="mb-0 text-[14px] font-medium text-black/80">
                 Product Category
@@ -214,44 +216,39 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <InputBox
-              nameuse="Product Price"
+              value={''} nameuse="Product Price"
               type="number"
               placeholder="Enter product price"
               {...register('productPrice')}
-              error={errors.productPrice?.message}
-            />
+              error={errors.productPrice?.message}            />
             <InputBox
-              nameuse="Discount"
+              value={''} nameuse="Discount"
               type="number"
               placeholder="Enter discount"
               {...register('discount')}
-              error={errors.discount?.message}
-            />
+              error={errors.discount?.message}            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <InputBox
-              nameuse="Currency"
+              value={''} nameuse="Currency"
               type="text"
               placeholder="Enter currency"
               {...register('currency')}
-              error={errors.currency?.message}
-            />
+              error={errors.currency?.message}            />
             <InputBox
-              nameuse="Expire Date"
+              placeholder={''} value={''} nameuse="Expire Date"
               type="date"
               min={getCurrentDate()}
               {...register('expireDate')}
-              error={errors.expireDate?.message}
-            />
+              error={errors.expireDate?.message}            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <InputBox
-              nameuse="Stock Level"
+              value={''} nameuse="Stock Level"
               type="number"
               placeholder="Enter stock level"
               {...register('stockLevel')}
-              error={errors.stockLevel?.message}
-            />
+              error={errors.stockLevel?.message}            />
             <div>
               <label htmlFor="productPictures" className="block font-medium mb-1">
                 Product Pictures
@@ -287,7 +284,8 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
                 <img src={picture} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
                 <button
                   type="button"
-                  className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 right-2 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity text-red-500"
+  style={{ fontSize: '30px', top: '-10px',right: '-1px' }}
                   onClick={() => handleDeletePicture(index)}
                 >
                   &times;

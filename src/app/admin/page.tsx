@@ -4,6 +4,7 @@ import DashboardHeader from "@/components/DashboardHeader";
 import UsersPageAdmin from "@/components/UsersAdmin";
 import AdminDashboard from "@/hooks/useAdminDashboard";
 import SellerProductView from "@/app/sellers/products_/page";
+import ProductPopup from "@/components/AddProducts";
 
 function Dashboard() {
   const {

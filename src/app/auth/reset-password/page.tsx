@@ -49,19 +49,17 @@ const resetpassword = () => {
     className="w-full sm:max-w-xs md:max-w-md lg:max-w-lg px-4 flex items-center flex-col"
   >
               <InputBox
-                type="password"
-                nameuse="New Password"
-                placeholder="New Password"
-                {...register('password')}
-                error={errors.password?.message as string}
-              />
+              value={''} type="password"
+              nameuse="New Password"
+              placeholder="New Password"
+              {...register('password')}
+              error={errors.password?.message as string}              />
               <InputBox
-                type="Password"
-                nameuse="Confirm Password"
-                placeholder="Confirm Password"
-                {...register('confirmPassword')}
-                error={errors.confirmPassword?.message as string}
-              />
+              value={''} type="Password"
+              nameuse="Confirm Password"
+              placeholder="Confirm Password"
+              {...register('confirmPassword')}
+              error={errors.confirmPassword?.message as string}              />
     <div className=" gap-2 w-[100%]">
       <h1 className="font-medium text-warningRed text-[13px] w-[100%]">
       {errorMessage}

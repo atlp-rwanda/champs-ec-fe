@@ -46,12 +46,11 @@ const ForgotPassword = () => {
   >
     
     <InputBox
-      nameuse="Email:"
-      type="text"
-      placeholder="example@example.com"
-      {...register('email')}
-      error={errors.email?.message as string}
- 
+              value={''} nameuse="Email:"
+              type="text"
+              placeholder="example@example.com"
+              {...register('email')}
+              error={errors.email?.message as string} 
     />
 
     <div className=" gap-2 w-[100%]">

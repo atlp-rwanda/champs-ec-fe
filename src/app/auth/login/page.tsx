@@ -59,19 +59,17 @@ export default function Login() {
               className="w-[90%] flex items-center flex-col"
             >
               <InputBox
-                nameuse="Email"
+                value={''} nameuse="Email"
                 type="text"
                 placeholder="Enter Email"
                 {...register('email')}
-                error={errors.email?.message as string}
-              />
+                error={errors.email?.message as string}              />
               <InputBox
-                nameuse="Password"
+                value={''} nameuse="Password"
                 type="password"
                 placeholder="Enter Password"
                 {...register('password')}
-                error={errors.password?.message as string}
-              />
+                error={errors.password?.message as string}              />
               <div className=" gap-2 w-[100%]">
                 <h1 className="font-medium text-warningRed text-[13px] w-[100%]">
                   {errorMessage}

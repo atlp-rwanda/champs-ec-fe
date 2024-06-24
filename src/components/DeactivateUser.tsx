@@ -70,7 +70,9 @@ const DeactivateUser: React.FC<AssignRoleInterface> = ({ id, isUserActive, isOpe
         {isUserActive ?
           <div className="my-1 mx-0 px-0">
             <span className='text-[14px]'>Reason for deactivation:*</span>
-            <InputBox type='text' ref={textInput} error={isError}/>
+            <InputBox type='text' ref={textInput} error={isError} placeholder={''} name={''} value={''} onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
+              throw new Error('Function not implemented.');
+            } }/>
           </div>
         :
           <div className="my-5">

@@ -3,22 +3,27 @@
 import twoFactorAuthSlice from './slices/2faAuthenticationSlice';
 import updatePasswordReducer from './slices/UpdatePasswordSlice';
 import userCartSlice from './slices/userCartSlice';
+// store.ts
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import auth from "./slices/authSlice";
 import productsAddReducers from "./slices/productSlice"; 
 import { welcomeReducer } from './slices/welcomeSlice';
+import profileReducer from './slices/profileSlice';
 
+import userProfileSlice from '@/redux/slices/profileSlice';
 
 
 const rootReducer = combineReducers({
-  auth: auth,
+  auth,
   productsAddReducers,
   sellerOTP: twoFactorAuthSlice,
   updatePassword: updatePasswordReducer,
-  userCartData:userCartSlice
+  userCartData:userCartSlice,
 
+  profileReducer,
+  userProfile: userProfileSlice, 
 });
 
 export const store = configureStore({

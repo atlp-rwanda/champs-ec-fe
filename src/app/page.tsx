@@ -68,26 +68,23 @@ export default function Home() {
             <div className="flex justify-center flex-col  mx-6 py-20">
               <form action="" onSubmit={handleSubmit(onSubmit)}>
                 <InputBox
-                  type="password"
+                  value={''} type="password"
                   nameuse="Old Password"
                   placeholder="Old Password"
                   {...register('oldPassword')}
-                  error={errors.oldPassword?.message as string}
-                />
+                  error={errors.oldPassword?.message as string}                />
                 <InputBox
-                  type="password"
+                  value={''} type="password"
                   nameuse="New Password"
                   placeholder="New Password"
                   {...register('newPassword')}
-                  error={errors.newPassword?.message as string}
-                />
+                  error={errors.newPassword?.message as string}                />
                 <InputBox
-                  type="Password"
+                  value={''} type="Password"
                   nameuse="Confirm Password"
                   placeholder="Confirm Password"
                   {...register('confirmPassword')}
-                  error={errors.confirmPassword?.message as string}
-                />
+                  error={errors.confirmPassword?.message as string}                />
                 <h1 className="text-red-400"> {error}</h1>
                 <div className="w-full mt-5">
                   <Button name="Save" loading={loading} />

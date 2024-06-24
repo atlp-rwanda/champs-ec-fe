@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart, FaRegBell } from 'react-icons/fa6';

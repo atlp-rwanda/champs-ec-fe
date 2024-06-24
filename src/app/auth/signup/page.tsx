@@ -67,48 +67,43 @@ const Signup = () => {
             >
               <div className="flex justify-between gap-2">
                 <InputBox
-                  data-testid="fname"
+                  value={''} data-testid="fname"
                   nameuse="First Name"
                   type="text"
                   placeholder="Enter First Name"
                   {...register('firstName')}
-                  error={errors.firstName?.message as string}
-                />
+                  error={errors.firstName?.message as string}                />
                 <InputBox
-                data-testid="lname"
+                  value={''} data-testid="lname"
                   nameuse="Last Name"
                   // name="lasttName"
                   type="text"
                   placeholder="Enter Last Name"
                   {...register('lasttName')}
-                  error={errors.lasttName?.message as string}
-                />
+                  error={errors.lasttName?.message as string}                />
               </div>
               <InputBox
-              data-testid="email"
+                value={''} data-testid="email"
                 nameuse="Email"
                 type="email"
                 placeholder="Enter Email"
                 {...register('email')}
-                error={errors.email?.message as string}
-              />
+                error={errors.email?.message as string}              />
               <InputBox
-              data-testid="password"
+                value={''} data-testid="password"
                 nameuse="Password"
                 type="password"
                 placeholder="Enter Password"
                 {...register('password')}
-                error={errors.password?.message as string}
-              />
+                error={errors.password?.message as string}              />
               <InputBox
-                data-testid="confirmp"
+                value={''} data-testid="confirmp"
                 nameuse="Confirm Password"
                 // name="confirmPassword"
                 type="Password"
                 placeholder="Confirm Password"
                 {...register('confirmPassword')}
-                error={errors.confirmPassword?.message as string}
-              />
+                error={errors.confirmPassword?.message as string}              />
 
               <div className="flex  gap-2 w-[100%]">
                 <h1 className="font-medium text-red-400 text-[13px] text-center w-[100%]">
