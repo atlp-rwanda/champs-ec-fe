@@ -7,16 +7,21 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import Image from 'next/image';//@ts-ignore
-import ReactStars from "react-rating-stars-component";
+import Image from 'next/image'; //@ts-ignore
+import ReactStars from 'react-rating-stars-component';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart } from 'react-icons/fa6';
 import { useParams } from 'next/navigation';
 import { Product } from '@/utils/requests';
-import { ProductObj, ProductType, ReviewType, imageType } from '@/types/Product';
+import {
+  ProductObj,
+  ProductType,
+  ReviewType,
+  imageType,
+} from '@/types/Product';
 import Card from '@/components/Card';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer'; 
+import Footer from '@/components/Footer';
 import image from '../../../../public/product.png';
 import { useQuery } from '@tanstack/react-query';
 import ReviewCard from '@/components/ReviewCard';
@@ -36,8 +41,10 @@ function Page() {
     queryKey: ['product', id],
     queryFn: async () => {
       try {
-        const response: ProductType = (await Product.single(_id)) as ProductType;
-        
+        const response: ProductType = (await Product.single(
+          _id,
+        )) as ProductType;
+
         return response;
       } catch (error) {
         throw new Error('Error fetching product data');
@@ -56,14 +63,14 @@ function Page() {
     reviews,
   } = data.product;
   console.log('this is reviews >>>>>>>>>', reviews);
-  console.log(' this is average reviews', averageReviews(reviews));
+  console.log(' this is average reviews', productPictures);
   const { relatedProducts } = data;
-const dispatch = useAppDispatch();
-const handleNewItem=()=>{
-  const productId=data.product.id
-dispatch(handleUserAddCart({productPrice,productId}));
-}
-  
+  const dispatch = useAppDispatch();
+  const handleNewItem = () => {
+    const productId = data.product.id;
+    dispatch(handleUserAddCart({ productPrice, productId }));
+  };
+
   return (
     <div>
       <Header />
@@ -80,10 +87,10 @@ dispatch(handleUserAddCart({productPrice,productId}));
                     modules={[FreeMode, Navigation, Thumbs]}
                     className="mySwiper2"
                   >
-                    {productPictures.map((image:imageType) => {
+                    {productPictures.map((image: imageType) => {
                       return (
                         <SwiperSlide key={image.imgId}>
-                          <img src={image.url} alt='image' />
+                          <img src={image.url} alt="image" />
                         </SwiperSlide>
                       );
                     })}
@@ -104,10 +111,10 @@ dispatch(handleUserAddCart({productPrice,productId}));
                       modules={[FreeMode, Navigation, Thumbs]}
                       className="mySwiper mycss"
                     >
-                      {productPictures.map((image:imageType) => {
+                      {productPictures.map((image: imageType) => {
                         return (
                           <SwiperSlide key={image.imgId}>
-                            <img src={image.url} alt='image'/>
+                            <img src={image.url} alt="image" />
                           </SwiperSlide>
                         );
                       })}
@@ -128,21 +135,25 @@ dispatch(handleUserAddCart({productPrice,productId}));
                     <FaRegHeart />
                   </div>
                   <div className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer">
-                    <MdOutlineShoppingCart onClick={() =>{handleNewItem()}}  />
+                    <MdOutlineShoppingCart
+                      onClick={() => {
+                        handleNewItem();
+                      }}
+                    />
                   </div>
                 </div>
                 <span className="font-medium text-2xl text-blue-300">
-                  ${productPrice}
+                  RWF {productPrice}
                 </span>
               </div>
-              <div className='block'>
+              <div className="block">
                 <ReactStars
-                    count={5}
-                    value={averageReviews(reviews)}
-                    isHalf={true}
-                    size={30}
-                    activeColor="#ffd700"
-                    edit={false}
+                  count={5}
+                  value={averageReviews(reviews)}
+                  isHalf={true}
+                  size={30}
+                  activeColor="#ffd700"
+                  edit={false}
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -156,7 +167,7 @@ dispatch(handleUserAddCart({productPrice,productId}));
             <div className="w-full">
               <div className="product-grid flex justify-left gap-5 mt-5 mx-0">
                 {relatedProducts && relatedProducts.length > 0 ? (
-                  relatedProducts.map((product:ProductType) => (
+                  relatedProducts.map((product: ProductType) => (
                     <Card
                       key={product.id}
                       id={product.id}
@@ -176,9 +187,9 @@ dispatch(handleUserAddCart({productPrice,productId}));
             </div>
           </div>
           <div className="w-full flex flex-col mt-10">
-            <div className='flex'>
+            <div className="flex">
               <h2 className="font-medium text-2xl mr-5">Reviews:</h2>
-              <Button name='Add Review' background='blue'></Button>
+              <Button name="Add Review" background="blue"></Button>
             </div>
             <div className="my-10">
               {reviews && reviews.length > 0 ? (

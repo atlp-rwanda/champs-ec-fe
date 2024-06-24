@@ -53,7 +53,7 @@ export default function Home() {
       <Header />
       <HeroSection />
       <main className="flex   flex-col items-center justify-between ">
-        <div className="sm:flex h-[20px] gap-10">
+        {/* <div className="sm:flex h-[20px] gap-10">
           <div>
             <button
               className=" w-auto"
@@ -62,7 +62,7 @@ export default function Home() {
               change password
             </button>
           </div>
-        </div>
+        </div> */}
         {showlModal && (
           <GlobarPopUp handleShowModel={handleshow}>
             <div className="flex justify-center flex-col  mx-6 py-20">

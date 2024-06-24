@@ -114,7 +114,7 @@ const CartContainer = (hideOverLay: any) => {
 }
   return (
     <div className="flex flex-col h-full justify-center w-full bg-[#F6F6F6] overflow-y-auto">
-      <div className="flex gap-4 mb-4  px-2 md:px-10">
+      <div className="flex gap-4 sm:mb-4  px-2 md:px-10">
         <Image
           src={backAllow}
           alt=''

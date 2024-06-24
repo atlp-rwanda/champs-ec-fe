@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-import {Button} from '@/components/Button';
+import { Button } from '@/components/Button';
 import { otpValidation } from '@/validations/otpValidations';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import {
   resendOTPCode,
 } from '@/redux/slices/2faAuthenticationSlice';
 import GlobarPopUp from './UsablePopUp';
+import request from '@/utils/axios';
 
 interface OtpVerifyInterface {
   isOpen: boolean;
@@ -44,7 +45,12 @@ const OtpVerify: React.FC<OtpVerifyInterface> = ({ isOpen }) => {
   const VerifyOtp = async () => {
     var otp = input.join('');
     const result = otpValidation.safeParse({ otp });
-    dispatch(handleOTPVerification(otp));
+    const result1 = await dispatch(handleOTPVerification(otp));
+    if (result1) {
+      const profile = await request.get(`${URL}/users/profile`);
+      const userData = JSON.stringify(profile);
+      localStorage.setItem('profile', userData);
+    }
   };
   const HandleInput = (
     index: number,
