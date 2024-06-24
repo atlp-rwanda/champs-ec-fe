@@ -1,20 +1,29 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Side from '../../components/Side';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductList from '@/components/ProductList';
-import { checkIsAdmin } from '@/components/isAdmin';
+import { useSearchParams } from 'next/navigation';
+import request from '@/utils/axios';
 
-
-function Page() {
-  // const isAdmin = checkIsAdmin();
+function SuspenseWrapper() {
+  const searchParams = useSearchParams();
+  const [searchResults, setSearchResults] = useState([]);
   
-  // if (isAdmin) { 
-  //   console.log('User is an admin!');
-  // } else {
-  //   console.log('User is not an admin.');
-  // }
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      const queryParams = new URLSearchParams(searchParams.toString());
+      try {
+        const response:any = await request.get(`/search?${queryParams.toString()}`);
+        setSearchResults(response);
+      } catch (error) {
+        console.error('Error fetching search results:', error);
+      }
+    };
+
+    fetchSearchResults();
+  }, [searchParams]);
 
   return (
     <>
@@ -25,22 +34,27 @@ function Page() {
           <h1>All Products</h1>
           <div className="flex self-end">
             <select name="" id="" className="border">
-              <option value="volvo">Popular</option>
-              <option value="saab">Recent</option>
-              <option value="opel">Clothes</option>
-              <option value="audi">Electronics</option>
+              <option value="popular">Popular</option>
+              <option value="recent">Recent</option>
+              <option value="clothes">Clothes</option>
+              <option value="electronics">Electronics</option>
             </select>
           </div>
         </div>
         <div className="w-full flex mx-auto px-10">
           <Side />
-          <ProductList />
+          <ProductList searchResults={searchResults} />
         </div>
       </div>
       <Footer />
-     
     </>
   );
 }
 
-export default Page;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuspenseWrapper />
+    </Suspense>
+  );
+}

@@ -12,8 +12,9 @@ import { useAppDispatch, useAppSelector } from '../redux/store';
 
 interface ProdductProps {
   activeNav?: String;
+  searchResults: ProductObj[];
 }
-const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
+const ProductList: React.FC<ProdductProps> = ({ activeNav,searchResults }) => {
   const [activeButton, setActiveButton] = useState(1);
 
   const fetchUrl = (nav: string) => {
@@ -96,16 +97,18 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
     </div>;
   }
 
-  if (!data) {
+  if (!data && !searchResults.length) {
     return <div>No products found.</div>;
   }
+  const productsToDisplay = searchResults.length ? searchResults : data;
+  console.log(searchResults)
 
   return (
     <div className="mt-5  sm:pl-20 w-full flex content-center flex-col items-left justify-center ">
       {data && (
         <>
           <ul className="sm:ml-2 flex flex-row   items-center justify-center sm:justify-start max-w-[1400px] sm:px-6  gap-2 flex-wrap ">
-            {data.map(
+            {productsToDisplay.map(
               (
                 product: {
                   id: string;
