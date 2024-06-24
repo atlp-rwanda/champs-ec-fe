@@ -66,9 +66,7 @@ describe('Home page', () => {
   it('renders without crashing', () => {
     const { getByText } = render(
         <QueryClientProvider client={queryClient}>
-         <Providers>
-          <ProductList />
-          </Providers> 
+          <ProductList searchResults={[]} />
         </QueryClientProvider>
     );
   });
