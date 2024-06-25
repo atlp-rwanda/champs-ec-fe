@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import ProductList from './ProductList';
-
 export const ProductWithFilter = () => {
   const [Value, setValue] = useState('');
   const [locarstorage, SetLocal] = useState(null);
@@ -11,33 +10,28 @@ export const ProductWithFilter = () => {
     { laber: 'Rating', value: 2 },
     { laber: 'wishes', value: 3 },
   ];
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedToken = localStorage.getItem('token');
       SetLocal(storedToken as any);
     }
   }, []);
-
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(event.target.value);
     setActiveButton(event.target.value);
   };
-
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
   };
-
   const buttonClass = (buttonName: string) =>
     `px-4 py-2  ${
       activeButton === buttonName ? 'bg-black text-white' : ''
     } focus:outline-none `;
-
   return (
-    <div className="w-full mb-10">
-      <div className="container mt-10">
+    <div className="w-full mb-10 flex justify-center items-center content-center">
+      <div className="container mt-10 ">
         {/* Filter with search  */}
-        <div className="flex sm:gap-5 mb-10 sm:ml-24 gap-1 ">
+        <div className="flex sm:gap-5 mb-10 sm:ml-24 gap-1  ">
           {locarstorage && (
             <>
               <button
@@ -60,7 +54,6 @@ export const ProductWithFilter = () => {
               </button>
             </>
           )}
-
           <button
             className={buttonClass('All')}
             onClick={() => handleButtonClick('All')}
@@ -108,7 +101,7 @@ export const ProductWithFilter = () => {
           </div>
         </div>
         {/* Product Section */}
-        <div className="sm:ml-5 sm:mt-20">
+        <div className="sm:ml-5 sm:mt-20 ">
           <ProductList activeNav={activeButton} />
         </div>
       </div>

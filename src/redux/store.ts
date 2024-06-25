@@ -2,7 +2,7 @@
 
 import twoFactorAuthSlice from './slices/2faAuthenticationSlice';
 import updatePasswordReducer from './slices/UpdatePasswordSlice';
-
+import userCartSlice from './slices/userCartSlice';
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
@@ -11,11 +11,13 @@ import productsAddReducers from "./slices/productSlice";
 import { welcomeReducer } from './slices/welcomeSlice';
 
 
+
 const rootReducer = combineReducers({
   auth: auth,
   productsAddReducers,
   sellerOTP: twoFactorAuthSlice,
   updatePassword: updatePasswordReducer,
+  userCartData:userCartSlice
 
 });
 

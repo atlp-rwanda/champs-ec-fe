@@ -8,7 +8,7 @@ export const showToast = (message: string, type: ToastType = 'default') => {
   toast(message, {
     type,
     position: 'top-right' as ToastPosition,
-    autoClose: 20000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
