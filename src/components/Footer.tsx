@@ -36,9 +36,9 @@ const Icons = [
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white pt-10 w-full ">
+    <footer className="bg-black text-white pt-10 w-full flex flex-col justify-center items-center content-center ">
       {/* <ItemsContainer /> */}
-      <div className="w-full  max-w-[1400px] flex justify-center items-center">
+      <div className="w-full  max-w-[1400px] flex justify-center items-center content-center">
         {/* Center section  */}
         <div className="flex sm:justify-between sm:gap-20 sm:py-4 sm:flex-row  gap-5 flex-col-reverse">
           <div className="flex flex-col sm:flex-row gap-2 mb-5">
@@ -116,7 +116,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className=" border-t-4 border-white items-center justify-center flex text-center  text-gray-400 text-sm p-4">
+      <div className=" border-t-4 border-white items-center justify-center flex text-center  text-gray-400 text-sm p-4 w-full">
         <span>
           {' '}
           Copyright © {new Date().getFullYear()} Champs bay. All rights

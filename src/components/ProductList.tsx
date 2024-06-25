@@ -40,13 +40,11 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
     queryFn: async () => {
       noStore();
       const response: any = await request.get(fetchUrl(activeNav as string));
-    
-      
+
       let data;
       if (response.products) {
-       
         data = response.products;
-          dispatch(storeAllProduct(data))
+        dispatch(storeAllProduct(data));
         return data;
       } else if (response.data) {
         const allProduct: any = await request.get(`/products`);
@@ -55,13 +53,13 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
         );
         data = filterdeArray;
       }
-     
-     // const data = response.products;
-    
+
+      // const data = response.products;
+
       return data;
     },
   });
- 
+
   if (isLoading) {
     return (
       <div data-testid="loading">
@@ -103,7 +101,7 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
   }
 
   return (
-    <div className="mt-5  sm:pl-20 w-full flex content-center flex-col items-center justify-center ">
+    <div className="mt-5  sm:pl-20 w-full flex content-center flex-col items-left justify-center ">
       {data && (
         <>
           <ul className="sm:ml-2 flex flex-row   items-center justify-center sm:justify-start max-w-[1400px] sm:px-6  gap-2 flex-wrap ">
@@ -114,8 +112,8 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
                   productPrice: number;
                   productThumbnail: string;
                   productDescription: string;
-                  productName:string;
-                  reviews:ReviewType[];
+                  productName: string;
+                  reviews: ReviewType[];
                 },
                 i: number,
               ) => (
