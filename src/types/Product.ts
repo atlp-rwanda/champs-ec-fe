@@ -7,14 +7,14 @@ export interface Seller {
   phone?: string;
 }
 export interface ReviewType {
-  buyerId:string;
+  buyerId: string;
   rating: number;
   feedback: string;
-  userProfile:{
-    firstName:string;
-    lastName:string;
-    profileImage:string;
-  }
+  userProfile: {
+    firstName: string;
+    lastName: string;
+    profileImage: string;
+  };
 }
 export interface imageType {
   imgId: string;
@@ -34,35 +34,46 @@ export interface ProductType {
   productDescription: string;
   productDiscount?: number;
   productName: string;
-  productPictures: imageType[]
+  productPictures: imageType[];
   productPrice: number;
   productThumbnail: string;
   reviews: ReviewType[];
   related: any;
   seller?: Seller;
-  sellerId?: string; 
+  sellerId?: string;
   stockLevel?: number;
   updatedAt?: number;
-  }
-  
-  export interface ProductObj {
-    currentPage: number;
-    products: ProductType[];
-    totalItems: number;
-    toatalPages: number;
-  }
+}
 
-  export interface Cards {
-    key: string;
-    id: string;
-    productPrice: number;
-    productThumbnail: string;
-    productDescription: string;
-    reviews:ReviewType[];
-    productName:string;
-  }
-  export interface TableType {
-    product: string;
-    index: number;
-    id:string;
-  }
+export interface ProductObj {
+  currentPage: number;
+  products: ProductType[];
+  totalItems: number;
+  toatalPages: number;
+}
+
+export interface Cards {
+  key: string;
+  id: string;
+  productPrice: number;
+  productThumbnail: string;
+  productDescription: string;
+  reviews: ReviewType[];
+  productName: string;
+}
+export interface TableType {
+  product: string;
+  index: number;
+  id: string;
+}
+export interface CategoryType {
+  id: string;
+  categoryName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CategoryResponse {
+  message: string;
+  categories: CategoryType[];
+}

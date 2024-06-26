@@ -182,7 +182,7 @@ function Page() {
               </div>
               <div className="w-[100%] sm:w-[100%] mt-[50px]">
                 <h2 className="font-bold text-2xl">Related products:</h2>
-                <div className="flex gap-5 mt-5 overflow-x-scroll hide-scrollbar">
+                <div className="flex gap-3 mt-5 overflow-x-scroll hide-scrollbar">
                   {relatedProducts && relatedProducts.length > 0 ? (
                     relatedProducts.map((product: ProductType) => (
                       <Card
