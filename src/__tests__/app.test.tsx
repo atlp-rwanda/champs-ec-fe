@@ -14,6 +14,7 @@ import { store } from '@/redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Test suite for the Home page
+
 const queryClient = new QueryClient();
 jest.mock('next/navigation', () => ({
   useRouter() {
@@ -54,6 +55,7 @@ describe('Signup Components', () => {
     expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
   });
   it('displays error message on Signup failure', async () => {
+    console.log('this is env cccccccccccccccccccccc', process.env.URL);
     mockaxios.onPost(`${process.env.URL}/users/signup`).reply(409, {
       message: 'User with this email already exists',
     });
