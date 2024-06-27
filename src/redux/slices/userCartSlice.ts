@@ -29,7 +29,7 @@ export interface IUSERCART {
 interface InitialCart {
   loading: boolean;
   allProduct: ProductType[];
-  deleteCartLoading:boolean,
+  deleteCartLoading: boolean;
   cart: IUSERCART | null;
   productInCart: CARTINT[];
   error: string | null;
@@ -37,7 +37,7 @@ interface InitialCart {
 
 const initialState: InitialCart = {
   loading: false,
-  deleteCartLoading:false,
+  deleteCartLoading: false,
   allProduct: [],
   cart: { userId: '', product: [] },
   productInCart: [],
@@ -104,7 +104,7 @@ export const handleUserAddCart:any = createAsyncThunk(
 
 export const handleChangeCartQuantity:any = createAsyncThunk(
   'updateUserCart',
-  async (payload: AddToCartPayload,{rejectWithValue}) => {
+  async (payload: AddToCartPayload, { rejectWithValue }) => {
     const product: CARTINT = {
       quantity: payload.quantity as number,
       product: payload.productId,
@@ -128,7 +128,7 @@ export const handleChangeCartQuantity:any = createAsyncThunk(
 
       const result: any = await request.put(`/carts`, items);
       return result;
-    } catch (error:any) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   },
@@ -138,29 +138,27 @@ export const handleChangeCartQuantity:any = createAsyncThunk(
 
 export const handleRemoveItemInCart:any = createAsyncThunk(
   'deleteSingleItemInCart',
-  async (id:string,{rejectWithValue}) => {
-    try{ 
-    const userCart = JSON.parse(localStorage.getItem('productCart') || '[]');
-    const carts = userCart.product;
-    const updatedItems = carts.filter(
-      (item: { product: string }) => item.product !== id,
-    );
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const userCart = JSON.parse(localStorage.getItem('productCart') || '[]');
+      const carts = userCart.product;
+      const updatedItems = carts.filter(
+        (item: { product: string }) => item.product !== id,
+      );
 
-    const items = updatedItems.map(
-      (element: { product: string; quantity: number }) => ({
-        productId: element.product,
-        Quantity: element.quantity,
-      }),
-    );
-    const result:any= await request.put(`/carts`, items);
-    return result
-   }catch(error:any) {
-    return rejectWithValue(error.response.data);
-  }
-});
-
-
-
+      const items = updatedItems.map(
+        (element: { product: string; quantity: number }) => ({
+          productId: element.product,
+          Quantity: element.quantity,
+        }),
+      );
+      const result: any = await request.put(`/carts`, items);
+      return result;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
 // handle remove all items in cart----------------------------------------------------
 
@@ -173,30 +171,26 @@ export const handleRemoveAllCart:any = createAsyncThunk(
   },
 );
 
-
-
-
-
-
-
-
-
-
-
 export const userCartSlice = createSlice({
   name: 'counter',
   initialState,
 
   reducers: {
     storeAllProduct: (state, action) => {
-      state.allProduct = action.payload;
+      if (action.payload) {
+        localStorage.setItem('productItem', JSON.stringify(action.payload));
+        state.allProduct = action.payload;
+      }
     },
     updateLocalCart: (state, action) => {
       state.productInCart = action.payload;
     },
     handleCartCount: (state, action: PayloadAction<any>) => {
       const result = action.payload;
-      console.log('-------------------------------------------------------------++++++++++',result)
+      console.log(
+        '-------------------------------------------------------------++++++++++',
+        result,
+      );
       if (!result.error) {
         state.cart = result.cart;
         localStorage.setItem('productCart', JSON.stringify(result.cart));
@@ -222,7 +216,7 @@ export const userCartSlice = createSlice({
           localStorage.setItem('productCart', JSON.stringify(result));
           showToast('Successfully added to cart', 'info');
         } else {
-          showToast(result.error,'error');
+          showToast(result.error, 'error');
           state.error = result.error;
         }
       },
@@ -259,9 +253,8 @@ export const userCartSlice = createSlice({
       },
     );
 
-
     builder.addCase(handleRemoveItemInCart.pending, (state: InitialCart) => {
-      state.deleteCartLoading= true;
+      state.deleteCartLoading = true;
       state.error = '';
     });
 
@@ -269,7 +262,7 @@ export const userCartSlice = createSlice({
       handleRemoveItemInCart.fulfilled,
       (state: InitialCart, action: PayloadAction<any>) => {
         const result = action.payload;
-         state.deleteCartLoading = false;
+        state.deleteCartLoading = false;
         if (!result.error) {
           state.cart = action.payload;
           localStorage.setItem('productCart', JSON.stringify(result));
@@ -281,7 +274,7 @@ export const userCartSlice = createSlice({
     );
 
     builder.addCase(handleRemoveItemInCart.rejected, (state: InitialCart) => {
-      state.deleteCartLoading =false;
+      state.deleteCartLoading = false;
       state.error = '';
     });
 

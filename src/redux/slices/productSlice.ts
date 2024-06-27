@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import request from '@/utils/axios';
 
 interface IProduct {
   id: string;
@@ -38,12 +39,8 @@ export const fetchCategories = createAsyncThunk(
   'products/fetchCategories',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${URL}/categories`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      return response.data.categories;
+      const response: any = await request.get(`/categories`);
+      return response.categories;
     } catch (error: any) {
       if (error.response && error.response.data.error) {
         return rejectWithValue(error.response.data);
@@ -51,17 +48,17 @@ export const fetchCategories = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  }
+  },
 );
 
 export const createProduct = createAsyncThunk(
   'products/createProduct',
   async (data: ICreateProductInput, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('No token found');
-      }
+      // const token = localStorage.getItem('token');
+      // if (!token) {
+      //   throw new Error('No token found');
+      // }
 
       const formData = new FormData();
       formData.append('productName', data.productName);
@@ -76,13 +73,8 @@ export const createProduct = createAsyncThunk(
         formData.append('productImage', picture);
       }
 
-      const response = await axios.post(`${URL}/products`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      return response.data;
+      const response: any = await request.post(`/products`, formData);
+      return response;
     } catch (error: any) {
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
@@ -90,7 +82,7 @@ export const createProduct = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  }
+  },
 );
 
 export const productsSlice = createSlice({

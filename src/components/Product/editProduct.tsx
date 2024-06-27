@@ -1,18 +1,21 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useParams } from 'next/navigation';
 import { unwrapResult } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../../redux/store';
-import { productSchema } from "../../validations/productValidation";
+import { productSchema } from '../../validations/productValidation';
 import { showToast } from '@/helpers/toast';
 import InputBox from '../InputBox';
-import { fetchCategories, IUpdateProductInput } from '@/redux/slices/UpdateProductSlice';
+import {
+  fetchCategories,
+  IUpdateProductInput,
+} from '@/redux/slices/UpdateProductSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
 import request from '@/utils/axios';
 import { handleUpdateProduct } from '@/hooks/update';
-
 
 interface IProduct {
   id: string;
@@ -27,113 +30,123 @@ interface IProduct {
   productPictures: File[];
 }
 
- export interface IFormInput extends Partial<IProduct> {}
+export interface IFormInput extends Partial<IProduct> {}
 
 interface UpdateProductPopup {
   isOpen: boolean;
   onClose: () => void;
-  productId:string
-  product?:any
+  productId?: string;
+  product?: any;
 }
 
-const ProductPopup: React.FC<UpdateProductPopup> = ({ isOpen, onClose,productId ,product}) => {
-  const [reuploadStatus, setReuploadStatus] = useState('Wait for loading product image........');
+const ProductPopup: React.FC<UpdateProductPopup> = ({
+  isOpen,
+  onClose,
+  // productId,
+  product,
+}) => {
+  const { id } = useParams();
+  const productId: any = id;
+  const [reuploadStatus, setReuploadStatus] = useState(
+    'Wait for loading product image........',
+  );
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [files, setFiles] = useState<File[]>([]);
   const [pictures, setPictures] = useState<string[]>([]);
 
-    const initialvalue={
-    productCategory :  product.productCategory,
-    currency : product.productCurrency,
-    description: product.productDescription,
-    discount :  product.productDiscount.toString(),
-    productName : product.productName,
-    productPrice : product.productPrice.toString(),
-    stockLevel:product.stockLevel.toString(),
-    expireDate:product.expireDate.split(" ")[0]
+  const initialvalue = {
+    productCategory: product?.productCategory,
+    currency: product?.productCurrency,
+    description: product?.productDescription,
+    discount: product?.productDiscount.toString(),
+    productName: product?.productName,
+    productPrice: product?.productPrice.toString(),
+    stockLevel: product?.stockLevel.toString(),
+    expireDate: product?.expireDate.split(' ')[0],
+  };
 
-     }
-     
-    
-  useEffect( () => {
-    if(product.productPictures){
-      handleImage()
-    }else{
-      setReuploadStatus('no existing image found for this product please upload new')
-      setIsImageLoading(false)
+  useEffect(() => {
+    if (product?.productPictures) {
+      handleImage();
+    } else {
+      setReuploadStatus(
+        'no existing image found for this product please upload new',
+      );
+      setIsImageLoading(false);
     }
-    
   }, [product]);
 
-// this function  will help to download image from next and store them in local folder to be used on updating product
+  // this function  will help to download image from next and store them in local folder to be used on updating product
 
-const handleImage= async ()=> {
-  const downloadedImage:string[]=[]
- const newFile:File[]=[]
-  try {
-    const images=product.productPictures
- 
-    for (const element of images) {
-      const cloudinaryUrl = element.url;
-     const response = await fetch(cloudinaryUrl);
-     const blob = await response.blob();
-     const file =  new File([blob], 'fileName'+ Date.now(), { type: blob.type, lastModified: Date.now() });;
-     console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++blobbbb",file)
-     newFile.push(file)
-     const newImage= new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
+  const handleImage = async () => {
+    const downloadedImage: string[] = [];
+    const newFile: File[] = [];
+    try {
+      const images = product.productPictures;
 
-    const base64Image:any = await newImage;
-    //return base64Image;
- 
-    downloadedImage.push(base64Image)
+      for (const element of images) {
+        const cloudinaryUrl = element.url;
+        const response = await fetch(cloudinaryUrl);
+        const blob = await response.blob();
+        const file = new File([blob], 'fileName' + Date.now(), {
+          type: blob.type,
+          lastModified: Date.now(),
+        });
+
+        newFile.push(file);
+        const newImage = new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+
+        const base64Image: any = await newImage;
+        //return base64Image;
+
+        downloadedImage.push(base64Image);
+      }
+
+      // localStorage.setItem('downloadedImage',JSON.stringify(downloadedImage))
+      setFiles(newFile);
+      setPictures(downloadedImage);
+      setIsImageLoading(false);
+    } catch (error) {
+      console.error('Error fetching image:', error);
     }
-    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",downloadedImage)
-   // localStorage.setItem('downloadedImage',JSON.stringify(downloadedImage))
-    setFiles(newFile)
-    setPictures(downloadedImage)
-    setIsImageLoading(false)
-  } catch (error) {
-    console.error('Error fetching image:', error);
-  }
-}
-
-
-
-
-
-
+  };
 
   // const handleDeleteDownloadedImage=async ()=>{
   //   try {
   //     const response =await fetch('/api/cloudinary-image-reupload?action=deleteFolder', {
   //       method: 'POST',
   //     });
-     
+
   //   } catch (error) {
   //     console.error('Error during re-upload:', error);
   //     setReuploadStatus('Error during deleting downloaded images');
   //   }
   // }
 
-
-
   const dispatch = useDispatch<AppDispatch>();
-  const { register, handleSubmit, setValue, formState: { errors }, getValues, trigger } = useForm<IFormInput>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    getValues,
+    trigger,
+  } = useForm<IFormInput>({
     resolver: zodResolver(productSchema),
-    defaultValues:initialvalue
+    defaultValues: initialvalue,
   });
- 
 
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const { categories, status } = useSelector((state: RootState) => state.productsAddReducers);
+  const { categories, status } = useSelector(
+    (state: RootState) => state.productsAddReducers,
+  );
   const [loading, setLoading] = useState(false);
 
-console.log('DATA.PROD',product)
   useEffect(() => {
     if (isOpen) {
       dispatch(fetchCategories());
@@ -147,9 +160,9 @@ console.log('DATA.PROD',product)
     };
   }, []);
 
-  const onSubmit: SubmitHandler<IFormInput> = async data => {
-    console.log("data received", data);
-    console.log("CURRENCY",data.currency)
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    console.log('data received', data);
+    console.log('CURRENCY', data.currency);
     if (files.length < 4) {
       setUploadError('You must upload at least 4 pictures.');
       return;
@@ -164,14 +177,13 @@ console.log('DATA.PROD',product)
 
     setLoading(true);
     try {
-
-    const result = await handleUpdateProduct(data,productId)
-      showToast('Product has been updated','success');  
+      const result = await handleUpdateProduct(data, productId);
+      showToast('Product has been updated', 'success');
       console.log(result);
-   
+
       onClose();
     } catch (error: any) {
-        console.log('ERROR',error)
+      console.log('ERROR', error);
       console.error('Failed to update product:', error);
       let errorMessage = 'An unknown error occurred';
       if (error.response) {
@@ -187,54 +199,56 @@ console.log('DATA.PROD',product)
       } else if (error.message) {
         errorMessage = error.message;
       }
-      
-      showToast(errorMessage, 'error'); 
+
+      showToast(errorMessage, 'error');
     } finally {
       setLoading(false);
- 
     }
   };
-
- 
-
 
   const handlePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length === 1) {
       const file = e.target.files[0];
-     
+
       const totalFiles = files.length + 1;
-      console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++filessss",files)
+      console.log(
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++filessss',
+        files,
+      );
       // Check for maximum file limit
       if (totalFiles > 8) {
         setUploadError('You can upload a maximum of 8 pictures.');
         return;
       }
-  
+
       // Validate file type
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
       if (!allowedTypes.includes(file.type)) {
         setUploadError('Only jpeg, jpg, and png files are allowed.');
         return;
       }
-  
+
       // Validate file size (maximum size of 1MB)
       const maxSizeInBytes = 1 * 1024 * 1024;
       if (file.size > maxSizeInBytes) {
         setUploadError('Image size must be less than 1MB.');
         return;
       }
-    
+
       const filePreview = URL.createObjectURL(file);
-     
-      setPictures(prevPictures => [...prevPictures, filePreview]);
-      setFiles(prevFiles => [...prevFiles, file]);
-    
-      setValue('productPictures', [...getValues('productPictures') || [], file]);
+
+      setPictures((prevPictures) => [...prevPictures, filePreview]);
+      setFiles((prevFiles) => [...prevFiles, file]);
+
+      setValue('productPictures', [
+        ...(getValues('productPictures') || []),
+        file,
+      ]);
       trigger('productPictures');
       setUploadError(null);
-      
+
       const updatedFiles = getValues('productPictures') || [];
-      if ((updatedFiles.length + files.length) < 4) {
+      if (updatedFiles.length + files.length < 4) {
         setUploadError('You must upload at least 4 pictures.');
       } else {
         setUploadError(null);
@@ -243,21 +257,21 @@ console.log('DATA.PROD',product)
       setUploadError('Please upload one picture at a time.');
     }
   };
-  
+
   const handleDeletePicture = (index: number) => {
-    setPictures(prevPictures => prevPictures.filter((_, i) => i !== index));
+    setPictures((prevPictures) => prevPictures.filter((_, i) => i !== index));
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
     setValue('productPictures', updatedFiles);
     trigger('productPictures');
-  
+
     if (updatedFiles.length < 4) {
       setUploadError('You must upload at least 4 pictures.');
     } else {
       setUploadError(null);
     }
   };
-  
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -269,28 +283,30 @@ console.log('DATA.PROD',product)
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={onClose}>
-      <div className="bg-white rounded-lg p-6 w-full max-w-3xl max-h-screen overflow-y-auto relative" onClick={(e) => e.stopPropagation()}>
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2 z-50"
-        >
-          &times;
-        </button>
-        <h2 className="text-xl font-bold mb-4" >update Product</h2>
+    <div
+      className=" inset-0 flex items-center justify-start w-full mb-10 mt-10 "
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-lg p-6 sm:w-full pb-10 sm:max-w-[80%] w-[100%] min-[80vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="text-xl font-bold mb-4">update Product</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <InputBox
               nameuse="Product Name"
               type="text"
-             // value={productName}
+              // value={productName}
               //placeholder="Enter product name"
               {...register('productName')}
               error={errors.productName?.message}
             />
             <div>
-              <label htmlFor="productCategory" className="mb-0 text-[14px] font-medium text-black/80">
+              <label
+                htmlFor="productCategory"
+                className="mb-0 text-[14px] font-medium text-black/80"
+              >
                 Product Category
               </label>
               <select
@@ -300,22 +316,28 @@ console.log('DATA.PROD',product)
                 disabled={status === 'loading'}
               >
                 {status === 'loading' ? (
-                  <option className="option-loading">Loading categories...</option>
-                ) : categories.length > 0 ? (
-                  categories.map(category => (
-                    <option 
-                    key={category.id} 
-                    value={category.id} 
-                    selected={category.id === product.productCategory}
-                  >
-                    {category.categoryName}
+                  <option className="option-loading">
+                    Loading categories...
                   </option>
+                ) : categories?.length > 0 ? (
+                  categories.map((category) => (
+                    <option
+                      key={category.id}
+                      value={category.id}
+                      selected={category.id === product.productCategory}
+                    >
+                      {category.categoryName}
+                    </option>
                   ))
                 ) : (
                   <option value="">No categories available</option>
                 )}
               </select>
-              {errors.productCategory && <p className="text-red-500 text-xs">{errors.productCategory.message}</p>}
+              {errors.productCategory && (
+                <p className="text-red-500 text-xs">
+                  {errors.productCategory.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -359,12 +381,13 @@ console.log('DATA.PROD',product)
               error={errors.stockLevel?.message}
             />
             <div>
-            
-              <label htmlFor="productPictures" className="block font-medium mb-1">
+              <label
+                htmlFor="productPictures"
+                className="block font-medium mb-1"
+              >
                 Product Pictures
               </label>
-             
-           
+
               <div className="flex items-center">
                 <input
                   type="file"
@@ -377,8 +400,8 @@ console.log('DATA.PROD',product)
                   htmlFor="productPictures"
                   className="cursor-pointer w-full"
                 >
-                  <div 
-                    className={`text-center p-2 rounded h-[40px] flex justify-center items-center ${errors.productPictures || uploadError ? 'border-red-500' : 'border-gray-400'} border`} 
+                  <div
+                    className={`text-center p-2 rounded h-[40px] flex justify-center items-center ${errors.productPictures || uploadError ? 'border-red-500' : 'border-gray-400'} border`}
                     style={{ position: 'relative', top: '-4px' }}
                   >
                     <span className="text-xl">+</span>
@@ -386,32 +409,45 @@ console.log('DATA.PROD',product)
                   </div>
                 </label>
               </div>
-              {uploadError && <p className="text-red-500 text-xs">{uploadError}</p>}
-              {errors.productPictures && <p className="text-red-500 text-xs">{errors.productPictures.message}</p>}
+              {uploadError && (
+                <p className="text-red-500 text-xs">{uploadError}</p>
+              )}
+              {errors.productPictures && (
+                <p className="text-red-500 text-xs">
+                  {errors.productPictures.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-wrap mt-4">
-           {isImageLoading?(
-              <div className='w-full flex flex-col h-[200px] items-center'>
-              <div className='w-full font-semibold'>{reuploadStatus}</div>
-              <div className="border-t-4 border-b-4 border-blue-900 rounded-full w-6 h-6 animate-spin m-auto"></div>
+            {isImageLoading ? (
+              <div className="w-full flex flex-col h-[200px] items-center">
+                <div className="w-full font-semibold">{reuploadStatus}</div>
+                <div className="border-t-4 border-b-4 border-blue-900 rounded-full w-6 h-6 animate-spin m-auto"></div>
               </div>
-            ):(
-            <>
-            {pictures.map((picture, index) => (
-              <div key={index} className="w-36 h-36 m-2 relative border group">
-                <img src={picture} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
-                <button
-                  type="button"
-                  className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={() => handleDeletePicture(index)}
-                >
-                  &times;
-                </button>
-              </div>
-            ))}
-            </>
-          )}
+            ) : (
+              <>
+                {pictures.map((picture, index) => (
+                  <div
+                    key={index}
+                    className="w-36 h-36 m-2 relative border group"
+                  >
+                    <img
+                      src={picture}
+                      alt={`Preview ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => handleDeletePicture(index)}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
           <div className="mb-4">
             <label htmlFor="description" className="block font-medium mb-1">
@@ -424,7 +460,11 @@ console.log('DATA.PROD',product)
               placeholder="Enter product description"
               rows={4}
             ></textarea>
-            {errors.description && <p className="text-red-500 text-xs">{errors.description.message}</p>}
+            {errors.description && (
+              <p className="text-red-500 text-xs">
+                {errors.description.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col md:flex-row justify-between">
             <button

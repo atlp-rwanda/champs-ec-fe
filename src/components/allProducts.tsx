@@ -12,8 +12,9 @@ export const ProductWithFilter = () => {
   ];
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storedToken = localStorage.getItem('token');
-      SetLocal(storedToken as any);
+      const storedToken: string | any = localStorage.getItem('profile');
+      const ifuser = JSON.parse(storedToken);
+      SetLocal(ifuser?.User?.Role.name as any);
     }
   }, []);
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,7 +33,7 @@ export const ProductWithFilter = () => {
       <div className="container mt-10 ">
         {/* Filter with search  */}
         <div className="flex sm:gap-5 mb-10 sm:ml-24 gap-1  ">
-          {locarstorage && (
+          {locarstorage === 'buyer' && (
             <>
               <button
                 className={buttonClass('Featured')}
@@ -62,7 +63,7 @@ export const ProductWithFilter = () => {
           </button>
         </div>
         <div className="flex  justify-between gap-2  sm:ml-24 items-center">
-          {locarstorage && (
+          {locarstorage === 'buyer' && (
             <>
               <div className="ml-2 w-[40%] sm:px-5 sm:py-3 border-2 sm:m-2 flex gap-4 sm:w-[210px] items-center">
                 <label htmlFor="" className="text-[9px] sm:text-sm ml-1">

@@ -1,10 +1,15 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import SideBar from "@/components/Side"
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query';
+import SideBar from '@/components/Side';
 import Provider from '@/app/providers';
 import Page from '@/app/products/page';
+import { useRouter } from 'next/navigation';
 
 const queryClient = new QueryClient();
 const ProductListTest = () => {
@@ -15,38 +20,46 @@ const ProductListTest = () => {
   return <div>{data}</div>;
 };
 
-describe('ProductList', () => {
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
 
+describe('ProductList', () => {
+  beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue({
+      push: jest.fn(),
+    });
+  });
   it('renders without crashing', async () => {
     const { findByText } = render(
-        <Provider>
-          <ProductListTest />
-        </Provider>
+      <Provider>
+        <ProductListTest />
+      </Provider>,
     );
     expect(await findByText('test')).toBeInTheDocument();
-});
-it('renders Page without crashing', async () => {
-  const { findByText } = render(
+  });
+  it('renders Page without crashing', async () => {
+    const { findByText } = render(
       <Provider>
         <Page />
-      </Provider>
-  );
-  expect(await findByText('All Products')).toBeInTheDocument();
-});
-it('renders single Page without crashing', async () => {
-  const { findByText } = render(
+      </Provider>,
+    );
+    expect(await findByText('All Products')).toBeInTheDocument();
+  });
+  it('renders single Page without crashing', async () => {
+    const { findByText } = render(
       <Provider>
         <Page />
-      </Provider>
-  );
-  expect(await findByText('All Products')).toBeInTheDocument();
-});
-it('should render productList', async ()=> {
-  const { getByText } = render(
-    <QueryClientProvider client={queryClient}>
-      <SideBar />
-    </QueryClientProvider>
-  );
-  expect(getByText('Filter Product')).toBeInTheDocument()
-})
+      </Provider>,
+    );
+    expect(await findByText('All Products')).toBeInTheDocument();
+  });
+  it('should render productList', async () => {
+    const { getByText } = render(
+      <QueryClientProvider client={queryClient}>
+        <SideBar />
+      </QueryClientProvider>,
+    );
+    expect(getByText('Filter Product')).toBeInTheDocument();
+  });
 });

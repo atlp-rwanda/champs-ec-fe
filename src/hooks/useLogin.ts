@@ -40,13 +40,18 @@ function useLogin() {
         return;
       }
       localStorage.setItem('token', res.data.token);
-      const profile = await request.get(`${URL}/users/profile`);
+      const profile: any = await request.get(`${URL}/users/profile`);
       const userData = JSON.stringify(profile);
-      localStorage.setItem('profile', userData);
 
-      await router.push('/');
+      localStorage.setItem('profile', userData);
+      if (profile?.User?.Role.name === 'admin') {
+        router.push('/dashboard');
+      } else {
+        router.push('/');
+      }
     } catch (error: any) {
       setLoading(false);
+      console.log(error);
       setErrorMessage(`Invalid Email or Password`);
       return;
     }

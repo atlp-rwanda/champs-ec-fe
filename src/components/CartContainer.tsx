@@ -22,7 +22,6 @@ import { handleCartInfoManipulation } from '@/hooks/userCart';
 import { usePayments } from '@/hooks/payment';
 import PopUpModels from './PopUpModels';
 
-
 const URL = process.env.URL;
 
 const CartContainer = (hideOverLay: any) => {
@@ -30,12 +29,14 @@ const CartContainer = (hideOverLay: any) => {
   const [isChanging, setIsChanging] = useState(false);
   const [currentCartItem, setCurrentCartItem] = useState('');
 
-  const { cart, allProduct, error, loading, deleteCartLoading } =
-    useAppSelector((state: RootState) => state.userCartData);
+  const { cart, error, loading, deleteCartLoading } = useAppSelector(
+    (state: RootState) => state.userCartData,
+  );
 
   const handleshow = hideOverLay;
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
+  const allProduct = JSON.parse(localStorage.getItem('productItem') || '');
   const carts = handleCartInfoManipulation(cart as IUSERCART, allProduct);
 
   const deletesingleCartItem = (id: string) => {
@@ -148,11 +149,12 @@ const CartContainer = (hideOverLay: any) => {
                 className="container bg-white w-full flex justify-evenly rounded-lg shadow-lg p-2 mb-4 text-[#000000]"
               >
                 <div className="w-[70px] h-[80px] flex items-center justify-center">
-                  <Image
+                  <img
                     src={prod.thumbnail}
                     alt={'product image'}
                     width={'70'}
                     height={'80'}
+                    onError={(e) => (e.currentTarget.src = '/product.png')}
                   />
                 </div>
                 <div className=" w-[100px] flex flex-col justify-center items-center overflow-hidden">

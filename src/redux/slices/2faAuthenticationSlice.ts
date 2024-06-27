@@ -25,6 +25,12 @@ export const handleOTPVerification:any = createAsyncThunk(
 
     try {
       const res = await axios.post(`${URL}/users/otp/${otpToken}`, { otp });
+      localStorage.setItem('token', res.data.token);
+      if (res.data.token) {
+        const profile = await request.get(`${URL}/users/profile`);
+        const userData = JSON.stringify(profile);
+        localStorage.setItem('profile', userData);
+      }
       return res.data.token;
     } catch (error: any) {
       return error.response.data;
@@ -43,7 +49,7 @@ export const resendOTPCode:any = createAsyncThunk(
       });
       // const res = await request.post(`/users/login`);
 
-      // return res.data.otpToken;
+      return res.data.otpToken;
     } catch (error: any) {
       const msg = 'Some thing went wrong please try again';
       return msg;

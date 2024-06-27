@@ -8,29 +8,29 @@ import reducer, {
 describe('updatePassword slice', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, { type: '' })).toEqual({
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     });
   });
 
   it('should handle updatePassword.pending', () => {
     const initialState: UpdatePasswordState = {
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     };
 
     const action = { type: updatePassword.pending.type };
     const state = reducer(initialState, action);
     expect(state).toEqual({
-      loading: true,
-      error: null,
+      loadings: true,
+      erro: null,
     });
   });
 
   it('should handle updatePassword.fulfilled', () => {
     const initialState: UpdatePasswordState = {
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     };
 
     const action = {
@@ -40,14 +40,14 @@ describe('updatePassword slice', () => {
 
     const state = reducer(initialState, action);
     expect(state).toEqual({
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     });
   });
   it('should handle updatePassword.fulfilled with error', () => {
     const initialState: UpdatePasswordState = {
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     };
 
     const action = {
@@ -59,15 +59,15 @@ describe('updatePassword slice', () => {
 
     const state = reducer(initialState, action);
     expect(state).toEqual({
-      loading: false,
-      error: 'incorrect old password',
+      loadings: false,
+      erro: 'incorrect old password',
     });
   });
 
   it('should handle updatePassword.rejected', () => {
     const initialState: UpdatePasswordState = {
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     };
 
     const action = {
@@ -77,22 +77,22 @@ describe('updatePassword slice', () => {
 
     const state = reducer(initialState, action);
     expect(state).toEqual({
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     });
   });
 
   it('should handle clearError', () => {
     const initialState: UpdatePasswordState = {
-      loading: false,
-      error: 'Some error',
+      loadings: false,
+      erro: 'Some error',
     };
 
     const action = { type: clearError.type };
     const state = reducer(initialState, action);
     expect(state).toEqual({
-      loading: false,
-      error: '',
+      loadings: false,
+      erro: '',
     });
   });
 });

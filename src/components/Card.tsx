@@ -20,26 +20,21 @@ function Card({
   id,
   reviews,
 }: Cards) {
-  
-const productId=id
+  const productId = id;
 
-const dispatch = useAppDispatch();
-const handleNewItem=()=>{
-
-dispatch(handleUserAddCart({productPrice,productId}));
-}
+  const dispatch = useAppDispatch();
+  const handleNewItem = () => {
+    dispatch(handleUserAddCart({ productPrice, productId }));
+  };
   return (
     <div className="w-full max-w-[80%] sm:max-w-48 sm:mb-10 min-w-[200px] mr-3  ml-0 my-3 sm:h-[17rem] h-[19rem] flex flex-col bg-white border border-gray-100 shadow relative">
       <div className="flex justify-center h-[180px]">
-        {productThumbnail && productThumbnail.length > 0 ? (
-          <img
-            src={productThumbnail}
-            alt="default image"
-            className="w-full h-[150px] text-[12px]"
-          />
-        ) : (
-          <img src="./force.png" alt={'no image found'} />
-        )}
+        <img
+          src={productThumbnail}
+          onError={(e) => (e.currentTarget.src = '/product.png')}
+          alt="default image"
+          className="w-full h-[150px] text-[12px] object-cover"
+        />
       </div>
       <div className="sm:px-4 flex flex-col gap-1">
         <h5 className="max-w-1xl sm:text-[12px] text-[30px] sm:text-left sm:mx-0  mx-3 w font-semibold tracking-tight text-black-900">
@@ -73,7 +68,12 @@ dispatch(handleUserAddCart({productPrice,productId}));
           <MdOutlineRemoveRedEye className="text-gray-700 mr-4 hover:text-blue-400 cursor-pointer" />
         </Link>
         <FaRegHeart className="text-gray-700 mr-4 hover:text-red-500 cursor-pointer" />
-        <MdOutlineShoppingCart className="text-gray-700 hover:text-green-500 cursor-pointer"  onClick={() =>{handleNewItem()}} />
+        <MdOutlineShoppingCart
+          className="text-gray-700 hover:text-green-500 cursor-pointer"
+          onClick={() => {
+            handleNewItem();
+          }}
+        />
       </div>
     </div>
   );

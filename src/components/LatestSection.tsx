@@ -31,7 +31,7 @@ export const LatestSection = () => {
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: -300,
+        left: -350,
         behavior: 'smooth',
       });
     }
@@ -40,14 +40,14 @@ export const LatestSection = () => {
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: 300,
+        left: 350,
         behavior: 'smooth',
       });
     }
   };
 
   return (
-    <div className="flex justify-center items-center flex-col mt-10 w-full">
+    <div className="flex justify-center items-center flex-col mt-10 w-full sm:pl-0 px-3">
       <div className="container mb-10 ">
         <h1 className="font-semibold text-2xl sm:ml-[-30px] pb-3">
           Latest Product
@@ -57,7 +57,7 @@ export const LatestSection = () => {
         ) : (
           <div
             ref={scrollContainerRef}
-            className=" flex sm:ml-20 overflow-x-auto space-x-1 hide-scrollbar"
+            className=" flex sm:ml-20 overflow-x-auto space-x-1 sm:gap-2 gap-5 hide-scrollbar overflow-hidden"
           >
             {data &&
               data.map((el: any, i: number) => (
