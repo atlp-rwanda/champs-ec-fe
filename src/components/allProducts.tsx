@@ -14,8 +14,7 @@ export const ProductWithFilter = () => {
   const router = useRouter();
   const Options = [
     { laber: 'All', value: 1 },
-    { laber: 'Rating', value: 2 },
-    { laber: 'wishes', value: 3 },
+    { laber: 'wishes', value: 3 }
   ];
 
   useEffect(() => {
@@ -82,24 +81,24 @@ export const ProductWithFilter = () => {
         <div className="flex sm:gap-5 mb-10 sm:ml-24 gap-1  ">
           {locarstorage === 'buyer' && (
             <>
-              <button
+              {/* <button
                 className={buttonClass('Featured')}
                 onClick={() => handleButtonClick('Featured')}
               >
-                Featured
-              </button>
+                Shoes
+              </button> */}
               <button
                 className={buttonClass('wishes')}
                 onClick={() => handleButtonClick('wishes')}
               >
                 wishes
               </button>
-              <button
+              {/* <button
                 className={buttonClass('Electronics')}
                 onClick={() => handleButtonClick('Electronics')}
               >
-                Electronics
-              </button>
+                Cars
+              </button> */}
             </>
           )}
           <button
