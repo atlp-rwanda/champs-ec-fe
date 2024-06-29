@@ -13,6 +13,7 @@ import CartContainer from './CartContainer';
 import { RootState } from '@/redux/store';
 import { useAppSelector } from '../redux/store';
 import { handleFetchUserCart } from '@/hooks/userCart';
+import Logout from '@/hooks/logout';
 
 const Header = () => {
   const { isOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
@@ -21,9 +22,9 @@ const Header = () => {
     (state: RootState) => state.userCartData,
   );
 
-  handleFetchUserCart();
+  const { mutate, pending } = Logout();
 
-  //const [cartItems, setCartItems]=useState(0);
+  handleFetchUserCart();
 
   const handleshow = () => {
     setShowmodal(!showlModal);
@@ -37,15 +38,13 @@ const Header = () => {
     const userData = JSON.parse(user as string);
     setUserdata(userData);
   }, []);
-  // console.log(userdata.User);
 
   const handleMenuToggle = () => {
     setViewmenu((prevState) => !prevState);
   };
-  const Logout = () => {
-    localStorage.clear();
 
-    setUserdata(null);
+  const logout = () => {
+    mutate();
   };
 
   return (
@@ -157,8 +156,11 @@ const Header = () => {
               <>
                 <div className="sm:flex gap-3 justify-center items-center hidden">
                   <img
-                    src={userdata.User.profileImage}
+                    src={userdata?.User?.profileImage}
                     alt="profile"
+                    onError={(e) => {
+                      e.currentTarget.src = '/unknown.jpg';
+                    }}
                     className="w-[40px] h-[40px] rounded-full bg-gray-700"
                   />
                   <div className="flex gap-0 flex-col">
@@ -172,12 +174,16 @@ const Header = () => {
                     >
                       {userdata.User.lastName} {userdata.User.firstName}
                     </a>
-                    <a
-                      className="text-black cursor-pointer hover:text-red-500"
-                      onClick={Logout}
-                    >
-                      Log Out
-                    </a>
+                    {pending ? (
+                      <div>loading ...</div>
+                    ) : (
+                      <a
+                        className="text-black cursor-pointer hover:text-red-500"
+                        onClick={logout}
+                      >
+                        Log Out
+                      </a>
+                    )}
                   </div>
                 </div>
               </>
