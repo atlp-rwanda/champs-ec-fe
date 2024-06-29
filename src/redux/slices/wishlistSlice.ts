@@ -1,9 +1,11 @@
+"use client"
+import { checkUserLoggedIn } from '@/components/isLogged';
 import request from '@/utils/axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const handleFetchUserWishes = async ():Promise<number>=>{
-    const token = localStorage.getItem('token');
-    if(token){
+    const check = checkUserLoggedIn();
+    if(check){
         const response:any = await request.get('/wishes');
         console.log('this is data from wishlist', response);
         if(response.status == 200){

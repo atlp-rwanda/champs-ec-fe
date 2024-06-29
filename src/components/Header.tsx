@@ -39,10 +39,10 @@ const Header = () => {
     (state: RootState) => state.wishlist
   )
   
-  const { isOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
+  const { isOrdersOverlayOpen, setIsOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
   const [activelink, setActivelink] = useState('home');
 
-  const { isWishlistOverlayOpen, toggleWishlistSlider } = WishlistOverlay();
+  const { isWishlistOverlayOpen, setIsWishlistOverlayOpen, toggleWishlistSlider } = WishlistOverlay();
   const [showlModal, setShowmodal] = useState(false);
 
   const [showCart, setShowCart] = useState(false);
@@ -53,11 +53,25 @@ const Header = () => {
     'cart' | 'notification' | null
   >(null);
 
+  const handleShowWishlist=()=>{
+    setIsOrdersOverlayOpen(false);
+    setOverlayComponent(null);
+    toggleWishlistSlider();
+  }
+  const handleShowOrders=()=>{
+    setIsWishlistOverlayOpen(false);
+    setOverlayComponent(null);
+    toggleOrdersSlider();
+  }
   const handleShowCart = () => {
+    setIsWishlistOverlayOpen(false);
+    setIsOrdersOverlayOpen(false);
     setOverlayComponent('cart');
   };
 
   const handleShowNotification = () => {
+    setIsWishlistOverlayOpen(false);
+    setIsOrdersOverlayOpen(false);
     setOverlayComponent('notification');
   };
 
@@ -122,7 +136,7 @@ const Header = () => {
                 </i>
                 <MdOutlineShoppingCart className="hover:bg-black text-white cursor-pointer z-20" />
               </span>
-               <span className='flex items-center mx-2  cursor-pointer' onClick={toggleWishlistSlider}>
+               <span className='flex items-center mx-2  cursor-pointer' onClick={handleShowWishlist}>
                 <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
                     {wishNumber}
                   </i>
@@ -173,7 +187,7 @@ const Header = () => {
                   <>
                     <li
                       className="text-black hover:text-blue-600"
-                      onClick={toggleOrdersSlider}
+                      onClick={handleShowOrders}
                     >
                       Order
                     </li>
@@ -223,7 +237,7 @@ const Header = () => {
               </li>
               <li
                 className={`${isOrdersOverlayOpen === true ? 'text-blue-600' : 'text-black'} font-normal hover:text-blue-600 cursor-pointer `}
-                onClick={toggleOrdersSlider}
+                onClick={handleShowOrders}
               >
                 Order
               </li>
@@ -326,8 +340,7 @@ const Header = () => {
         ) : (
           ''
         )}
-      </div>
-      {isWishlistOverlayOpen ? (
+        {isWishlistOverlayOpen ? (
           <WishlistContainer
             isWishlistOverlayOpen={isWishlistOverlayOpen}
             toggleWishlistSlider={toggleWishlistSlider}
@@ -335,6 +348,8 @@ const Header = () => {
         ) : (
           ''
         )}
+      </div>
+    
       {overlayComponent && (
         <SideBarOverlay handleOpenOverlay={handleCloseOverlay}>
           {overlayComponent === 'cart' && (
