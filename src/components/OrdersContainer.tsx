@@ -1,6 +1,6 @@
 import React from 'react';
 import BuyerOrdersList from './BuyerOrdersList';
-import OrdersOverlay from '@/hooks/ordersOverlay';
+
 interface OrdersContainerInterface{
     toggleOrdersSlider?:()=>void; 
     isOrdersOverlayOpen?:boolean;

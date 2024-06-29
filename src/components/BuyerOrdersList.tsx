@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import ReviewProduct from './ReviewProductPopup';
 import { useQuery } from "@tanstack/react-query";
-import requestAxios from '@/utils/axios';
+import request from '@/utils/axios';
 import {
   ColumnDef,
   flexRender,
@@ -37,7 +37,7 @@ const BuyerOrdersList = () => {
     const [orderId, setOrderId] = useState<string | null>(null);
     const { isLoading, refetch, error, data } = useQuery<any>({
         queryKey: ['BuyerOrdersList'],
-        queryFn: () => requestAxios.get('/orders'),
+        queryFn: () => request.get('/orders'),
     });
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
@@ -65,7 +65,7 @@ const BuyerOrdersList = () => {
           header: 'Price',
           accessorFn: row => row.Product.productPrice,
           cell: (row: any) => <>
-            <span> {row.row.original.Product.productPrice}</span> <span>{ row.row.original.Product.productCurrency}</span>
+            <span> {row.row.original.Product.productPrice.toLocaleString()}</span> <span>{ row.row.original.Product.productCurrency}</span>
           </>
         },
         {
@@ -162,6 +162,7 @@ const BuyerOrdersList = () => {
                         ))}
                       </tbody>
                     </table>
+                    {ordersData.length > 6 ? 
                     <div className='flex gap-2 w-full justify-center mt-5 py-5 cursor-pointer'>
                       < div className='flex gap-3' >
                         <BackButton handle={() => table.previousPage()} isDisabled={!table.getCanPreviousPage()} />
@@ -169,6 +170,7 @@ const BuyerOrdersList = () => {
                         < BackButton handle={() => table.nextPage()} isDisabled={!table.getCanNextPage()} rotate />
                       </div>
                     </div>
+                    :""}
                   </>
                 </div>
             </div >
