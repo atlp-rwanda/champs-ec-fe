@@ -91,7 +91,6 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
       console.log(result.message);
       onClose();
     } catch (error: any) {
-      console.error('Failed to create product:', error);
       let errorMessage = 'An unknown error occurred';
       if (error.response) {
         if (error.response.data && error.response.data.error) {

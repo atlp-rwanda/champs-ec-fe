@@ -1,8 +1,9 @@
 // BuyerProductView
+
 'use client';
 
 import React, { useState, useEffect } from "react";
-import Image from 'next/image';
+// import Image from 'next/image';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart } from 'react-icons/fa6';
 import { useParams } from 'next/navigation';
@@ -27,7 +28,7 @@ import request from "@/utils/axios";
 import { showToast } from "@/helpers/toast";
 import UpdateProductPopup from '@/components/Product/editProduct';
 import router from "next/router";
-import ConfirmDelete from "@/components/confirmDeletePopup";
+import ConfirmDelete from "@/components/confirmDeletePopup"
 
 function Page() {
   const { id } :any= useParams();
