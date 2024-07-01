@@ -1,9 +1,10 @@
 export interface Seller {
+  id?: string;
   firstName: string;
   lastName: string;
   profileImage: string;
-  email: string;
-  phone: string;
+  email?: string;
+  phone?: string;
 }
 export interface ReviewType {
   buyerId:string;

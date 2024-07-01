@@ -14,47 +14,39 @@ jest.mock('next/navigation', () => ({
   useParams: jest.fn(() => ({
     id: '1', // Mocking a product ID
   })),
-  
   useSearchParams: jest.fn(() => ({
     get: jest.fn(),
   })),
 }));
 
-describe('sellerProductView', () => {
-  console.log(
-    'should render test with t xxxxxxxxxxxxxxxxxxxxxxx in Seller product view ts',
-  );
-  it('renders the loading state', () => {
-    console.log(
-      'should render test with t xxxxxxxxxxxxxxxxxxxxxxx in Seller product it one ts',
-    );
+describe('Seller pages', () => {
+  it('renders the loading state for SellerDash', () => {
     render(
       <QueryClientProvider client={queryClient}>
         <SellerDash />
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
+    // Uncomment and update the assertion based on the actual content of SellerDash
     // expect(screen.getByText('Welcome to the seller dashboard')).toBeInTheDocument();
   });
+
   it('renders the "Seller products view" text', () => {
-    console.log(
-      'should render test with t xxxxxxxxxxxxxxxxxxxxxxx in Seller product it two ts',
-    );
     render(
       <QueryClientProvider client={queryClient}>
         <SellerProductView />
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
+    // Uncomment and update the assertion based on the actual content of SellerProductView
     // expect(screen.getByText('Seller products view')).toBeInTheDocument();
   });
-  it('renders the loading state', () => {
-    console.log(
-      'should render test with t xxxxxxxxxxxxxxxxxxxxxxx in Seller product it three ts',
-    );
+
+  it('renders the loading state for Page', () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Page />
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
+    // Uncomment and update the assertion based on the actual content of Page
     // expect(screen.getByText('Description:')).toBeInTheDocument();
   });
 });
