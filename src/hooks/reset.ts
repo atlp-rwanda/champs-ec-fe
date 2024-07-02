@@ -48,7 +48,11 @@ const ResetPassword = () => {
     } catch (error: any) {
       console.log('Error', error);
       setLoading(false);
-      setError(error.response.data.error);
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setErrorMessage('An error occurred while resetting the password.');
+      }
       setErrorMessage('Invalid Email');
       return;
     }

@@ -23,7 +23,7 @@ const Menus: MenuInterface[] = [
 
 function AdminDashboard() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const searchParams:any = useSearchParams()
   const [open, setOpen] = useState(false)
   const [display, setDisplay] = useState<JSX.Element | null>(null);
   const [menu, setMenus] = useState(Menus);

@@ -11,9 +11,10 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({
     push: jest.fn(),
   })),
-  useParams: () => ({
-    get: () => { }
-  }),
+  useParams: jest.fn(() => ({
+    id: '1', // Mocking a product ID
+  })),
+  
   useSearchParams: jest.fn(() => ({
     get: jest.fn(),
   }))

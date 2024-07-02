@@ -41,8 +41,9 @@ export const resendOTPCode = createAsyncThunk(
         email: localStorage.getItem('email'),
         password: localStorage.getItem('password'),
       });
+      // const res = await request.post(`/users/login`);
 
-      return res.data.otpToken;
+      // return res.data.otpToken;
     } catch (error: any) {
       const msg = 'Some thing went wrong please try again';
       return msg;

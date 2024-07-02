@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 const GoogleAuthPage: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const token = searchParams.get('token') || null;
+  const token = searchParams?.get('token') || null;
 
   useEffect(() => {
     if (token != null) {
