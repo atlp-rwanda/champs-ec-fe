@@ -30,7 +30,7 @@ const AssigningRole: React.FC<AssignRoleInterface> = ({ id, currentRole, refetch
         text: "Successfully Changed Role",
         icon: "success"
       });
-    },
+   },
   })
 
   const Assign = async () => {
