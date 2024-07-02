@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReviewProduct from './ReviewProductPopup';
 import { useQuery } from "@tanstack/react-query";
 import requestAxios from '@/utils/axios';
@@ -11,6 +11,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { BackButton, ReviewButton } from './Button';
+import TruckOrder from './TruckOrder';
 
 type ordersTable = {
     No: number;
@@ -31,18 +32,20 @@ type PaginationState = {
 }
 const BuyerOrdersList = () => {
     const [isReviewProductModalOpen, setIsReviewProductModalOpen] = useState(false);
+    const [isTruckOrderStatusModalOpen, setIsTruckOrderStatusModalOpen] = useState(false);
     const [productId, setProductId] = useState<string | null>(null);
-
+    const [orderId, setOrderId] = useState<string | null>(null);
     const { isLoading, refetch, error, data } = useQuery<any>({
         queryKey: ['BuyerOrdersList'],
         queryFn: () => requestAxios.get('/orders'),
     });
-
+    console.log("----------------------------------------------------------------------",data)
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: 7
       })
       var ordersData = data?.orders ?? [];
+      console.log("----------------------------------------------------------------------",ordersData)
       const columns: ColumnDef<ordersTable>[] = [
         {
           header: 'No',
@@ -54,6 +57,7 @@ const BuyerOrdersList = () => {
           accessorFn: row => row.Product.productName,
           cell: (val: any) => <span> {val.getValue()} </span>
         },
+         
         // {
         //   header: 'Stock Level',
         //   accessorFn: row => row.stockLevel,
@@ -86,6 +90,7 @@ const BuyerOrdersList = () => {
                 }
               <ReviewButton
                 name="Details"
+                handle={() => handleOpenTruckOrdePopup(row.row.original.id)}
                 className="btn-bg-blue px-4 py-1.5 text-[13px]"
               />
             </div>
@@ -102,15 +107,26 @@ const BuyerOrdersList = () => {
           pagination
         }
     })
-    const handleOpenReviewPopup = (productId: string) => {
-        setProductId(productId);
-        setIsReviewProductModalOpen(true);
+    const handleOpenTruckOrdePopup = (orderId: string) => {
+       setOrderId(orderId);
+       setIsTruckOrderStatusModalOpen(true);
     };
+
+    const handleOpenReviewPopup  = (productId: string) => {
+      setProductId(productId);
+      setIsReviewProductModalOpen(true);
+  };
+
 
     const handleClosePopup = () => {
         setIsReviewProductModalOpen(false);
         setProductId(null);
     };
+
+  const handleCloseTruckOrderPopup=()=>{
+       setOrderId(null);
+       setIsTruckOrderStatusModalOpen(false);
+  }
     return (
         <>
             <div className='w-[100%] block w-[100%]'>
@@ -161,6 +177,9 @@ const BuyerOrdersList = () => {
             {isReviewProductModalOpen &&
                 <ReviewProduct id={productId} isOpen={isReviewProductModalOpen} handleClose={handleClosePopup} refetch={refetch}/>
             }
+            {isTruckOrderStatusModalOpen && 
+            <TruckOrder id={orderId} isOpen={isTruckOrderStatusModalOpen} handleClose={handleCloseTruckOrderPopup}/>
+          }
         </>
     );
 };

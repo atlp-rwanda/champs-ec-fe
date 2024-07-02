@@ -10,7 +10,7 @@ const config: Config = {
   testEnvironment: 'jsdom',
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  collectCoverageFrom: ['src/**'],
+  collectCoverageFrom: ['src/**', '!src/app/products/[id]/page.tsx'],
   coveragePathIgnorePatterns: ['src/components/', 'src/types/'],
   coverageReporters: ['json-summary', 'text', 'lcov'],
   preset: 'ts-jest',

@@ -10,6 +10,9 @@ import auth from "./slices/authSlice";
 import productsAddReducers from "./slices/productSlice"; 
 import { welcomeReducer } from './slices/welcomeSlice';
 import UpdateProductSlice from './slices/UpdateProductSlice';
+import profileReducer from './slices/profileSlice';
+
+import userProfileSlice from '@/redux/slices/profileSlice';
 
 
 
@@ -19,7 +22,9 @@ const rootReducer = combineReducers({
   sellerOTP: twoFactorAuthSlice,
   updatePassword: updatePasswordReducer,
   userCartData:userCartSlice,
-  UpdateProducts:UpdateProductSlice
+  UpdateProducts:UpdateProductSlice,
+  profileReducer,
+  userProfile: userProfileSlice, 
 
 });
 

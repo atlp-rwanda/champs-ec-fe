@@ -1,12 +1,16 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, ChangeEvent } from 'react';
+
 interface Properties {
   nameuse?: string;
   type: string;
   value?:string;
   placeholder?: string;
   error?: string;
+  name?: string;  // Now optional
  
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
+
 const InputBox = forwardRef<HTMLInputElement, Properties>(
   ({ nameuse, type, placeholder, error, ...rest }, ref) => {
     return (
@@ -24,5 +28,7 @@ const InputBox = forwardRef<HTMLInputElement, Properties>(
     );
   },
 );
+
 InputBox.displayName = 'InputBox';
+
 export default InputBox;

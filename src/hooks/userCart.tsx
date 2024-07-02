@@ -10,23 +10,35 @@ import {
   IUSERCART,
   handleCartCount,
 } from '@/redux/slices/userCartSlice';
+import { useEffect, useState } from 'react';
 const URL = process.env.URL;
 
 // fetch user cart initial ---------------------------------------------------------------------
 
 export const handleFetchUserCart = () => {
+  const [userdata, setUserdata] = useState<any | null>(null);
+  useEffect(() => {
+    const user = localStorage.getItem('profile');
+    const userData = JSON.parse(user as string);
+
+    setUserdata(userData);
+  }, []);
   const dispatch = useDispatch();
+
   const { data, error, isLoading } = useQuery({
     queryKey: ['carts'],
     queryFn: async () => {
       noStore();
       try {
-        const result: any = await request.get(`/carts`);
+        let result: any;
+        if(userdata){
+        result = await request.get(`/carts`);
+        }
         // console.log("-----------------------------------------------------------",result)
         if (result.cart) {
           localStorage.setItem('productCart', JSON.stringify(result.cart));
         }
-        dispatch(handleCartCount(result));
+       dispatch(handleCartCount(result));
 
         return result;
       } catch (error: any) {

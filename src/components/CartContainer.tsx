@@ -12,14 +12,14 @@ import {
 import trashImage from '../../public/delete.png';
 import upAllow from '../../public/upperArrow.png';
 import downAllow from '../../public/lowerArrow.png';
-import backAllow from '../../public/cartAllow.png'
+import backAllow from '../../public/cartAllow.png';
 import shooes from '../../public/force.png';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { useMutation } from '@tanstack/react-query';
 import { showToast } from '@/helpers/toast';
 import Image from 'next/image';
 import { handleCartInfoManipulation } from '@/hooks/userCart';
-import request from '@/utils/axios';
+
 
 const URL = process.env.URL;
 
@@ -106,20 +106,21 @@ const CartContainer = (hideOverLay: any) => {
     dispatch(handleRemoveAllCart());
   };
 
-  function formatNumber(cartPrice:number) {
+  function formatNumber(cartPrice: number) {
     return cartPrice.toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
-}
+  }
   return (
     <div className="flex flex-col h-full justify-center w-full bg-[#F6F6F6] overflow-y-auto">
       <div className="flex gap-4 sm:mb-4  px-2 md:px-10">
         <Image
           src={backAllow}
-          alt=''
+          alt=""
           className="w-8 h-8"
-          width={'4'} height={'4'}
+          width={'4'}
+          height={'4'}
           onClick={handleshow.hideOverLay}
         />
         <h3 className="w-full text-left font-semibold text-[#000] text-2xl">
@@ -234,11 +235,11 @@ const CartContainer = (hideOverLay: any) => {
               <span>Total Price</span>
               <span>{formatNumber(cart?.totalPrice as number)} RWF</span>
             </div>
-            
-              <div className="w-full flex items-end">
+
+            <div className="w-full flex items-end">
               {loading ? (
-              <div className="border-t-4 border-b-4 border-blue-900 rounded-full w-6 h-6 animate-spin m-auto"></div>
-            ) : (
+                <div className="border-t-4 border-b-4 border-blue-900 rounded-full w-6 h-6 animate-spin m-auto"></div>
+              ) : (
                 <button
                   className={`w-1/2 h-[40px] bg-primaryBlue  text-white flex justify-center items-center text-[20px] ${loading || carts.length == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                   onClick={() => {
@@ -247,14 +248,13 @@ const CartContainer = (hideOverLay: any) => {
                 >
                   Clear All
                 </button>
-                )}
-                <button
-                  className={`w-1/2 h-[40px] bg-[#71C154] text-white flex justify-center items-center text-[20px] ${loading || carts.length == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                >
-                  Place Order
-                </button>
-              </div>
-            
+              )}
+              <button
+                className={`w-1/2 h-[40px] bg-[#71C154] text-white flex justify-center items-center text-[20px] ${loading || carts.length == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              >
+                Place Order
+              </button>
+            </div>
           </div>
         </div>
       ) : (

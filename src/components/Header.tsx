@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart, FaRegBell } from 'react-icons/fa6';
@@ -23,7 +24,6 @@ const Header = () => {
   );
 
   const { mutate, pending } = Logout();
-
   handleFetchUserCart();
 
   const handleshow = () => {
@@ -36,6 +36,7 @@ const Header = () => {
   useEffect(() => {
     const user = localStorage.getItem('profile');
     const userData = JSON.parse(user as string);
+
     setUserdata(userData);
   }, []);
 
@@ -55,21 +56,29 @@ const Header = () => {
             <Image src={logo} alt={'logo'} width={100} height={100} />
           </Link>
           <div className="flex gap-5 justify-center items-center">
-            <span
-              className="flex items-center"
-              onClick={() => setShowmodal(!showlModal)}
-            >
-              <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
-                {cart?.product.length}
-              </i>
-              <MdOutlineShoppingCart className="hover:bg-black text-white cursor-pointer z-20" />
-            </span>
-            <FaRegHeart className="hover:bg-black text-white cursor-pointer" />
-            <FaRegBell className="hover:bg-black text-white cursor-pointer" />
-            <IoMdMenu
-              className="text-white text-2xl cursor-pointer sm:hidden  block"
-              onClick={handleMenuToggle}
-            />
+            {userdata && userdata.User.Role.name === 'buyer' && (
+              <span
+                className="flex items-center"
+                onClick={() => setShowmodal(!showlModal)}
+              >
+                <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
+                  {cart?.product.length}
+                </i>
+                <MdOutlineShoppingCart className="hover:bg-black text-white cursor-pointer z-20" />
+              </span>
+            )}
+            {userdata ? (
+              <>
+                <FaRegHeart className="hover:bg-black text-white cursor-pointer" />
+                <FaRegBell className="hover:bg-black text-white cursor-pointer" />
+                <IoMdMenu
+                  className="text-white text-2xl cursor-pointer sm:hidden  block"
+                  onClick={handleMenuToggle}
+                />
+              </>
+            ) : (
+              ''
+            )}
           </div>
           {viewMenu && (
             <div className="absolute duration-200 bg-gray-200 h-[200px] w-[70%] top-[76px] right-0 sm:hidden block">
@@ -88,7 +97,12 @@ const Header = () => {
                     Products
                   </Link>
                 </li>
-
+                <li
+                  className="text-black hover:text-blue-600"
+                  onClick={toggleOrdersSlider}
+                >
+                  Order
+                </li>
                 {(userdata.User.Role.name === 'seller' ||
                   userdata.User.Role.name === 'admin') && (
                   <li className="text-black hover:text-blue-600">
@@ -126,19 +140,11 @@ const Header = () => {
                   Products
                 </Link>
               </li>
-              <li className="text-black hover:text-blue-600">
-                <Link href="/reservation">Reservation</Link>
-              </li>
               <li
                 className="text-black hover:text-blue-600"
                 onClick={toggleOrdersSlider}
               >
                 Order
-              </li>
-              <li className="text-black hover:text-blue-600">
-                <Link href="/admin" className="">
-                  Admin
-                </Link>
               </li>
             </ul>
           </nav>
@@ -155,14 +161,14 @@ const Header = () => {
             {userdata && (
               <>
                 <div className="sm:flex gap-3 justify-center items-center hidden">
-                  <img
-                    src={userdata?.User?.profileImage}
-                    alt="profile"
-                    onError={(e) => {
-                      e.currentTarget.src = '/unknown.jpg';
-                    }}
-                    className="w-[40px] h-[40px] rounded-full bg-gray-700"
-                  />
+                  
+                <Link href="/profile">
+  <img
+    src={userdata.User.profileImage}
+    alt="profile"
+    className="w-[40px] h-[40px] rounded-full bg-gray-700 cursor-pointer"
+  />
+</Link>
                   <div className="flex gap-0 flex-col">
                     <a
                       href={
