@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import { MdOutlineShoppingCart } from 'react-icons/md';
 import { FaRegHeart, FaRegBell } from 'react-icons/fa6';
@@ -160,14 +161,14 @@ const Header = () => {
             {userdata && (
               <>
                 <div className="sm:flex gap-3 justify-center items-center hidden">
-                  <img
-                    src={userdata?.User?.profileImage}
-                    alt="profile"
-                    onError={(e) => {
-                      e.currentTarget.src = '/unknown.jpg';
-                    }}
-                    className="w-[40px] h-[40px] rounded-full bg-gray-700"
-                  />
+                  
+                <Link href="/profile">
+  <img
+    src={userdata.User.profileImage}
+    alt="profile"
+    className="w-[40px] h-[40px] rounded-full bg-gray-700 cursor-pointer"
+  />
+</Link>
                   <div className="flex gap-0 flex-col">
                     <a
                       href={
