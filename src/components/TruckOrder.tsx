@@ -86,7 +86,7 @@ const TruckOrder: React.FC<any> = ({ id, isOpen, handleClose }) => {
               <h1 className="text-[18px]">
                 From{' '}
                 <span className="font-bold">
-                {orderData && orderData.Product.seller.firstName}{' '}
+                 {orderData && orderData.Product.seller.firstName}{' '} 
                 {orderData && orderData.Product.seller.lastName}
                 </span>{' '}
                 at {' '} {orderData && orderData.Product.seller.billingAddress}

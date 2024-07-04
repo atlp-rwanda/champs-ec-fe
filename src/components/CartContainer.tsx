@@ -19,6 +19,8 @@ import { useMutation } from '@tanstack/react-query';
 import { showToast } from '@/helpers/toast';
 import Image from 'next/image';
 import { handleCartInfoManipulation } from '@/hooks/userCart';
+import { usePayments } from '@/hooks/payment';
+import PopUpModels from './PopUpModels';
 
 
 const URL = process.env.URL;
@@ -40,6 +42,7 @@ const CartContainer = (hideOverLay: any) => {
     setCurrentCartItem(id);
     dispatch(handleRemoveItemInCart(id));
   };
+  const {  handlePayment} = usePayments();
 
   const handleIncreaseCartItem = async (id: string) => {
     const updatedItems = carts;
@@ -249,17 +252,20 @@ const CartContainer = (hideOverLay: any) => {
                   Clear All
                 </button>
               )}
-              <button
-                className={`w-1/2 h-[40px] bg-[#71C154] text-white flex justify-center items-center text-[20px] ${loading || carts.length == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-              >
-                Place Order
-              </button>
+       <button
+        className={`w-1/2 h-[40px] bg-[#71C154] text-white flex justify-center items-center text-[20px] ${loading || carts.length === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+        onClick={handlePayment}
+        disabled={loading || carts.length === 0}
+      >
+        Place Order
+      </button>
             </div>
           </div>
         </div>
       ) : (
         ''
       )}
+   
     </div>
   );
 };
