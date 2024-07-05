@@ -19,16 +19,16 @@ const config: Config = {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '^swiper/react$': '<rootDir>/__mocks__/swiper-react.js',
     '^@/(.*)$': '<rootDir>/src/$1',
-     'swiper/css': 'swiper/swiper.min.css'
+    'swiper/css': 'swiper/swiper.min.css',
   },
   transformIgnorePatterns: [
     'node_modules/(?!(swiper|another-module-to-transform)/)',
-    'node_modules/(?!(swiper|ssr-window|dom7)/)'
+    'node_modules/(?!(swiper|ssr-window|dom7)/)',
   ],
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.(js|jsx)$': 'babel-jest',
-     '^.+\\.tsx?$': 'babel-jest'
+    '^.+\\.tsx?$': 'babel-jest',
   },
 };
 

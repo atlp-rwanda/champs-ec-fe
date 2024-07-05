@@ -1,7 +1,7 @@
-"use client";
+'use client';
 import React, { useEffect, useState } from 'react';
 import { MdOutlineShoppingCart } from 'react-icons/md';
-import { FaRegHeart, FaRegBell } from 'react-icons/fa6';
+import { FaRegHeart } from 'react-icons/fa6';
 import { IoMdMenu } from 'react-icons/io';
 import { VscAccount } from 'react-icons/vsc';
 import logo from '../../public/logo.svg';
@@ -15,10 +15,33 @@ import { RootState } from '@/redux/store';
 import { useAppSelector } from '../redux/store';
 import { handleFetchUserCart } from '@/hooks/userCart';
 import Logout from '@/hooks/logout';
+import NotificationIcon from './ui-components/NotificationIcon';
+import Notification from './ui-components/Notification';
 
 const Header = () => {
   const { isOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
+
   const [showlModal, setShowmodal] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+
+  const [showNotification, setShowNotification] = useState(false);
+
+  const [overlayComponent, setOverlayComponent] = useState<
+    'cart' | 'notification' | null
+  >(null);
+
+  const handleShowCart = () => {
+    setOverlayComponent('cart');
+  };
+
+  const handleShowNotification = () => {
+    setOverlayComponent('notification');
+  };
+
+  const handleCloseOverlay = () => {
+    setOverlayComponent(null);
+  };
+
   const { allProduct, cart } = useAppSelector(
     (state: RootState) => state.userCartData,
   );
@@ -29,6 +52,16 @@ const Header = () => {
   const handleshow = () => {
     setShowmodal(!showlModal);
   };
+  // //const [cartItems, setCartItems]=useState(0);
+
+  // const handleshow = () => {
+  //   setShowmodal(!showlModal);
+  // };
+
+  // const handleshowCart = () => {
+  //   setShowmodal(!showlModal);
+  //   setShowCart(!showCart);
+  // };
 
   const [viewMenu, setViewmenu] = useState(false);
   const [userdata, setUserdata] = useState<any | null>(null);
@@ -57,10 +90,7 @@ const Header = () => {
           </Link>
           <div className="flex gap-5 justify-center items-center">
             {userdata && userdata.User.Role.name === 'buyer' && (
-              <span
-                className="flex items-center"
-                onClick={() => setShowmodal(!showlModal)}
-              >
+              <span className="flex items-center" onClick={handleShowCart}>
                 <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
                   {cart?.product.length}
                 </i>
@@ -69,8 +99,8 @@ const Header = () => {
             )}
             {userdata ? (
               <>
+                <NotificationIcon toggleNotification={handleShowNotification} />
                 <FaRegHeart className="hover:bg-black text-white cursor-pointer" />
-                <FaRegBell className="hover:bg-black text-white cursor-pointer" />
                 <IoMdMenu
                   className="text-white text-2xl cursor-pointer sm:hidden  block"
                   onClick={handleMenuToggle}
@@ -161,14 +191,13 @@ const Header = () => {
             {userdata && (
               <>
                 <div className="sm:flex gap-3 justify-center items-center hidden">
-                  
-                <Link href="/profile">
-  <img
-    src={userdata.User.profileImage}
-    alt="profile"
-    className="w-[40px] h-[40px] rounded-full bg-gray-700 cursor-pointer"
-  />
-</Link>
+                  <Link href="/profile">
+                    <img
+                      src={userdata.User.profileImage}
+                      alt="profile"
+                      className="w-[40px] h-[40px] rounded-full bg-gray-700 cursor-pointer"
+                    />
+                  </Link>
                   <div className="flex gap-0 flex-col">
                     <a
                       href={
@@ -205,9 +234,14 @@ const Header = () => {
           ''
         )}
       </div>
-      {showlModal && (
-        <SideBarOverlay handleOpenOverlay={handleshow}>
-          <CartContainer hideOverLay={handleshow} />
+      {overlayComponent && (
+        <SideBarOverlay handleOpenOverlay={handleCloseOverlay}>
+          {overlayComponent === 'cart' && (
+            <CartContainer hideOverLay={handleCloseOverlay} />
+          )}
+          {overlayComponent === 'notification' && (
+            <Notification toggleNotification={handleCloseOverlay} />
+          )}
         </SideBarOverlay>
       )}
     </>
