@@ -1,5 +1,19 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from 'react'
+import request from '@/utils/axios';
+
+
+
+
 function Order() {
+    // const [orderss, setOrders] = useState<Orders[]>([]);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const response: any = await request.get('/orders');
+    //         setOrders(response.orders);
+    //     };
+    //     fetchData();
+    // }, [])
     const orders: any = [
         {
             name: "Sneakers N12",
@@ -14,6 +28,9 @@ function Order() {
             desc: "tkacheanton dress"
         }
     ]
+    useEffect(() => {
+        
+    }, [])
     return (
         <div className='bg-white shadow-md rounded-lg pl-10 pb-4'>
             <div className='w-[100%]  py-4 '>

@@ -18,7 +18,7 @@ const initialState: ISELLEROTP = {
   isAuthenticated: false,
 };
 
-export const handleOTPVerification = createAsyncThunk(
+export const handleOTPVerification:any = createAsyncThunk(
   'auth/otp',
   async (otp: string) => {
     const otpToken = localStorage.getItem('token') || '';
@@ -32,7 +32,7 @@ export const handleOTPVerification = createAsyncThunk(
   },
 );
 
-export const resendOTPCode = createAsyncThunk(
+export const resendOTPCode:any = createAsyncThunk(
   'auth/resendOTP',
   async (otp: string) => {
     // const otpToken = localStorage.getItem('token') || "";

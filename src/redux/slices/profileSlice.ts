@@ -30,7 +30,7 @@ const initialState: UserProfileState = {
   error: null,
 };
 
-export const getUserProfile = createAsyncThunk('userProfile/getProfile', async (_, { rejectWithValue }) => {
+export const getUserProfile:any = createAsyncThunk('userProfile/getProfile', async (_, { rejectWithValue }) => {
   try {
     const response: any = await request.get('/users/profile');
     return response;

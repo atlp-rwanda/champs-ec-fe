@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect } from 'react';
-import { User, Cake } from 'lucide-react';
+import { User, Cake, Award } from 'lucide-react';
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
 import { getUserProfile } from '@/redux/slices/profileSlice';
+import request from '@/utils/axios';
 
 function About() {
     const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +18,8 @@ function About() {
         };
         fetchData();
     }, [dispatch]);
+
+  
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
