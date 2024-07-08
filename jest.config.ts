@@ -30,6 +30,7 @@ const config: Config = {
     '^.+\\.(js|jsx)$': 'babel-jest',
     '^.+\\.tsx?$': 'babel-jest',
   },
+  testTimeout: 10000,
 };
 
 export default createJestConfig(config);

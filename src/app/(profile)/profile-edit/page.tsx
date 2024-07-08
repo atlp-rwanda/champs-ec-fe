@@ -212,7 +212,7 @@ const UserProfileForm: React.FC = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                   <button type="button" className="w-full sm:w-1/2 bg-white text-gray-700 border border-gray-300 px-16 py-2 rounded hover:bg-gray-100 transition duration-300">
-                    Cancel
+                    <a href="/profile">Cancel</a>
                   </button>
                   <button
                     type="submit"

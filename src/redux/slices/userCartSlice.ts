@@ -46,7 +46,7 @@ const initialState: InitialCart = {
 
 // adding new item in user cart ------------------------------------------------------------------------
 
-export const handleUserAddCart = createAsyncThunk(
+export const handleUserAddCart:any = createAsyncThunk(
   'userAddCart',
   async (payload: AddToCartPayload, { rejectWithValue }) => {
     try {
@@ -102,7 +102,7 @@ export const handleUserAddCart = createAsyncThunk(
 
 // handle change item quantinty in cart -------------------------------------------------------------------------
 
-export const handleChangeCartQuantity = createAsyncThunk(
+export const handleChangeCartQuantity:any = createAsyncThunk(
   'updateUserCart',
   async (payload: AddToCartPayload,{rejectWithValue}) => {
     const product: CARTINT = {
@@ -136,7 +136,7 @@ export const handleChangeCartQuantity = createAsyncThunk(
 
 // handle remove single item in cart ----------------------------------------------------------------------------
 
-export const handleRemoveItemInCart = createAsyncThunk(
+export const handleRemoveItemInCart:any = createAsyncThunk(
   'deleteSingleItemInCart',
   async (id:string,{rejectWithValue}) => {
     try{ 
@@ -164,7 +164,7 @@ export const handleRemoveItemInCart = createAsyncThunk(
 
 // handle remove all items in cart----------------------------------------------------
 
-export const handleRemoveAllCart = createAsyncThunk(
+export const handleRemoveAllCart:any = createAsyncThunk(
   'deleteUserCart',
   async () => {
     const items: CARTINT[] = [];
