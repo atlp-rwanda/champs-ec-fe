@@ -171,6 +171,9 @@ body {}
   opacity: 1;
 }
 
+.mySwiper4 .swiper-slide-thumb-active {
+  opacity: 1;
+}
 .swiper-slide img {
   display: block;
   width: 100%;
