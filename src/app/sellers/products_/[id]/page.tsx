@@ -88,8 +88,8 @@ function Page() {
       
       setPopupOpen(true)
      // console.log(res)
-      console.log('id',id)
-      console.log(res.product)
+      // console.log('id',id)
+      // console.log(res.product)
      // return res.data
 
     }

@@ -29,6 +29,7 @@ import Button from '@/components/Button';
 import { averageReviews } from '@/utils/averageReviews';
 import { useAppDispatch } from '@/redux/store';
 import { handleUserAddCart } from '@/redux/slices/userCartSlice';
+//import StripeProvider from '@/components/StripeProvider';
 
 function Page() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -73,6 +74,7 @@ function Page() {
 
   return (
     <div>
+     {/* // <StripeProvider> */}
       <Header />
       <div className="w-full mb-5 mt-5 flex flex-col justify-center items-center">
         <div className="w-2/3 flex flex-col justify-center items-center gap-5">
@@ -210,6 +212,7 @@ function Page() {
         </div>
       </div>
       <Footer />
+      {/* </StripeProvider> */}
     </div>
   );
 }
