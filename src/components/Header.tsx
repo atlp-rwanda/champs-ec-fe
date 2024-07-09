@@ -1,8 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { MdOutlineShoppingCart } from 'react-icons/md';
-import { FaRegHeart } from 'react-icons/fa6';
-import { IoMdMenu } from 'react-icons/io';
+import {
+  MdDashboard,
+  MdOutlineLogout,
+  MdOutlineShoppingCart,
+} from 'react-icons/md';
+import { CgProfile } from 'react-icons/cg';
+import { FaRegHeart, FaRegBell } from 'react-icons/fa6';
+import { IoIosArrowDropdown, IoMdMenu } from 'react-icons/io';
 import { VscAccount } from 'react-icons/vsc';
 import logo from '../../public/logo.svg';
 import Image from 'next/image';
@@ -18,6 +23,15 @@ import Logout from '@/hooks/logout';
 import NotificationIcon from './ui-components/NotificationIcon';
 import Notification from './ui-components/Notification';
 
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem,
+  Button,
+} from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 const Header = () => {
   const { isOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
 
@@ -45,42 +59,34 @@ const Header = () => {
   const { allProduct, cart } = useAppSelector(
     (state: RootState) => state.userCartData,
   );
-
+  const [dropdownShow, setDropDownShow] = useState(false);
   const { mutate, pending } = Logout();
   handleFetchUserCart();
-
+  const router = useRouter();
   const handleshow = () => {
     setShowmodal(!showlModal);
   };
-  // //const [cartItems, setCartItems]=useState(0);
-
-  // const handleshow = () => {
-  //   setShowmodal(!showlModal);
-  // };
-
-  // const handleshowCart = () => {
-  //   setShowmodal(!showlModal);
-  //   setShowCart(!showCart);
-  // };
-
   const [viewMenu, setViewmenu] = useState(false);
   const [userdata, setUserdata] = useState<any | null>(null);
-
   useEffect(() => {
     const user = localStorage.getItem('profile');
     const userData = JSON.parse(user as string);
-
     setUserdata(userData);
   }, []);
-
   const handleMenuToggle = () => {
     setViewmenu((prevState) => !prevState);
   };
-
   const logout = () => {
     mutate();
   };
-
+  const dropDownShowEvent = (open: boolean) => {
+    setDropDownShow(open);
+  };
+  const ProfileShow = () => {
+    return userdata.User.Role.name == 'buyer'
+      ? router.push('/profile')
+      : router.push('/dashboard');
+  };
   return (
     <>
       <div className="sticky top-0 z-50 w-full border  ">
@@ -88,10 +94,10 @@ const Header = () => {
           <Link href="/">
             <Image src={logo} alt={'logo'} width={100} height={100} />
           </Link>
-          <div className="flex gap-5 justify-center items-center">
+          <div className="flex gap-5 justify-center items-center ">
             {userdata && userdata.User.Role.name === 'buyer' && (
               <span className="flex items-center" onClick={handleShowCart}>
-                <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
+                <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative  top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
                   {cart?.product.length}
                 </i>
                 <MdOutlineShoppingCart className="hover:bg-black text-white cursor-pointer z-20" />
@@ -99,25 +105,28 @@ const Header = () => {
             )}
             {userdata ? (
               <>
-                <NotificationIcon toggleNotification={handleShowNotification} />
-                <FaRegHeart className="hover:bg-black text-white cursor-pointer" />
-                <IoMdMenu
-                  className="text-white text-2xl cursor-pointer sm:hidden  block"
-                  onClick={handleMenuToggle}
-                />
+                <div className="mb-4 mx-4 ">
+                  <NotificationIcon
+                    toggleNotification={handleShowNotification}
+                  />
+                </div>
+                <div>
+                  <FaRegHeart className="hover:bg-black text-white cursor-pointer" />
+                </div>
               </>
             ) : (
               ''
             )}
+            <IoMdMenu
+              className="text-white text-2xl cursor-pointer sm:hidden  block"
+              onClick={handleMenuToggle}
+            />
           </div>
           {viewMenu && (
             <div className="absolute duration-200 bg-gray-200 h-[200px] w-[70%] top-[76px] right-0 sm:hidden block">
               <ul className="w-full flex flex-col gap-3 justify-center items-center mt-2">
                 <li className="text-black hover:text-blue-600">
                   <Link href="/">Home</Link>
-                </li>
-                <li className="text-black hover:text-blue-600">
-                  <Link href="/messages">Messages</Link>
                 </li>
                 <li>
                   <Link
@@ -127,28 +136,47 @@ const Header = () => {
                     Products
                   </Link>
                 </li>
-                <li
-                  className="text-black hover:text-blue-600"
-                  onClick={toggleOrdersSlider}
-                >
-                  Order
-                </li>
-                {(userdata.User.Role.name === 'seller' ||
-                  userdata.User.Role.name === 'admin') && (
-                  <li className="text-black hover:text-blue-600">
-                    <Link href="/admin" className="">
-                      Admin
+                {userdata?.User.Role.name === 'seller' ||
+                userdata?.User.Role.name === 'admin' ? (
+                  <>
+                    <li className="text-black hover:text-blue-600">
+                      <Link href="/dashboard" className="">
+                        Admin
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li
+                      className="text-black hover:text-blue-600"
+                      onClick={toggleOrdersSlider}
+                    >
+                      Order
+                    </li>
+                    <li>
+                      <Link
+                        href="/profile"
+                        className="text-black hover:text-blue-600"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {userdata ? (
+                  <li onClick={logout} className="text-red-500 font-semibold">
+                    LogOut
+                  </li>
+                ) : (
+                  <li>
+                    <Link
+                      href="/auth/login"
+                      className="text-black hover:text-blue-600"
+                    >
+                      Login
                     </Link>
                   </li>
                 )}
-                <li>
-                  <Link
-                    href="/profile"
-                    className="text-black hover:text-blue-600"
-                  >
-                    Profile
-                  </Link>
-                </li>
               </ul>
             </div>
           )}
@@ -158,9 +186,6 @@ const Header = () => {
             <ul className="w-full flex gap-10 justify-center items-center">
               <li className="text-black hover:text-blue-600">
                 <Link href="/">Home</Link>
-              </li>
-              <li className="text-black hover:text-blue-600">
-                <Link href="/messages">Messages</Link>
               </li>
               <li>
                 <Link
@@ -191,33 +216,75 @@ const Header = () => {
             {userdata && (
               <>
                 <div className="sm:flex gap-3 justify-center items-center hidden">
-                  <Link href="/profile">
-                    <img
-                      src={userdata.User.profileImage}
-                      alt="profile"
-                      className="w-[40px] h-[40px] rounded-full bg-gray-700 cursor-pointer"
-                    />
-                  </Link>
+                  <img
+                    src={userdata?.User?.profileImage}
+                    alt="profile"
+                    onError={(e) => {
+                      e.currentTarget.src = '/unknown.jpg';
+                    }}
+                    className="w-[40px] h-[40px] rounded-full bg-gray-700 object-cover"
+                  />
                   <div className="flex gap-0 flex-col">
-                    <a
-                      href={
-                        userdata.User.Role.name == 'buyer'
-                          ? '/profile'
-                          : '/admin'
-                      }
-                      className="text-blue-500 font-bold"
-                    >
-                      {userdata.User.lastName} {userdata.User.firstName}
+                    <a className="text-blue-500 font-bold capitalize">
+                      {userdata.User.firstName}
                     </a>
+                  </div>
+                  <div className="">
                     {pending ? (
-                      <div>loading ...</div>
+                      <div>
+                        <div className="border-t-4 border-b-4 border-black rounded-full w-5 h-5 animate-spin m-auto"></div>
+                      </div>
                     ) : (
-                      <a
-                        className="text-black cursor-pointer hover:text-red-500"
-                        onClick={logout}
-                      >
-                        Log Out
-                      </a>
+                      <>
+                        <Dropdown
+                          onOpenChange={(isOpen) => dropDownShowEvent(isOpen)}
+                        >
+                          <DropdownTrigger>
+                            <Button variant="bordered">
+                              {dropdownShow ? (
+                                <IoIosArrowDropdown className="text-[25px] rotate-180 ease-in duration-300" />
+                              ) : (
+                                <IoIosArrowDropdown className="text-[25px] ease-in duration-300" />
+                              )}
+                            </Button>
+                          </DropdownTrigger>
+                          <DropdownMenu
+                            aria-label="Static Actions"
+                            className="bg-gray-100  border border-t-0 mt-[9px] border-black/15 p-2 text-xl min-w-[200px] min-h-[100px]"
+                          >
+                            <DropdownSection>
+                              <DropdownItem
+                                onClick={ProfileShow}
+                                className="hover:bg-gray-300 hover:rounded-lg"
+                              >
+                                {userdata.User.Role.name == 'buyer' ? (
+                                  <p className="flex items-center gap-2">
+                                    <CgProfile />
+                                    Profile
+                                  </p>
+                                ) : (
+                                  <p className="flex items-center gap-2">
+                                    <MdDashboard />
+                                    Dashboard
+                                  </p>
+                                )}
+                              </DropdownItem>
+                            </DropdownSection>
+                            <DropdownSection title="" showDivider={true}>
+                              <DropdownItem
+                                key="logout"
+                                onClick={logout}
+                                className="hover:bg-gray-300 text-red-600 hover:rounded-lg font-bold"
+                              >
+                                <p className="flex items-center gap-2">
+                                  {' '}
+                                  <MdOutlineLogout /> Logout
+                                </p>
+                              </DropdownItem>
+                            </DropdownSection>
+                          </DropdownMenu>
+                        </Dropdown>
+                      </>
                     )}
                   </div>
                 </div>
@@ -247,5 +314,4 @@ const Header = () => {
     </>
   );
 };
-
 export default Header;

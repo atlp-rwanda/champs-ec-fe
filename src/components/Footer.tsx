@@ -29,7 +29,7 @@ const data = [
   },
 ];
 const Icons = [
-  { Icon: './insta.png', link: '#' },
+  { Icon: './instagram.svg', link: '#' },
   { Icon: './fb.png', link: '#' },
   { Icon: './X.png', link: '#' },
 ];

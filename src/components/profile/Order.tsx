@@ -38,7 +38,7 @@ function Order() {
             </div>
             <div className='flex flex-col gap-4'>
                 {
-                    orders.map((order: any, index: any) => {
+                    orders?.map((order: any, index: any) => {
                         return (
                             <div className='flex flex-col'>
                                 <span className='text-secondaryBlue text-[.8rem]'>{order.name}</span>

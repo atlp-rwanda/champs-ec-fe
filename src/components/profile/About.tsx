@@ -48,7 +48,7 @@ function About() {
         <div className='bg-white shadow-md pl-5 pr-2 p-6 rounded-lg max-h-72'>
             <h3 className='font-semibold text-secondaryBlue text-[1rem] pr-5'>About</h3>
             <div>
-                {items.map((item: any, index: number) => (
+                {items?.map((item: any, index: number) => (
                     <div key={index} className={`flex flex-col ${index === items.length - 1 ? "" : "border-b-[1px]"} py-3 pl-3 pr-0`}>
                         <div className='flex items-center gap-2'>
                             {item.icon}

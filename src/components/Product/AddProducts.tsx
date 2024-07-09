@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -31,22 +31,36 @@ interface ProductPopupProps {
   onClose: () => void;
 }
 
-const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
+const ProductPopup: React.FC<ProductPopupProps> = ({
+  isOpen = true,
+  onClose,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { register, handleSubmit, setValue, formState: { errors }, getValues, trigger } = useForm<IFormInput>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    getValues,
+    trigger,
+  } = useForm<IFormInput>({
     resolver: zodResolver(productSchema),
   });
   const [pictures, setPictures] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const { categories, status } = useSelector((state: RootState) => state.productsAddReducers);
+  const { categories, status } = useSelector(
+    (state: RootState) => state.productsAddReducers,
+  );
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      dispatch(fetchCategories());
-    }
-  }, [dispatch, isOpen]);
+    const cath = async () => {
+      const data = await dispatch(fetchCategories());
+      console.log('dada', data);
+    };
+    cath();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -55,8 +69,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
     };
   }, []);
 
-  const onSubmit: SubmitHandler<IFormInput> = async data => {
-    console.log("data received", data);
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     if (files.length < 4) {
       setUploadError('You must upload at least 4 pictures.');
       return;
@@ -73,7 +86,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
     try {
       const resultAction = await dispatch(createProduct(data as IProduct));
       const result = unwrapResult(resultAction);
-      showToast(result.message, 'success');  
+      showToast(result.message, 'success');
       console.log(result);
       console.log(result.message);
       onClose();
@@ -93,8 +106,8 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
       } else if (error.message) {
         errorMessage = error.message;
       }
-      
-      showToast(errorMessage, 'error'); 
+
+      showToast(errorMessage, 'error');
     } finally {
       setLoading(false);
     }
@@ -104,34 +117,37 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
     if (e.target.files && e.target.files.length === 1) {
       const file = e.target.files[0];
       const totalFiles = files.length + 1;
-  
+
       // Check for maximum file limit
       if (totalFiles > 8) {
         setUploadError('You can upload a maximum of 8 pictures.');
         return;
       }
-  
+
       // Validate file type
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
       if (!allowedTypes.includes(file.type)) {
         setUploadError('Only jpeg, jpg, and png files are allowed.');
         return;
       }
-  
+
       // Validate file size (maximum size of 1MB)
       const maxSizeInBytes = 1 * 1024 * 1024;
       if (file.size > maxSizeInBytes) {
         setUploadError('Image size must be less than 1MB.');
         return;
       }
-  
+
       const filePreview = URL.createObjectURL(file);
-      setPictures(prevPictures => [...prevPictures, filePreview]);
-      setFiles(prevFiles => [...prevFiles, file]);
-      setValue('productPictures', [...getValues('productPictures') || [], file]);
+      setPictures((prevPictures) => [...prevPictures, filePreview]);
+      setFiles((prevFiles) => [...prevFiles, file]);
+      setValue('productPictures', [
+        ...(getValues('productPictures') || []),
+        file,
+      ]);
       trigger('productPictures');
       setUploadError(null);
-  
+
       const updatedFiles = getValues('productPictures') || [];
       if (updatedFiles.length < 4) {
         setUploadError('You must upload at least 4 pictures.');
@@ -142,21 +158,21 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
       setUploadError('Please upload one picture at a time.');
     }
   };
-  
+
   const handleDeletePicture = (index: number) => {
-    setPictures(prevPictures => prevPictures.filter((_, i) => i !== index));
+    setPictures((prevPictures) => prevPictures.filter((_, i) => i !== index));
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
     setValue('productPictures', updatedFiles);
     trigger('productPictures');
-  
+
     if (updatedFiles.length < 4) {
       setUploadError('You must upload at least 4 pictures.');
     } else {
       setUploadError(null);
     }
   };
-  
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -165,19 +181,25 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
     return `${year}-${month}-${day}`;
   };
 
-  if (!isOpen) return null;
+  // if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={onClose}>
-      <div className="bg-white rounded-lg p-6 w-full max-w-3xl max-h-screen overflow-y-auto relative" onClick={(e) => e.stopPropagation()}>
+    <div
+      className=" inset-0 flex items-center justify-start w-full mb-10 mt-10 "
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-lg p-6 sm:w-full pb-10 sm:max-w-[80%] w-[100%] min-[80vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           type="button"
-          onClick={onClose}
-          className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2 z-50"
+          // onClick={onClose}
+          className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2 z-50 hidden"
         >
           &times;
         </button>
-        <h2 className="text-xl font-bold mb-4" >Add New Product</h2>
+        <h2 className="text-xl font-bold mb-4">Add New Product</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <InputBox
@@ -188,7 +210,10 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
               error={errors.productName?.message}
             />
             <div>
-              <label htmlFor="productCategory" className="mb-0 text-[14px] font-medium text-black/80">
+              <label
+                htmlFor="productCategory"
+                className="mb-0 text-[14px] font-medium text-black/80"
+              >
                 Product Category
               </label>
               <select
@@ -198,9 +223,11 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
                 disabled={status === 'loading'}
               >
                 {status === 'loading' ? (
-                  <option className="option-loading">Loading categories...</option>
+                  <option className="option-loading">
+                    Loading categories...
+                  </option>
                 ) : categories.length > 0 ? (
-                  categories.map(category => (
+                  categories.map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.categoryName}
                     </option>
@@ -209,7 +236,11 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
                   <option value="">No categories available</option>
                 )}
               </select>
-              {errors.productCategory && <p className="text-red-500 text-xs">{errors.productCategory.message}</p>}
+              {errors.productCategory && (
+                <p className="text-red-500 text-xs">
+                  {errors.productCategory.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -253,7 +284,10 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
               error={errors.stockLevel?.message}
             />
             <div>
-              <label htmlFor="productPictures" className="block font-medium mb-1">
+              <label
+                htmlFor="productPictures"
+                className="block font-medium mb-1"
+              >
                 Product Pictures
               </label>
               <div className="flex items-center">
@@ -268,8 +302,8 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
                   htmlFor="productPictures"
                   className="cursor-pointer w-full"
                 >
-                  <div 
-                    className={`text-center p-2 rounded h-[40px] flex justify-center items-center ${errors.productPictures || uploadError ? 'border-red-500' : 'border-gray-400'} border`} 
+                  <div
+                    className={`text-center p-2 rounded h-[40px] flex justify-center items-center ${errors.productPictures || uploadError ? 'border-red-500' : 'border-gray-400'} border`}
                     style={{ position: 'relative', top: '-4px' }}
                   >
                     <span className="text-xl">+</span>
@@ -277,14 +311,24 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
                   </div>
                 </label>
               </div>
-              {uploadError && <p className="text-red-500 text-xs">{uploadError}</p>}
-              {errors.productPictures && <p className="text-red-500 text-xs">{errors.productPictures.message}</p>}
+              {uploadError && (
+                <p className="text-red-500 text-xs">{uploadError}</p>
+              )}
+              {errors.productPictures && (
+                <p className="text-red-500 text-xs">
+                  {errors.productPictures.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-wrap mt-4">
             {pictures.map((picture, index) => (
               <div key={index} className="w-36 h-36 m-2 relative border group">
-                <img src={picture} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
+                <img
+                  src={picture}
+                  alt={`Preview ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
                 <button
                   type="button"
                   className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -306,19 +350,23 @@ const ProductPopup: React.FC<ProductPopupProps> = ({ isOpen, onClose }) => {
               placeholder="Enter product description"
               rows={4}
             ></textarea>
-            {errors.description && <p className="text-red-500 text-xs">{errors.description.message}</p>}
+            {errors.description && (
+              <p className="text-red-500 text-xs">
+                {errors.description.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col md:flex-row justify-between">
             <button
               type="button"
               onClick={onClose}
-              className="bg-blue-500 text-white px-4 py-3 rounded-l-lg rounded-r-none flex-grow flex items-center justify-center mb-2 md:mb-0"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-l-lg rounded-r-none flex-grow flex items-center justify-center mb-2 md:mb-0"
             >
               <span className="ml-2">Close</span>
             </button>
             <button
               type="submit"
-              className="bg-greenMain hover:bg-greenMain-dark text-white px-4 py-3 rounded-r-lg rounded-l-none flex-grow flex items-center justify-center"
+              className="bg-greenMain hover:bg-green-500 text-white px-4 py-3 rounded-r-lg rounded-l-none flex-grow flex items-center justify-center"
               disabled={status === 'loading' || loading}
             >
               {loading && (

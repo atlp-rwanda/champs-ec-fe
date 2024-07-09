@@ -34,12 +34,13 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
   };
 
   const dispatch = useAppDispatch();
-
+  const [pages, setPages] = useState();
   const { data, isLoading, error } = useQuery<any>({
     queryKey: ['products', activeNav, activeButton],
     queryFn: async () => {
       noStore();
       const response: any = await request.get(fetchUrl(activeNav as string));
+      setPages(response.totalPages);
 
       let data;
       if (response.products) {
@@ -131,51 +132,53 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav }) => {
           </ul>
         </>
       )}
-      <nav aria-label="Page navigation example" className="mt-3">
-        <ul className="w-full inline-flex -space-x-px text-sm justify-center">
-          <li>
-            <button
-              onClick={PreviewPage}
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-            >
-              Previous
-            </button>
-          </li>
-          <li>
-            <button onClick={() => setButoon(1)} className={buttonClass(1)}>
-              1
-            </button>
-          </li>
-          <li>
-            <button onClick={() => setButoon(2)} className={buttonClass(2)}>
-              2
-            </button>
-          </li>
-          <li>
-            <button onClick={() => setButoon(3)} className={buttonClass(3)}>
-              3
-            </button>
-          </li>
-          <li>
-            <button onClick={() => setButoon(4)} className={buttonClass(4)}>
-              4
-            </button>
-          </li>
-          <li>
-            <button onClick={() => setButoon(5)} className={buttonClass(5)}>
-              5
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={NextPage}
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-            >
-              Next
-            </button>
-          </li>
-        </ul>
-      </nav>
+      {pages && pages > 1 && (
+        <nav aria-label="Page navigation example" className="mt-3">
+          <ul className="w-full inline-flex -space-x-px text-sm justify-center">
+            <li>
+              <button
+                onClick={PreviewPage}
+                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+              >
+                Previous
+              </button>
+            </li>
+            <li>
+              <button onClick={() => setButoon(1)} className={buttonClass(1)}>
+                1
+              </button>
+            </li>
+            <li>
+              <button onClick={() => setButoon(2)} className={buttonClass(2)}>
+                2
+              </button>
+            </li>
+            <li>
+              <button onClick={() => setButoon(3)} className={buttonClass(3)}>
+                3
+              </button>
+            </li>
+            <li>
+              <button onClick={() => setButoon(4)} className={buttonClass(4)}>
+                4
+              </button>
+            </li>
+            <li>
+              <button onClick={() => setButoon(5)} className={buttonClass(5)}>
+                5
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={NextPage}
+                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      )}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Link from 'next/link';
 
 const sliderData = [
   {
@@ -48,9 +49,11 @@ const HeroSection = () => {
                     </h1>
                     <p className="text-lg w-[80%] mb-10">{items.description}</p>
                     <div className="bg-green-500 w-[160px]  items-center px-2 p-1 pr-6 hover:pr-2 duration-200 hover:bg-green-600 flex justify-between">
-                      <button className=" text-white bg-primary   hover:bg-primary/70 rounded-2xl">
-                        See All Deals
-                      </button>
+                      <Link href="/products">
+                        <button className=" text-white bg-primary   hover:bg-primary/70 rounded-2xl">
+                          See All Deals
+                        </button>
+                      </Link>
                       <span className="text-white font-bold text-2xl ">→</span>
                     </div>
                   </div>

@@ -11,7 +11,7 @@ import { clearError } from '@/redux/slices/UpdatePasswordSlice';
 
 function UpdatePassword() {
   const router = useRouter();
-  const { loading, error } = useAppSelector(
+  const { loadings, erro } = useAppSelector(
     (state: RootState) => state.updatePassword,
   );
   const [success, setSuccess] = useState(false);
@@ -36,11 +36,11 @@ function UpdatePassword() {
   };
   return {
     submit,
-    error,
+    erro,
     FormData,
     success,
     handlemoduleButton,
-    loading,
+    loadings,
     ClearDispatch,
   };
 }

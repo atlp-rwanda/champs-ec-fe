@@ -13,7 +13,6 @@ import {
   resendOTPCode,
 } from '@/redux/slices/2faAuthenticationSlice';
 import GlobarPopUp from './UsablePopUp';
-import request from '@/utils/axios';
 
 interface OtpVerifyInterface {
   isOpen: boolean;
@@ -32,7 +31,7 @@ const OtpVerify: React.FC<OtpVerifyInterface> = ({ isOpen }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/seller/dashboard/products');
+      router.push('/dashboard');
     }
   }, [isAuthenticated]);
 
@@ -45,12 +44,7 @@ const OtpVerify: React.FC<OtpVerifyInterface> = ({ isOpen }) => {
   const VerifyOtp = async () => {
     var otp = input.join('');
     const result = otpValidation.safeParse({ otp });
-    const result1 = await dispatch(handleOTPVerification(otp));
-    if (result1) {
-      const profile = await request.get(`${URL}/users/profile`);
-      const userData = JSON.stringify(profile);
-      localStorage.setItem('profile', userData);
-    }
+    await dispatch(handleOTPVerification(otp));
   };
   const HandleInput = (
     index: number,

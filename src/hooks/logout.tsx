@@ -1,8 +1,9 @@
 import { showToast } from '@/helpers/toast';
 import request from '@/utils/axios';
 import { useMutation } from '@tanstack/react-query';
-
+import { useRouter } from 'next/navigation';
 const Logout = () => {
+  const router = useRouter();
   const mutation = useMutation({
     mutationFn: () => {
       return request.post('/users/logout', {});
@@ -10,8 +11,8 @@ const Logout = () => {
     onError: (error) => console.log(error),
     onSuccess: () => {
       localStorage.clear();
-      showToast('SuccesFully signed out', 'success');
-      window.location.href = '/auth/login';
+      showToast('Successfully Logged out', 'success');
+      router.push('/auth/login');
     },
   });
   const mutate = mutation.mutate;
@@ -21,5 +22,4 @@ const Logout = () => {
     pending,
   };
 };
-
 export default Logout;

@@ -39,13 +39,11 @@ const BuyerOrdersList = () => {
         queryKey: ['BuyerOrdersList'],
         queryFn: () => requestAxios.get('/orders'),
     });
-    console.log("----------------------------------------------------------------------",data)
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: 7
       })
       var ordersData = data?.orders ?? [];
-      console.log("----------------------------------------------------------------------",ordersData)
       const columns: ColumnDef<ordersTable>[] = [
         {
           header: 'No',

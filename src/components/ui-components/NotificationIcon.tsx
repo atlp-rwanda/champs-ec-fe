@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { FaRegBell } from 'react-icons/fa6';
 import PingCounter from './PingCounter';
@@ -50,10 +51,13 @@ const NotificationIcon = ({
   }, []);
 
   return (
-    <div onClick={toggleNotification}>
+    <div onClick={toggleNotification} className="absolute">
       <FaRegBell className="hover:bg-black text-white cursor-pointer" />
-      {unreadNotifications.length > 0 && (
-        <PingCounter color="bg-warningRed" count={unreadNotifications.length} />
+      {unreadNotifications?.length > 0 && (
+        <PingCounter
+          color="bg-warningRed"
+          count={unreadNotifications?.length}
+        />
       )}
     </div>
   );

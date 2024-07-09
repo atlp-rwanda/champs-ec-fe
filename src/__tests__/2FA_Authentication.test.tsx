@@ -1,7 +1,7 @@
 import React, { act } from 'react';
 import { render, screen } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import { Provider } from 'react-redux';
+
 //import configureStore from 'redux-mock-store'; // Assuming you are using Redux
 import OtpVerify from '../components/2faVerification';
 import userEvent from '@testing-library/user-event';
@@ -13,6 +13,7 @@ import {
 import { configureStore } from '@reduxjs/toolkit';
 import twoFactorAuthSlice from '../redux/slices/2faAuthenticationSlice';
 import axios from 'axios';
+import { Provider } from 'react-redux';
 jest.mock('axios');
 const URL = process.env.URL;
 console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",URL)
