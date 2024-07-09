@@ -1,7 +1,6 @@
 // BuyerProductView
 'use client';
 
-
 import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import { MdOutlineShoppingCart } from 'react-icons/md';
