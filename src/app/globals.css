@@ -100,6 +100,11 @@ body {}
   gap:1px;
   grid-template-columns:1fr 3fr;
 }
+.triple-grid{
+  display: grid;
+  gap:1px;
+  grid-template-columns:3fr 1fr;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -179,4 +184,84 @@ body {}
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* CHATS */
+
+.chat{
+  background: #72b8ff;
+  border-radius: 20px;
+  display: inline-block;
+  padding: 10px;
+  color: #fff;
+  font-weight: lighter;
+  font-size: small;
+  box-shadow: 1px 1px 2px rgba(0,0,0,.3);
+  margin: 5px;
+  position: relative;
+}
+.chat.u1{
+  float: left;
+  clear: both;
+  border-top-left-radius: 0px;
+  max-width: 60%;
+}
+.chat.u1:before{
+  content: "";
+  width: 0px;
+  height: 0px;
+  display: block;
+  border-left: 5px solid transparent;
+  border-right: 5px solid #72b8ff;
+  border-top: 5px solid #72b8ff;
+  border-bottom: 5px solid transparent;
+  position: absolute;
+  top: 0px;
+  left: -10px;
+}
+.chat.u2{
+  float: right;
+  clear: both;
+  border-top-right-radius: 0px;
+  background: #00D025;
+  max-width: 60%;
+}
+.chat.u2:before{
+  content: "";
+  width: 0px;
+  height: 0px;
+  display: block;
+  border-left: 5px solid #00D025;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #00D025;
+  border-bottom: 5px solid transparent;
+  position: absolute;
+  top: 0px;
+  right: -10px;
+}
+
+/* Scroll */
+.o-hidden{overflow: hidden !important;}
+.o-x-scroll{overflow-y: scroll !important;}
+.opacity-0{opacity: 0 !important;}
+/* doubleshricked*/
+/* width */
+.scroll-double-shrinked::-webkit-scrollbar {
+    width: 4px !important ;
+    height: 90% !important;
+    background-color: #fafafa !important;
+    margin-top: 1rem !important;
+}
+/* Track */
+.scroll-double-shrinked::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px rgb(41, 41, 41) !important ;
+    border-radius: 5px !important ;
+}
+/* Handle */
+.scroll-double-shrinked::-webkit-scrollbar-thumb  {
+    background: grey !important ;
+    border-radius: 4px !important ;
+    margin-top: 4px !important ;
+    margin-bottom: 4px !important ;
+    height: 90% !important;
 }
