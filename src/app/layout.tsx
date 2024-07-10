@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import ClientProvider from '../app/clientProvider';
 import ReactQueryProvider from '@/utils/ReactQueryProvider';
 
+
 //const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Champs E-Commerce',

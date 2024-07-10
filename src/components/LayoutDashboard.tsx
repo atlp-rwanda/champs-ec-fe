@@ -3,6 +3,9 @@ import React, { FC, useEffect, useState } from 'react';
 import DashNavbar from '@/components/DashNavbar';
 import HeaderDash from '@/components/headerDash';
 import { useRouter } from 'next/navigation';
+import { MdOutlineChat } from 'react-icons/md';
+import ChatPopUp from '@/hooks/ChatPopUp';
+import ChatWrapper from './chatWrapper';
 interface Properties {
   children: React.ReactNode;
   pageName: string;
@@ -30,7 +33,7 @@ const LayoutDashboard: React.FC<Properties> = ({
     };
     categ();
   }, []);
-
+  const { isChatPopUpOpen, setIsChatPopUpOpen, toggleChatPopUp } = ChatPopUp();
   return (
     <div className="w-full flex sm:flex-row flex-col fixed ">
       <div className="z-50">
@@ -53,6 +56,22 @@ const LayoutDashboard: React.FC<Properties> = ({
           </div>
         </div>
       </div>
+      {/* Startttttttt */}
+      <div className='absolute right-5 w-full flex justify-end items-end'>
+        <div className="fixed bottom-20 z-50 h-[30rem] w-full max-w-[20%] ">
+          <div className="fixed bottom-5 right-0 z-10 p-4 bg-green-300 rounded-full">
+            <MdOutlineChat
+              className="text-4xl cursor-pointer z-20"
+              onClick={toggleChatPopUp}
+            />
+          </div>
+          {isChatPopUpOpen && (
+            // <ChatRoomsList chatrooms= {chatrooms} currentUser = {currentUser as string}/>
+            <ChatWrapper />
+          )}
+        </div>
+      </div>
+      {/* Enddddddddd */}
     </div>
   );
 };
