@@ -172,7 +172,7 @@ const Singleproduct: React.FC<Properties> = ({ role }) => {
               </div>
               {role === 'seller' && (
                 <div className="flex space-x-5 gap-3">
-                  <Link href={`/dashboard/product_/${id}`}>
+                  <Link href={`/dashboard/product/${id}/edit`}>
                     <BlueBorderButton
                       name="Edit"
                       className="border border-blue-500 px-12 hover:bg-blue-500 hover:text-white py-2"
