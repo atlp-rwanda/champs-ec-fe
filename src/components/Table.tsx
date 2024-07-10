@@ -133,7 +133,7 @@ const ProductsTable: React.FC<Properties> = ({ Role }) => {
                   </td>
                   <td className="px-6 py-4">{product.productDiscount}</td>
                   <td className="py-4">
-                    <Link href={`/dashboard/products_/${product.id}`}>
+                    <Link href={`/dashboard/product/${product.id}`}>
                       <button className="w-[90px] py-2 bg-blue-500 hover:bg-blue-600 text-white">
                         View
                       </button>
@@ -150,7 +150,7 @@ const ProductsTable: React.FC<Properties> = ({ Role }) => {
                         </button>
                       </td>
                       <td className="py-2">
-                        <Link href={`/dashboard/product_/${product.id}`}>
+                        <Link href={`/dashboard/product/${product.id}/edit`}>
                           <button className="w-[90px] py-2 bg-gray-500 hover:bg-gray-600 text-white">
                             Update
                           </button>

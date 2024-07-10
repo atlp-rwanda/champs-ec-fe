@@ -72,7 +72,7 @@ describe('updatePassword slice', () => {
 
     const action = {
       type: updatePassword.rejected.type,
-      error: 'Failed to update password',
+      erro: 'Failed to update password',
     };
 
     const state = reducer(initialState, action);

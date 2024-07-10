@@ -60,7 +60,9 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
       <div className="stick relative">
         <div
           className={`${
-            open ? 'w-64' : 'sm:w-20 w-full sm:min-w-0 min-w-[280px]'
+            open
+              ? 'w-60 duration-300'
+              : 'sm:w-20 w-full sm:min-w-0 min-w-[280px]'
           } sm:h-screen h-[70px] p-5 sticky top-0 pt-4 justify-between    duration-300 sm:flex-col bg-primaryBlue flex`}
         >
           <img
@@ -74,13 +76,13 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
           <div className="flex items-center ">
             <img
               src="/logo.png"
-              className={`cursor-pointer duration-500 ${
-                open && 'rotate-[360deg]' && 'min-w-[20px]'
+              className={`cursor-pointer w-10 duration-500 ${
+                open && 'rotate-[360deg]' && 'min-w-[10px]'
               }`}
               onClick={() => handleClick('/')}
             />
             <h1
-              className={`text-white text-1xl  origin-left font-medium duration-200 ${
+              className={`text-white text-sm origin-left font-medium duration-200 ${
                 !open && 'scale-0'
               }`}
             >
@@ -93,7 +95,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
               <Link href="/dashboard">
                 <li
                   key="home"
-                  className={`flex bg-primary/80 ${activelink === 'dashboard' ? 'text-yellow-400' : 'text-white'} text-2xl  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
+                  className={`flex bg-primary/80 ${activelink === 'dashboard' ? 'text-yellow-400' : 'text-white'} text-sm  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
                 >
                   {React.createElement(FaHome)}
                   <span
@@ -107,7 +109,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
                 <Link href="/dashboard/users">
                   <li
                     key="users"
-                    className={`flex bg-primary/80 ${activelink === 'users' ? 'text-yellow-400' : 'text-white'} text-2xl  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
+                    className={`flex bg-primary/80 ${activelink === 'users' ? 'text-yellow-400' : 'text-white'} text-sm  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
                   >
                     {React.createElement(FaUsersGear)}
                     <span
@@ -122,7 +124,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
               <Link href="/dashboard/profile">
                 <li
                   key="profile"
-                  className={`flex bg-primary/80 ${activelink === 'profile' ? 'text-yellow-400' : 'text-white'} text-2xl hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
+                  className={`flex bg-primary/80 ${activelink === 'profile' ? 'text-yellow-400' : 'text-white'} text-sm hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
                 >
                   {React.createElement(FaUserShield)}
                   <span
@@ -135,7 +137,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
               <Link href="/dashboard/product">
                 <li
                   key="product"
-                  className={`flex bg-primary/80 ${activelink === 'product' ? 'text-yellow-400' : 'text-white'} text-2xl  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
+                  className={`flex bg-primary/80 ${activelink === 'product' ? 'text-yellow-400' : 'text-white'} text-sm  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
                 >
                   {React.createElement(AiFillProduct)}
                   <span
@@ -150,7 +152,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
                   <Link href="/dashboard/orders">
                     <li
                       key="product"
-                      className={`flex bg-primary/80 ${activelink === 'orders' ? 'text-yellow-400' : 'text-white'} text-2xl hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
+                      className={`flex bg-primary/80 ${activelink === 'orders' ? 'text-yellow-400' : 'text-white'} text-sm hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
                     >
                       {React.createElement(BsBorderStyle)}
                       <span
@@ -160,10 +162,10 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
                       </span>
                     </li>
                   </Link>
-                  <Link href="/dashboard/addproduct">
+                  <Link href="/dashboard/product/create">
                     <li
                       key="product"
-                      className={`flex bg-primary/80 ${activelink === 'addproduct' ? 'text-yellow-400' : 'text-white'} text-2xl hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
+                      className={`flex bg-primary/80 ${activelink === 'addproduct' ? 'text-yellow-400' : 'text-white'} text-sm hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
                     >
                       {React.createElement(MdCreateNewFolder)}
                       <span
@@ -180,7 +182,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
             <li
               key="product"
               onClick={() => mutate()}
-              className={`flex bg-primary/80 ${activelink === 'product' ? 'text-yellow-400' : 'text-white'} text-2xl  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
+              className={`flex bg-primary/80 ${activelink === '' ? 'text-yellow-400' : 'text-white'} text-sm  hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
             >
               {React.createElement(MdOutlineLogout)}
               <span
@@ -246,14 +248,15 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
                       onClick={handlemenu}
                       className={`${activelink === 'addproduct' ? 'bg-yellow-600 text-white font-bold' : 'text-black'} hover:bg-yellow-400 px-2 hover:text-white font-semibold`}
                     >
-                      <Link href="/dashboard/addproduct">Create Product</Link>
+                      <Link href="/dashboard/product/create">
+                        Create Product
+                      </Link>
                     </li>
                   </>
                 )}
 
                 <li
                   key="product"
-                  
                   onClick={() => mutate()}
                   className={` hover:bg-yellow-400 px-2 hover:text-white font-semibold`}
                 >

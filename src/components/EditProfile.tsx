@@ -3,26 +3,31 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
 import { getUserProfile, updateUserProfile } from '@/redux/slices/profileSlice';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import InputBox from '@/components/InputBox';
+
 import { toast } from 'react-toastify';
 import { showToast } from '@/helpers/toast';
 import { useForm, SubmitHandler, useWatch } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+
 import updateSchema from '@/validations/userProfileSchema';
 import { useRouter } from 'next/navigation';
 import type { z } from 'zod';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import InputBox from '@/components/InputBox';
+import UpdatePasswords from './updatepassword';
 type FormSchemaType = z.infer<typeof updateSchema>;
 
 const UserProfileForm: React.FC = () => {
   const route = useRouter();
+  const [showlModal, setShowmodal] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { user, loading, error } = useSelector(
     (state: RootState) => state.userProfile,
   );
-
+  const handleshow = () => {
+    setShowmodal(!showlModal);
+  };
   const {
     register,
     handleSubmit,
@@ -113,7 +118,6 @@ const UserProfileForm: React.FC = () => {
         );
         if (response.payload && response.payload.User) {
           currentProfile.User = response.payload.User;
-          console.log('currentProfile', currentProfile);
           localStorage.setItem('profile', JSON.stringify(currentProfile));
         }
 
@@ -267,6 +271,14 @@ const UserProfileForm: React.FC = () => {
                   </svg>
                   {watchedValues.phone || 'Contact Number'}
                 </li>
+                <li>
+                  <button
+                    onClick={() => setShowmodal(!showlModal)}
+                    className="cursor-pointer p-2  text-blue-500 hover:text-blue-600 hover:font-semibold duration-200"
+                  >
+                    Update Password
+                  </button>
+                </li>
               </ul>
             </aside>
 
@@ -350,10 +362,11 @@ const UserProfileForm: React.FC = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                   <button
+                    onClick={() => route.back()}
                     type="button"
                     className="w-full sm:w-1/2 bg-white text-gray-700 border border-gray-300 px-16 py-2 rounded hover:bg-gray-100 transition duration-300"
                   >
-                    <a href="/profile">Cancel</a>
+                    <a>Cancel</a>
                   </button>
                   <button
                     type="submit"
@@ -371,6 +384,7 @@ const UserProfileForm: React.FC = () => {
           </div>
         </div>
       </main>
+      <UpdatePasswords handleshow={handleshow} showlModal={showlModal} />
     </div>
   );
 };

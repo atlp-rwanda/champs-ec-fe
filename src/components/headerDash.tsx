@@ -46,7 +46,7 @@ const HeaderDash: React.FC<HeaderInterface> = ({ pageName }) => {
         </div>
         <div className={` flex gap-2 w-auto justify-center items-center`}>
           <div
-            className="bg-blue-600 rounded-full h-10 w-10 flex justify-center items-center hover:bg-green-600"
+            className="bg-blue-600 rounded-full h-7 w-7 flex justify-center items-center hover:bg-green-600"
             onClick={handleShowNotification}
           >
             <NotificationIcon toggleNotification={handleShowNotification} />

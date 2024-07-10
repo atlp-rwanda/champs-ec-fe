@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Page from '@/app/dashboard/products_/[id]/page';
+import Page from '@/app/dashboard/product/[id]/page';
 import request from '@/utils/axios';
 import { useRouter } from 'next/navigation';
 
