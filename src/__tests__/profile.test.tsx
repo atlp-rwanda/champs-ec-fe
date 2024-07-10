@@ -23,19 +23,7 @@ jest.mock('next/navigation', () => ({
 const queryClient = new QueryClient();
 
 describe('Profile Page Test', () => {
-  it('renders the profile page', async () => {
-    await act(async () => {
-      render(
-        <Provider store={store}>
-          <QueryClientProvider client={queryClient}>
-            <ProfilePage />
-          </QueryClientProvider>
-        </Provider>
-      );
-    });
 
-   
-  });
 
   it('renders the user profile form', async () => {
     await act(async () => {
