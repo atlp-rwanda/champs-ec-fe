@@ -1,3 +1,5 @@
+'use client'
+
 import React,{useState, useEffect} from 'react'
 import ChatConversation from './ChatConversation'
 import ChatRoomsList from './ChatRoomsList'
@@ -16,9 +18,8 @@ export interface msgObject {
 }
 
 let socket: Socket;
-
 const ChatWrapper= () => {
-
+  const chatUrl = process.env.NEXT_PUBLIC_URL_CHAT as string;
   //socket connect
 
   const [chatrooms, setChatrooms] = useState([]);
@@ -43,14 +44,14 @@ const ChatWrapper= () => {
     }
   },[]);
   
-  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const trimmedToken = token.split(' ')[1];
       setCurrentUserToken(trimmedToken);
-      
-      socket = io('http://localhost:9090/chats', {
+      // const chatUrl = process.env.URL_CHAT as string
+      console.log("Chatttttt urllllllll",chatUrl);
+      socket = io(chatUrl, {
         auth: { token: trimmedToken },
       });
       

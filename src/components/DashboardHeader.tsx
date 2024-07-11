@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CiBellOn } from 'react-icons/ci';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useQuery } from '@tanstack/react-query';
@@ -32,41 +32,6 @@ const DashboardHeader: React.FC<HeaderInterface> = ({ pageName }) => {
     setOverlayComponent('notification');
   };
   const user = data?.User as userData;
-  // const { isChatPopUpOpen, setIsChatPopUpOpen, toggleChatPopUp } = ChatPopUp();
-  // const [currentUser, setCurrentUser] = useState(getCurrentUser());
-  // const [currentUserToken, setCurrentUserToken] = useState('');
-  // const [chatrooms, setChatrooms] = useState([]);
-
-
-  //  useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     const trimmedToken = token.split(' ')[1];
-  //     setCurrentUserToken(trimmedToken);
-      
-  //     socket = io(`${process.env.URL__CHAT}`, {
-  //       auth: { token: trimmedToken },
-  //     });
-      
-  //     socket.on('connect', () => {
-  //       socket.emit('fetch all chatrooms');
-  //     });
-      
-  //     socket.on('connect_error', (err) => {
-  //       console.error('Socket connection error:', err);
-      
-  //     });
-
-  //      socket.on('all chatrooms', (receivedChatrooms) => {
-  //     setChatrooms(receivedChatrooms);
-  //   });
-      
-  //     return () => {
-  //       socket.off('all chatrooms');
-  //       socket.disconnect();
-  //     };
-  //   }
-  // }, [currentUserToken]);
 
   const handleCloseOverlay = () => {
     setOverlayComponent(null);

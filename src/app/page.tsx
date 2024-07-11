@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,15 +8,15 @@ import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import { LatestSection } from '@/components/LatestSection';
 import Footer from '@/components/Footer';
-import { MdOutlineChat } from 'react-icons/md';
-import { IoMdClose } from 'react-icons/io';
+
 import { HomeAds } from '@/components/HomeAds';
+
 import { ProductWithFilter } from '@/components/allProducts';
-import Link from 'next/link';
-import ChatRoomsList from '@/components/ChatRoomsList';
 import ChatPopUp from '@/hooks/ChatPopUp';
 import ChatWrapper from '@/components/chatWrapper';
-
+import Link from 'next/link';
+import { MdOutlineChat } from 'react-icons/md';
+import { checkUserLoggedIn } from '@/components/isLogged';
 
 export interface FormDataType {
   confirmPassword: string;
@@ -24,9 +25,8 @@ export interface FormDataType {
 }
 
 export default function Home() {
-  // const [isOpen, setIsOpen] = useState(false);
-  const [showlModal, setShowmodal] = useState(false);
   const { isChatPopUpOpen, setIsChatPopUpOpen, toggleChatPopUp } = ChatPopUp();
+  const [showlModal, setShowmodal] = useState(false);
   const {
     register,
     handleSubmit,
@@ -43,42 +43,12 @@ export default function Home() {
     reset();
   };
 
-  // function handlePopUp(): void {
-  //   setIsOpen(!isOpen);
-  // }
- 
   return (
     <div className="sm:flex sm:justify-center sm:items-center sm:flex-col">
       <Header />
       <HeroSection />
-      <main className="flex flex-col items-center justify-between ">
-        {/* <div className="sm:flex h-[20px] gap-10">
-          <div>
-            <button
-              className=" w-auto"
-              onClick={() => setShowmodal(!showlModal)}
-            >
-              change password
-            </button>
-          </div>
-        </div> */}
-      </main>
-      {/* Startttttttt */}
-      <div className='absolute right-5 w-full flex justify-end items-end'>
-        <div className="fixed bottom-20 z-50 h-[30rem] w-full max-w-[20%] ">
-          <div className="fixed bottom-5 right-0 z-10 p-4 bg-green-300 rounded-full">
-            <MdOutlineChat
-              className="text-4xl cursor-pointer z-20"
-              onClick={toggleChatPopUp}
-            />
-          </div>
-          {isChatPopUpOpen && (
-            // <ChatRoomsList chatrooms= {chatrooms} currentUser = {currentUser as string}/>
-            <ChatWrapper />
-          )}
-        </div>
-      </div>
-      {/* Enddddddddd */}
+      <main className="flex   flex-col items-center justify-between "></main>
+
       {/* The Image adds */}
       <HomeAds />
       {/* LAtest Product */}
@@ -98,6 +68,26 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      {/* Startttttttt */}
+      <div className="absolute right-5 w-full flex justify-end items-end">
+        {checkUserLoggedIn() && (
+          <div className="fixed bottom-5 right-0 z-10 p-4 bg-green-300 rounded-full">
+            <MdOutlineChat
+              className="text-4xl cursor-pointer z-20"
+              onClick={toggleChatPopUp}
+            />
+          </div>
+        )}
+        <div
+          className={`${isChatPopUpOpen ? 'block fixed bottom-24' : 'hidden'} h-[30rem] w-full max-w-[20%]`}
+        >
+          {isChatPopUpOpen && (
+            // <ChatRoomsList chatrooms= {chatrooms} currentUser = {currentUser as string}/>
+            <ChatWrapper />
+          )}
+        </div>
+      </div>
+      {/* Enddddddddd */}
       {/* Footer Sections  */}
       <Footer />
     </div>
