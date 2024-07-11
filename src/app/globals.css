@@ -241,9 +241,9 @@ body {}
 }
 
 /* Scroll */
-.o-hidden{overflow: hidden !important;}
+/* .o-hidden{overflow: hidden !important;}
 .o-x-scroll{overflow-y: scroll !important;}
-.opacity-0{opacity: 0 !important;}
+.opacity-0{opacity: 0 !important;} */
 /* doubleshricked*/
 /* width */
 .scroll-double-shrinked::-webkit-scrollbar {

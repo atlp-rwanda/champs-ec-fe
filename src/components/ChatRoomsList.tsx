@@ -23,16 +23,10 @@ const ChatRoomsList:React.FC<chatroomsLists>=({chatrooms, currentUser, toogleDis
     ))
   return (
     <>
-        <h2 className="flex justify-center self-center text-bold text-2xl py-3">
+        <h2 className="flex justify-center self-center text-bold text-2xl py-5 bg-gray-100">
           Messages
         </h2>
-        <div className="w-full flex justify-center items-center">
-          <input
-            type="text"
-            className="rounded-full border bg-gray-200 h-10 w-full max-w-[70%]"
-          />
-        </div>
-        <hr className="my-3" />
+        <hr />
         <div>
           {ListOfChatRooms}
         </div>

@@ -70,7 +70,7 @@ const allMessagesList = messages.map((message:Message)=>{
            toogleDislay={toogleDislay}
           />
         </div>
-        <div className="h-[78%] w-full p-2 o-x-hidden o-x-scroll scroll-double-shrinked">
+        <div className="h-[78%] w-full p-2 overflow-hidden overflow-y-auto scroll-double-shrinked">
           {allMessagesList}
         </div>
         <div className="h-[10%] w-full border">
