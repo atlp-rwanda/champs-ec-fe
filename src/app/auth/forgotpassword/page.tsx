@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@/components/Button'
+import { Button, GreenButton } from '@/components/Button'
 import InputBox from '@/components/InputBox'
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -8,6 +8,8 @@ import resetValidation from '@/validations/RecoverValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import recover from '@/hooks/recover';
 import PopUpModels from '@/components/PopUpModels';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 type FormField = z.infer<typeof resetValidation>;
 const ForgotPassword = () => {
@@ -27,7 +29,9 @@ const ForgotPassword = () => {
   };
   return (
 <>
-<div className='  flex min-w-[100%] h-[100vh]  content-center justify-center  flex-col'>
+<div>
+<Header/>
+<div className='  flex min-w-[100%] min-h-[70vh] content-center justify-center  flex-col'>
       <div className='mt-7 flex content-center justify-center '>
       <div className=" w-full sm:max-w-xs md:max-w-md lg:max-w-lg px-4 items-center mb-5 text-center ">
           <h1 className="text-black text-[26px] ">
@@ -60,7 +64,7 @@ const ForgotPassword = () => {
       </h1>
     </div>
     <div className="w-[100%] mt-5">
-      <Button name="Send" loading={loading}  />
+      <GreenButton name="Send" loading={loading}  />
     </div>
   </form>
   </div>
@@ -74,6 +78,8 @@ const ForgotPassword = () => {
           iconImagelink="/Verified.png"
         />
       )}
+      <Footer/>
+      </div>
 </>
   )
 }

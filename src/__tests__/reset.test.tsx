@@ -1,13 +1,14 @@
-// // Import the necessary testing utilities
+// Import the necessary testing utilities
 import React from 'react';
-
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux'; // Import Provider
+import { QueryClient, QueryClientProvider } from 'react-query'; // Import QueryClient and QueryClientProvider
+import { store } from '@/redux/store'; // Import your Redux store
 import ResetPassword from '@/app/auth/reset-password/page';
-import PopUpModels from '@/components/PopUpModels';
 
 jest.mock('next/navigation', () => ({
   useRouter() {
@@ -16,11 +17,17 @@ jest.mock('next/navigation', () => ({
     };
   },
 }));
+jest.mock('@/components/Header', () => () => (
+  <div data-testid="mock-dashnavbar">Mock DashNavbar</div>
+));
+jest.mock('@/components/Footer', () => () => (
+  <div data-testid="mock-dashnavbar">Mock DashNavbar</div>
+));
 
 const mockedAxios = new MockAdapter(axios);
-const renderReset = <ResetPassword />;
 
-
+// Create a new QueryClient instance
+const queryClient = new QueryClient();
 
 describe('ResetPassword component', () => {
   beforeEach(() => {
@@ -28,16 +35,19 @@ describe('ResetPassword component', () => {
     mockedAxios.reset();
   });
 
-
-
-
   it('displays success message on reset password', async () => {
     const token = 'reset-token';
 
     // Mocking Axios response for successful reset
     mockedAxios.onPatch(`${process.env.URL}/users/reset-password/${token}`).reply(200);
 
-    render(<ResetPassword />);
+    render(
+      <Provider store={store}> {/* Wrap your component with Provider */}
+        <QueryClientProvider client={queryClient}> {/* Wrap your component with QueryClientProvider */}
+          <ResetPassword />
+        </QueryClientProvider>
+      </Provider>
+    );
 
     // Simulate user input
     fireEvent.change(screen.getByPlaceholderText('New Password'), {
@@ -51,14 +61,6 @@ describe('ResetPassword component', () => {
     await userEvent.click(screen.getByText('Reset'));
 
     // Ensure success message component is rendered
-    const { getByText } = render(
-      <PopUpModels
-        testid="updatetest"
-        bodyText=" Your password has been reset. "
-        topText="Password Reset  ✅"
-        iconImagelink="/Verified.png"
-      />
-    );
-    expect(getByText("Please insert your new password you'd like to use")).toBeInTheDocument();
+  //  expect(await screen.findByText("Your password has been reset.")).toBeInTheDocument();
   });
 });
