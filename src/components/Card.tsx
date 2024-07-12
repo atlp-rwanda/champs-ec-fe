@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MdOutlineRemoveRedEye, MdOutlineShoppingCart } from 'react-icons/md';
 import Image from 'next/image'; //@ts-ignore
 import ReactStars from 'react-rating-stars-component';
@@ -9,7 +9,7 @@ import defaultProductImage from '../../public/product-default.png';
 import Link from 'next/link';
 import { averageReviews } from '@/utils/averageReviews';
 import { RootState, useAppDispatch, useAppSelector } from '@/redux/store';
-import { handleUserAddCart } from '@/redux/slices/userCartSlice';
+import { handleUserAddCart, IUSERCART } from '@/redux/slices/userCartSlice';
 
 function Card({
   productName,
@@ -20,9 +20,17 @@ function Card({
   reviews,
 }: Cards) {
 
+  const [addProductToCart, setAddProductToCart]=useState(false)
+  const {cart} = useAppSelector(
+    (state: RootState) => state.userCartData,
+  );
+  
+  const carts=cart as IUSERCART
   const productId = id;
+
   const dispatch = useAppDispatch();
   const handleNewItem = () => {
+    setAddProductToCart(true)
     dispatch(handleUserAddCart({ productPrice, productId }));
   }
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -67,7 +75,8 @@ function Card({
             <MdOutlineRemoveRedEye className="text-gray-600  hover:text-blue-600 cursor-pointer" size={20} />
           </Link>
           <FaRegHeart className="text-gray-600 hover:text-red-500 cursor-pointer" size={20} />
-          <MdOutlineShoppingCart className="text-gray-600 hover:text-green-500 cursor-pointer" size={20} onClick={handleNewItem} />
+          <MdOutlineShoppingCart className={` hover:text-green-500 cursor-pointer ${addProductToCart ||  carts.product.some(item => item.product === id) ?
+            'text-red-600 pointer-events-none':'text-gray-600'}`} size={20} onClick={handleNewItem} />
         </div>
       </div>
     </div>
@@ -75,4 +84,3 @@ function Card({
 }
 
 export default Card;
-

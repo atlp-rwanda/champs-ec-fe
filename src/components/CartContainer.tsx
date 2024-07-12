@@ -35,6 +35,7 @@ const CartContainer = (hideOverLay: any) => {
 
   const handleshow = hideOverLay;
 
+
   const dispatch = useAppDispatch();
   const allProduct = JSON.parse(localStorage.getItem('productItem') || '');
   const carts = handleCartInfoManipulation(cart as IUSERCART, allProduct);
@@ -43,7 +44,7 @@ const CartContainer = (hideOverLay: any) => {
     setCurrentCartItem(id);
     dispatch(handleRemoveItemInCart(id));
   };
-  const {  handlePayment} = usePayments();
+  const { handlePayment, paymentLoading } = usePayments();
 
   const handleIncreaseCartItem = async (id: string) => {
     const updatedItems = carts;
@@ -236,7 +237,7 @@ const CartContainer = (hideOverLay: any) => {
       {carts && carts.length > 0 ? (
         <div className="w-full bottom-2 sm:max-w-full ">
           <div className="bg-[#E5E5E5] w-full h-30 flex flex-col items-end ">
-            <div className="px-10 h-[60px] w-full flex justify-between font-semibold items-center">
+            <div className="px-10 h-[60px] w-full flex justify-between font-bold text-black items-center border-blue-50 border-b-2">
               <span>Total Price</span>
               <span>{formatNumber(cart?.totalPrice as number)} RWF</span>
             </div>
@@ -246,28 +247,33 @@ const CartContainer = (hideOverLay: any) => {
                 <div className="border-t-4 border-b-4 border-blue-900 rounded-full w-6 h-6 animate-spin m-auto"></div>
               ) : (
                 <button
-                  className={`w-1/2 h-[40px] bg-primaryBlue  text-white flex justify-center items-center text-[20px] ${loading || carts.length == 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                  className={`w-1/2 h-[40px] bg-primaryBlue  text-white flex justify-center items-center text-[20px] ${loading || paymentLoading || carts.length == 0 ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
                   onClick={() => {
                     RemoveAllCart();
                   }}
+                  disabled={paymentLoading || loading || carts.length === 0}
                 >
                   Clear All
                 </button>
               )}
-       <button
-        className={`w-1/2 h-[40px] bg-[#71C154] text-white flex justify-center items-center text-[20px] ${loading || carts.length === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-        onClick={handlePayment}
-        disabled={loading || carts.length === 0}
-      >
-        Place Order
-      </button>
+
+              {paymentLoading ? (
+                <div className="border-t-4 border-b-4 border-blue-900 rounded-full w-6 h-6 animate-spin m-auto"></div>
+              ) : (
+                <button
+                  className={`w-1/2 h-[40px] bg-[#71C154] text-white flex justify-center items-center text-[20px] ${paymentLoading || loading || carts.length === 0 ? 'cursor-not-allowed opacity-6' : 'cursor-pointer'}`}
+                  onClick={handlePayment}
+                  disabled={paymentLoading || loading || carts.length === 0}
+                >
+                  Place Order
+                </button>
+              )}
             </div>
           </div>
         </div>
       ) : (
         ''
       )}
-   
     </div>
   );
 };

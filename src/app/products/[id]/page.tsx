@@ -21,12 +21,19 @@ import { useQuery } from '@tanstack/react-query';
 import ReviewCard from '@/components/ReviewCard';
 import Button from '@/components/Button';
 import { averageReviews } from '@/utils/averageReviews';
-import { useAppDispatch } from '@/redux/store';
-import { handleUserAddCart } from '@/redux/slices/userCartSlice';
+import { RootState, useAppDispatch, useAppSelector } from '@/redux/store';
+import { handleUserAddCart, IUSERCART } from '@/redux/slices/userCartSlice';
 //import StripeProvider from '@/components/StripeProvider';
 
 function Page() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [addProductToCart, setAddProductToCart]=useState(false)
+  
+  const {cart} = useAppSelector(
+    (state: RootState) => state.userCartData,
+  );
+
+  const carts=cart as IUSERCART
   const { id } = useParams();
   const handleSwiper = (swiper: any) => {
     setThumbsSwiper(swiper);
@@ -149,8 +156,9 @@ function Page() {
                       <div className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer">
                         <FaRegHeart />
                       </div>
-                      <div className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer">
+                      <div className={`p-3 rounded-full  hover:bg-green-500 hover:text-white cursor-pointer  '${(addProductToCart || carts.product.some(item => item.product ===data.product.id)) ?' bg-red-500 pointer-events-none':'pointer-events-auto bg-gray-200'}`}>
                         <MdOutlineShoppingCart
+                        
                           onClick={() => {
                             handleNewItem();
                           }}
