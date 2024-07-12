@@ -27,7 +27,7 @@ const LatestCard: React.FC<Properties> = ({
         <div className=" bg-white h-full w-full bottom-0 left-0">
           <h1 className=" font-semibold text-2xl  mb-2 capitalize">{name}</h1>
           <div className="flex gap-4">
-            <p className="">Price:{price} RWF </p>
+            <p className="">Price:{price.toLocaleString()} RWF </p>
           </div>
         </div>
       </div>

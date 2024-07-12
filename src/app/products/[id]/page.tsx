@@ -61,7 +61,7 @@ function Page() {
   };
   return (
     <div>
-     {/* // <StripeProvider> */}
+      {/* // <StripeProvider> */}
       <Header />
       <>
         {isLoading ? (
@@ -157,8 +157,10 @@ function Page() {
                         />
                       </div>
                     </div>
-                    <span className="font-medium text-2xl text-blue-300 mt-2">
-                      <span className="font-bold text-3xl">{productPrice}</span>{' '}
+                    <span className="font-medium text-2xl text-green-400 mt-2">
+                      <span className="font-bold text-3xl">
+                        {productPrice.toLocaleString()}
+                      </span>{' '}
                       RWF
                     </span>
                   </div>
