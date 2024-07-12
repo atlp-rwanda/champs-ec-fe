@@ -114,8 +114,8 @@ const UsersPageAdmin = () => {
     <>
       <div className="w-[100%] flex">
         {isLoading ? (
-          <div className="flex w-full min-h-[400px] justify-center items-center">
-            <div className="border-t-4 border-b-4 border-black rounded-full w-10 h-10 animate-spin m-auto"></div>
+          <div className="min-h-screen w-full justify-center items-center flex">
+            <div className="border-t-4 border-b-4 border-blue-600 rounded-full w-20 h-20 animate-spin m-auto"></div>
           </div>
         ) : (
           <div className="w-[100%] sm:w-[100%] min-h-[600px] mx-auto mt-10 py-6 px-10 border border-gray-400  ">
@@ -180,7 +180,6 @@ const UsersPageAdmin = () => {
                         handle={() => table.nextPage()}
                         isDisabled={!table.getCanNextPage()}
                         rotate
-                        
                       />
                     </div>
                   </div>

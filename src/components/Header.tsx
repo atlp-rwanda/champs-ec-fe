@@ -34,6 +34,7 @@ import {
 import { useRouter } from 'next/navigation';
 const Header = () => {
   const { isOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
+  const [activelink, setActivelink] = useState('home');
 
   const [showlModal, setShowmodal] = useState(false);
   const [showCart, setShowCart] = useState(false);
@@ -69,6 +70,13 @@ const Header = () => {
   const [viewMenu, setViewmenu] = useState(false);
   const [userdata, setUserdata] = useState<any | null>(null);
   useEffect(() => {
+    const link = window.location.href
+      .toString()
+      .split('/')
+      .splice(-1)
+      .toString();
+    setActivelink(link);
+
     const user = localStorage.getItem('profile');
     const userData = JSON.parse(user as string);
     setUserdata(userData);
@@ -87,6 +95,7 @@ const Header = () => {
       ? router.push('/profile')
       : router.push('/dashboard');
   };
+
   return (
     <>
       <div className="sticky top-0 z-50 w-full border  ">
@@ -181,22 +190,24 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className="sm:flex hidden justify-center items-center bg-gray-100 py-5">
-          <nav className=" hidden w-full max-w-1/2 sm:flex justify-center  ">
-            <ul className="w-full flex gap-10 justify-center items-center">
-              <li className="text-black hover:text-blue-600">
+        <div className="sm:flex hidden justify-between items-center bg-gray-100 py-5">
+          <nav className=" flex-1 ml-[20%]  hidden  max-w-1/2 sm:flex justify-center  ">
+            <ul className="w-full  flex gap-10 justify-center items-center">
+              <li
+                className={`${activelink === '' ? 'text-blue-600' : 'text-black'} font-normal hover:text-blue-600 cursor-pointer `}
+              >
                 <Link href="/">Home</Link>
               </li>
               <li>
                 <Link
                   href="/products"
-                  className="text-black hover:text-blue-600"
+                  className={`${activelink === 'products' ? 'text-blue-600' : 'text-black'} font-normal hover:text-blue-600 cursor-pointer `}
                 >
                   Products
                 </Link>
               </li>
               <li
-                className="text-black hover:text-blue-600"
+                className={`${isOrdersOverlayOpen === true ? 'text-blue-600' : 'text-black'} font-normal hover:text-blue-600 cursor-pointer `}
                 onClick={toggleOrdersSlider}
               >
                 Order

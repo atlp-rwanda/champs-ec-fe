@@ -75,10 +75,9 @@ const Wishlist: React.FC = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!user) return <div>No user found</div>;
-  console.log(wishlist, '------------ wishlist');
+
   return (
     <div className="bg-white shadow-md rounded-lg">
       <div className="w-full pl-16 py-4 border-b mb-4">

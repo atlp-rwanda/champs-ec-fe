@@ -32,7 +32,7 @@ const Chartssection: React.FC<Params> = ({ user, data, categories, users }) => {
     <div className="flex gap-7 sm:w-[80%] h-full sm:flex-row flex-col w-full sm:justify-start sm:items-start justify-center items-center ">
       {user && user?.Role?.name === 'seller' ? (
         <div className="sm:w-[50%] w-[90%] border-[1px] p-2 px-4">
-          <h1 className="font-semibold text-2xl">Seller statistics</h1>
+          <h1 className="font-semibold text-1xl">Seller statistics</h1>
           <Chart
             chartType="PieChart"
             data={data1}
@@ -43,7 +43,7 @@ const Chartssection: React.FC<Params> = ({ user, data, categories, users }) => {
         </div>
       ) : (
         <div className="sm:w-[50%] w-[90%] border-[1px] p-2">
-          <h1 className="font-bold text-2xl text-left mx-4 w-full mb-3">
+          <h1 className="font-bold text-1xl text-left mx-4 w-full mb-3">
             All Markert Users
           </h1>
           <div className=" sm:w-[90%] w-[100%] p-2 rounded-sm overflow-auto h-[250px]">
@@ -83,8 +83,8 @@ const Chartssection: React.FC<Params> = ({ user, data, categories, users }) => {
         </div>
       )}
       <div className="sm:w-[50%] w-[90%] border-[1px] h-[200px]  ">
-        <div className="w-full flex justify-center items-center flex-col ">
-          <h1 className="font-semibold text-2xl text-left mx-4 w-full mb-3">
+        <div className="w-full flex justify-center mx-4 mt-2 items-center flex-col ">
+          <h1 className="font-semibold text-1xl text-left mx-4 w-full mb-3">
             All Categolie On Market
           </h1>
           <div className=" w-[80%] p-2 rounded-sm overflow-auto h-[150px]">

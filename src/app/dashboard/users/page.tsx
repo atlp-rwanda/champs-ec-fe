@@ -26,7 +26,7 @@ function page() {
     );
   }
   return (
-    <LayoutDashboard pageName="Dashboard" isLoading={!user ? true : false}>
+    <LayoutDashboard pageName="Users Page" isLoading={!user ? true : false}>
       <UsersPageAdmin />
     </LayoutDashboard>
   );

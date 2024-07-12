@@ -60,7 +60,12 @@ function ProfileHeader() {
     fetchData();
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="min-h-screen w-full justify-center items-center flex">
+        <div className="border-t-4 border-b-4 border-blue-600 rounded-full w-20 h-20 animate-spin m-auto"></div>
+      </div>
+    );
 
   if (!user) return <div>No user found</div>;
 
