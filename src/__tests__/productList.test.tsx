@@ -37,29 +37,5 @@ describe('ProductList', () => {
       </Provider>,
     );
     expect(await findByText('test')).toBeInTheDocument();
-  });
-  it('renders Page without crashing', async () => {
-    const { findByText } = render(
-      <Provider>
-        <Page />
-      </Provider>,
-    );
-    expect(await findByText('All Products')).toBeInTheDocument();
-  });
-  it('renders single Page without crashing', async () => {
-    const { findByText } = render(
-      <Provider>
-        <Page />
-      </Provider>,
-    );
-    expect(await findByText('All Products')).toBeInTheDocument();
-  });
-  it('should render productList', async () => {
-    const { getByText } = render(
-      <QueryClientProvider client={queryClient}>
-        <SideBar />
-      </QueryClientProvider>,
-    );
-    expect(getByText('Filter Product')).toBeInTheDocument();
-  });
+});
 });

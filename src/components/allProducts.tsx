@@ -1,15 +1,23 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductList from './ProductList';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { useRouter } from 'next/navigation';
+import request from '@/utils/axios';
+
 export const ProductWithFilter = () => {
   const [Value, setValue] = useState('');
   const [locarstorage, SetLocal] = useState(null);
   const [activeButton, setActiveButton] = useState('All');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searched, setSearched] = useState(false); // New state for tracking if a search has been performed
+  const router = useRouter();
   const Options = [
     { laber: 'All', value: 1 },
     { laber: 'Rating', value: 2 },
     { laber: 'wishes', value: 3 },
   ];
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedToken: string | any = localStorage.getItem('profile');
@@ -17,17 +25,56 @@ export const ProductWithFilter = () => {
       SetLocal(ifuser?.User?.Role.name as any);
     }
   }, []);
+
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(event.target.value);
     setActiveButton(event.target.value);
   };
+
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
   };
+
   const buttonClass = (buttonName: string) =>
     `px-4 py-2  ${
       activeButton === buttonName ? 'bg-black text-white' : ''
     } focus:outline-none `;
+
+  const handleSearch = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    console.log("Search query:", Value);
+
+    try {
+      let queryParams: any = {};
+      const trimmedValue = Value.trim();
+      const numericValue = parseFloat(trimmedValue);
+
+      if (!isNaN(numericValue)) {
+        queryParams.minPrice = numericValue;
+      } else if (!isNaN(numericValue)) {
+        queryParams.maxPrice = numericValue;
+      } else if (!isNaN(numericValue)) {
+        queryParams.minPrice = numericValue;
+        queryParams.maxPrice = numericValue;
+      } else if (trimmedValue.length > 0) {
+        queryParams.name = Value;
+      } else if (trimmedValue.length > 0) {
+        queryParams.category = Value;
+      }
+
+      const queryString = new URLSearchParams(queryParams).toString();
+      console.log(queryString);
+
+      const url = `/search?${new URLSearchParams(queryParams).toString()}`;
+      const response: any = await request.get(url);
+
+      setSearchResults(response);
+      setSearched(true); // Set searched to true when a search is performed
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+  };
+
   return (
     <div className="w-full mb-10 flex justify-center items-center content-center">
       <div className="container mt-10 ">
@@ -90,20 +137,28 @@ export const ProductWithFilter = () => {
             </>
           )}
           {/* Search  */}
-          <div className="sm:w-[50%] w-[70%] relative ">
-            <input
-              type="text"
-              placeholder="Search Product ..."
-              className="p-2 py-3 border-2 sm:w-[60%] w-[80%] h-[35px] sm:h-[50px] relative "
-            />
-            <div className="absolute top-2 left-80 hover:cursor-pointer hidden sm:block">
-              <img src="./Search.svg" alt="" className="w-[30px] " />
+          <form className="w-[50%] relative" onSubmit={handleSearch}>
+            <div className="flex border-2 border-[#8F8F8F]">
+              <input
+                type="search"
+                placeholder="Search Product ..."
+                className="p-2 py-3 w-full border-none outline-none"
+                value={Value}
+                onChange={(e) => setValue(e.target.value)}
+              />
+              <button type="submit" className="flex items-center justify-center p-2 bg-transparent text-[#8F8F8F]">
+                <AiOutlineSearch size={24} />
+              </button>
             </div>
-          </div>
+          </form>
         </div>
         {/* Product Section */}
-        <div className="sm:ml-5 sm:mt-20 ">
-          <ProductList activeNav={activeButton} />
+        <div className="sm:ml-5 sm:mt-20">
+          {searched && searchResults.length === 0 ? (
+            <p>No product found</p>
+          ) : (
+            <ProductList activeNav={activeButton} searchResults={searchResults} />
+          )}
         </div>
       </div>
     </div>

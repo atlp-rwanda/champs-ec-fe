@@ -5,12 +5,11 @@ import ReactStars from 'react-rating-stars-component';
 import { FaRegHeart } from 'react-icons/fa6';
 import { Cards } from '../types/Product';
 import image from '../../public/product.png';
+import defaultProductImage from '../../public/product-default.png';
 import Link from 'next/link';
 import { averageReviews } from '@/utils/averageReviews';
 import { RootState, useAppDispatch, useAppSelector } from '@/redux/store';
 import { handleUserAddCart } from '@/redux/slices/userCartSlice';
-
-// import { useRouter } from 'next/router';
 
 function Card({
   productName,
@@ -20,36 +19,37 @@ function Card({
   id,
   reviews,
 }: Cards) {
-  const productId = id;
 
+  const productId = id;
   const dispatch = useAppDispatch();
   const handleNewItem = () => {
     dispatch(handleUserAddCart({ productPrice, productId }));
+  }
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    event.currentTarget.src = defaultProductImage.src;
   };
   return (
-    <div className="w-full max-w-[80%] sm:max-w-48 sm:mb-10 min-w-[200px] mr-3  ml-0 my-3 sm:h-[17rem] h-[19rem] flex flex-col bg-white border border-gray-100 shadow relative">
-      <div className="flex justify-center h-[180px]">
-        <img
-          src={productThumbnail}
-          onError={(e) => (e.currentTarget.src = '/product.png')}
-          alt="default image"
-          className="w-full h-[150px] text-[12px] object-cover"
-        />
-      </div>
-      <div className="sm:px-4 flex flex-col gap-1">
-        <h5 className="max-w-1xl sm:text-[12px] text-[30px] sm:text-left sm:mx-0  mx-3 w font-semibold tracking-tight text-black-900">
-          {productName.length < 30
-            ? productName
-            : productName.substring(0, 30) + '...'}
-        </h5>
-        <div className="block text-[12px] text-muted">
-          {productDescription.length < 50
-            ? productDescription
-            : productDescription.substring(0, 50) + '...'}
+    <div className="relative w-full max-w-[80%] sm:max-w-48 sm:mb-10 min-w-[200px] mx-3 my-6 sm:h-[17rem] h-[19rem] bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out transform hover:scale-105">
+      <Link href={`/products/${id}`}>
+        <div className="overflow-hidden p-3">
+          <img 
+            src={productThumbnail || '../../public/product-default.png'} 
+            alt={productName} 
+            className="w-full h-32 object-contain transition-transform duration-300"
+            onError={handleImageError}
+          />
         </div>
-        <div className="flex items-center justify-between pb-3">
-          <span className="text-1xl sm:m-0 m-3 font-bold text-green-400">
-            {productPrice} RWF
+      </Link>
+      <div className="px-3 pb-3">
+        <h5 className="text-sm font-semibold mb-1  text-gray-900 truncate">
+          {productName.length < 30 ? productName : `${productName.substring(0, 30)}...`}
+        </h5>
+        <p className="text-xs text-gray-700 mb-2 truncate">
+          {productDescription.length < 50 ? productDescription : `${productDescription.substring(0, 50)}...`}
+        </p>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-bold text-green-500">
+            {productPrice.toLocaleString()} RWF
           </span>
           <span className="block">
             <ReactStars
@@ -62,21 +62,17 @@ function Card({
             />
           </span>
         </div>
-      </div>
-      <div className="absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 transition duration-300 ease-in-out bg-gray-200 bg-opacity-75">
-        <Link href={`/products/${id}`}>
-          <MdOutlineRemoveRedEye className="text-gray-700 mr-4 hover:text-blue-400 cursor-pointer" />
-        </Link>
-        <FaRegHeart className="text-gray-700 mr-4 hover:text-red-500 cursor-pointer" />
-        <MdOutlineShoppingCart
-          className="text-gray-700 hover:text-green-500 cursor-pointer"
-          onClick={() => {
-            handleNewItem();
-          }}
-        />
+        <div className="flex justify-end space-x-4">
+          <Link href={`/products/${id}`}>
+            <MdOutlineRemoveRedEye className="text-gray-600  hover:text-blue-600 cursor-pointer" size={20} />
+          </Link>
+          <FaRegHeart className="text-gray-600 hover:text-red-500 cursor-pointer" size={20} />
+          <MdOutlineShoppingCart className="text-gray-600 hover:text-green-500 cursor-pointer" size={20} onClick={handleNewItem} />
+        </div>
       </div>
     </div>
   );
 }
 
 export default Card;
+

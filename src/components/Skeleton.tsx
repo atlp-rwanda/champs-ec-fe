@@ -66,29 +66,14 @@ export const SideSkeleton = () => {
   return (
     <>
       <div className="h-full flex flex-col justify-center items-center animate-pulse">
-        <div className="mb-5">
-          <h1 className="bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2 h-3"></h1>
-        </div>
+        
         <div className="w-full max-w-sm borderflex-col items-center justify-center px-5">
           <h2 className="bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2"></h2>
-          <div>
-            <h3 className="bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2 h-5"></h3>
-            <p className="bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2 h-5 ml-5"></p>
-            <p className="bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2 h-5 ml-5"></p>
-          </div>
-          <div>
-            <div className="bg-gray-200 rounded-full dark:bg-gray-700 w-32 mt-5 h-5"></div>
-          </div>
+          
+         
           <div className="flex flex-col gap-2">
             <h3 className="bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2"></h3>
-            <div className="flex gap-2">
-              <button className="bg-gray-200 rounded-full dark:bg-gray-700 w-12 h-5 ml-5"></button>
-              <button className="bg-gray-200 rounded-full dark:bg-gray-700 w-12 h-5 ml-5"></button>
-            </div>
-            <div className="flex gap-2">
-              <button className="bg-gray-200 rounded-full dark:bg-gray-700 w-12 h-5 ml-5"></button>
-              <button className="bg-gray-200 rounded-full dark:bg-gray-700 w-12 h-5 ml-5"></button>
-            </div>
+          
           </div>
         </div>
       </div>
