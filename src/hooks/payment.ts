@@ -7,7 +7,7 @@ export const usePayments = () => {
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   
   const router = useRouter();
@@ -16,13 +16,14 @@ export const usePayments = () => {
   
 
     try {
+      setPaymentLoading(true)
       const res: any = await request.post(`/payments`, {});
 
       router.push(`${res.paymenturl}`);
 
     } catch (error: any) {
       console.log('error', error);
-   
+      setPaymentLoading(false)
       setError(error.response.data.error);
     }
   };
@@ -30,8 +31,7 @@ export const usePayments = () => {
   return {
     handlePayment,
     success,
-    loading,
-
+    paymentLoading,
     error,
   };
 };

@@ -13,7 +13,7 @@ interface ReviewInterface {
 const ReviewCard: React.FC<ReviewInterface> =({ rating, feedback, image, firstName, lastName }) =>{
     return(
         <div className='block'>
-            <div className="double-grid w-sm-[100%] w-md-[60%] w-[36%] border rounded-2xl border">
+            <div className="double-grid w-sm-[100%] w-md-[60%] w-[36%]  rounded-2xl border">
                 <div className='flex items-center justify-center w-full'>
                     <img src={image} className="rounded-full h-[60px] w-[60px] border-black-1 "/>
                 </div>

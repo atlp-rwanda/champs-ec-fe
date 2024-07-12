@@ -188,7 +188,7 @@ const TruckOrder: React.FC<any> = ({ id, isOpen, handleClose }) => {
 
               <div className="w-1/3 flex flex-col items-center ">
                 <img
-                  alt="delivery"
+                  alt={orderData && orderData.Product.productName}
                   src={orderData && orderData.Product.productThumbnail}
                   className="w-[50%]"
                 />

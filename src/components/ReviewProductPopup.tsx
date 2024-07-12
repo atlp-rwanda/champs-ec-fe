@@ -35,7 +35,8 @@ export const ReviewProduct: React.FC<ReviewProductInterface> = ({ id,  isOpen, h
     mutationFn: (feedback: string) => {
       return request.post(`/products/${id}/reviews`, { feedback, rating })
     },
-    onError: (error) => console.log(error),
+    onError: (error: any) => console.log(error),
+    
     onSuccess: async () => {
       toast('successfully submitted your review', {
         position: "top-right",
@@ -59,8 +60,8 @@ export const ReviewProduct: React.FC<ReviewProductInterface> = ({ id,  isOpen, h
       setFeedbackErrro("Feedback must be 10 chars atleast");
       setRatingError('Please add rating');
       return;
-    }if(feedback.length < 10) {
-      setFeedbackErrro("Feedback must be 10 chars atleast");
+    }if(feedback.length < 10 || feedback.length > 200 ) {
+      setFeedbackErrro("Feedback must be between 10 and 200 characters at least");
       return;
     }if(rating === 0){
       setRatingError('Please add rating');
@@ -89,7 +90,8 @@ export const ReviewProduct: React.FC<ReviewProductInterface> = ({ id,  isOpen, h
         </div>
       </div>
       <div className='justify-center pb-4 flex w-full'>
-        <Button  background='green' name='Submit' handle={handleSubmitReiew}/>
+        {mutation.isPending?(<div className="border-t-4 border-b-4 border-blue-900 rounded-full w-6 h-6 animate-spin m-auto"></div>):(<Button  background='green' name='Submit' handle={handleSubmitReiew}/>)}
+        
       </div>
     </dialog >
   );
