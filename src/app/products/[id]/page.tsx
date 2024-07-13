@@ -18,14 +18,19 @@ import Card from '@/components/Card';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useQuery } from '@tanstack/react-query';
-import ReviewCard from '@/components/ReviewCard';
-import Button from '@/components/Button';
 import { averageReviews } from '@/utils/averageReviews';
 import { RootState, useAppDispatch, useAppSelector } from '@/redux/store';
 import { handleUserAddCart, IUSERCART } from '@/redux/slices/userCartSlice';
+import { handleWishlistCount } from '@/redux/slices/wishlistSlice';
+import request from '@/utils/axios';
+import { showToast } from '@/helpers/toast';
+import ReviewWrapper from '@/components/ReviewsWrapper';
 //import StripeProvider from '@/components/StripeProvider';
 
 function Page() {
+  const { wishNumber } = useAppSelector(
+    (state: RootState) => state.wishlist
+  )
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [addProductToCart, setAddProductToCart]=useState(false)
   
@@ -39,7 +44,7 @@ function Page() {
     setThumbsSwiper(swiper);
   };
   const _id: string = id.toLocaleString();
-  const { data, isLoading, error } = useQuery<any>({
+  const { data, isLoading, error , refetch} = useQuery<any>({
     queryKey: ['product', id],
     queryFn: async () => {
       try {
@@ -66,6 +71,17 @@ function Page() {
     const productId = data.product.id;
     dispatch(handleUserAddCart({ productPrice, productId }));
   };
+  const handleAddRemoveWish = async(event: { preventDefault: () => void; })=>{
+    event.preventDefault();
+    const response:any = await request.post('/wishes', { productId:id });
+    if(response.status == 200 || response.status == 203){
+      const { status } = response;
+      dispatch(handleWishlistCount(status  == 200 ? await wishNumber + 1 : await wishNumber - 1));
+      showToast(response.message, 'success')
+    }
+    console.log('this is response', response)
+    
+  }
   return (
     <div>
       {/* // <StripeProvider> */}
@@ -153,7 +169,7 @@ function Page() {
                   </div>
                   <div className="flex flex-col gap-4">
                     <div className="flex gap-2 mt-5">
-                      <div className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer">
+                      <div className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer" onClick={handleAddRemoveWish}>
                         <FaRegHeart />
                       </div>
                       <div className={`p-3 rounded-full  hover:bg-green-500 hover:text-white cursor-pointer  '${(addProductToCart || carts.product.some(item => item.product ===data.product.id)) ?' bg-red-500 pointer-events-none':'pointer-events-auto bg-gray-200'}`}>
@@ -211,27 +227,10 @@ function Page() {
                 </div>
               </div>
               <div className="w-full flex flex-col mt-10">
-                <div className="flex">
-                  <h2 className="font-medium text-2xl mr-5">Reviews:</h2>
-                  <Button name="Add Review" background="blue"></Button>
-                </div>
-                <div className="my-10">
-                  {reviews && reviews.length > 0 ? (
-                    reviews.map((review: ReviewType) => (
-                      <ReviewCard
-                        rating={review.rating}
-                        feedback={review.feedback}
-                        image={review.userProfile.profileImage}
-                        firstName={review.userProfile.firstName}
-                        lastName={review.userProfile.lastName}
-                      />
-                    ))
-                  ) : (
-                    <p className="text-red-500 font-bold">No ratings yet.</p>
-                  )}
-                </div>
+              <ReviewWrapper productId={_id.trim()} refetch={refetch} reviews={reviews} />
               </div>
             </div>
+           
           </div>
         )}
       </>

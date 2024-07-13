@@ -2,6 +2,8 @@
 import React from 'react';
 import { IoChevronBack } from 'react-icons/io5';
 import { IoMdClose } from 'react-icons/io';
+import { MdClose } from "react-icons/md";
+
 interface Properties {
   name?: string;
   handle?: () => void;

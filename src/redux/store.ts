@@ -14,6 +14,9 @@ import userProfileSlice from '@/redux/slices/profileSlice';
 
 import notificationSlice from './slices/notificationSlice';
 
+import userWishlistSlice from './slices/wishlistSlice';
+
+
 const rootReducer = combineReducers({
   auth: auth,
   productsAddReducers,
@@ -24,6 +27,7 @@ const rootReducer = combineReducers({
   profileReducer,
   userProfile: userProfileSlice,
   notification: notificationSlice,
+  wishlist: userWishlistSlice
 });
 
 export const store = configureStore({
