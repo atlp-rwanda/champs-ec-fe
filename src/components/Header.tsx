@@ -22,6 +22,8 @@ import { handleFetchUserCart } from '@/hooks/userCart';
 import Logout from '@/hooks/logout';
 import NotificationIcon from './ui-components/NotificationIcon';
 import Notification from './ui-components/Notification';
+import WishlistOverlay from '@/hooks/wishlistOverlay';
+import WishlistContainer from './wishlistContainer';
 
 import {
   Dropdown,
@@ -33,10 +35,16 @@ import {
 } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 const Header = () => {
+  const { wishNumber } = useAppSelector(
+    (state: RootState) => state.wishlist
+  )
+  
   const { isOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
   const [activelink, setActivelink] = useState('home');
 
+  const { isWishlistOverlayOpen, toggleWishlistSlider } = WishlistOverlay();
   const [showlModal, setShowmodal] = useState(false);
+
   const [showCart, setShowCart] = useState(false);
 
   const [showNotification, setShowNotification] = useState(false);
@@ -67,6 +75,8 @@ const Header = () => {
   const handleshow = () => {
     setShowmodal(!showlModal);
   };
+
+
   const [viewMenu, setViewmenu] = useState(false);
   const [userdata, setUserdata] = useState<any | null>(null);
   useEffect(() => {
@@ -105,23 +115,28 @@ const Header = () => {
           </Link>
           <div className="flex gap-5 justify-center items-center ">
             {userdata && userdata.User.Role.name === 'buyer' && (
+              <>
               <span className="flex items-center" onClick={handleShowCart}>
                 <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative  top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
                   {cart?.product.length}
                 </i>
                 <MdOutlineShoppingCart className="hover:bg-black text-white cursor-pointer z-20" />
               </span>
+               <span className='flex items-center mx-2  cursor-pointer' onClick={toggleWishlistSlider}>
+                <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
+                    {wishNumber}
+                  </i>
+                  <FaRegHeart className="hover:bg-black text-white cursor-pointer z-20" />
+              </span>
+             </>
             )}
             {userdata ? (
               <>
-                <div className="mb-4 mx-4 ">
-                  <NotificationIcon
-                    toggleNotification={handleShowNotification}
-                  />
-                </div>
-                <div>
-                  <FaRegHeart className="hover:bg-black text-white cursor-pointer" />
-                </div>
+                <NotificationIcon toggleNotification={handleShowNotification} />
+                <IoMdMenu
+                  className="text-white text-2xl cursor-pointer sm:hidden  mxs-2 block"
+                  onClick={handleMenuToggle}
+                />
               </>
             ) : (
               ''
@@ -248,7 +263,7 @@ const Header = () => {
                     ) : (
                       <>
                         <Dropdown
-                          onOpenChange={(isOpen) => dropDownShowEvent(isOpen)}
+                          onOpenChange={(isOpen: boolean) => dropDownShowEvent(isOpen)}
                         >
                           <DropdownTrigger>
                             <Button variant="bordered">
@@ -312,6 +327,14 @@ const Header = () => {
           ''
         )}
       </div>
+      {isWishlistOverlayOpen ? (
+          <WishlistContainer
+            isWishlistOverlayOpen={isWishlistOverlayOpen}
+            toggleWishlistSlider={toggleWishlistSlider}
+          />
+        ) : (
+          ''
+        )}
       {overlayComponent && (
         <SideBarOverlay handleOpenOverlay={handleCloseOverlay}>
           {overlayComponent === 'cart' && (

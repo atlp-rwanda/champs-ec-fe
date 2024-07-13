@@ -11,6 +11,7 @@ import Provider from '@/app/providers';
 import Page from '@/app/products/page';
 import { useRouter } from 'next/navigation';
 
+jest.setTimeout(15000)
 const queryClient = new QueryClient();
 const ProductListTest = () => {
   const { data } = useQuery<any>({

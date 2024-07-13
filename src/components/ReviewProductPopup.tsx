@@ -4,6 +4,7 @@ import request from '@/utils/axios';
 import { useQuery, useMutation, useQueryClient, RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
 import { toast } from 'react-toastify';//@ts-ignore
 import ReactStars from "react-rating-stars-component";
+import { showToast } from '@/helpers/toast';
 interface ReviewProductInterface {
   isOpen: boolean,
   id: string | null;
@@ -28,27 +29,16 @@ export const ReviewProduct: React.FC<ReviewProductInterface> = ({ id,  isOpen, h
       dialogRef.current.close();
     }
   }, [isOpen]);
-  const ratingChanged = (newRating:any) => {
+  const ratingChanged = async (newRating:any) => {
     setRating(newRating);
   };
   const mutation = useMutation({
     mutationFn: (feedback: string) => {
       return request.post(`/products/${id}/reviews`, { feedback, rating })
     },
-    onError: (error: any) => console.log(error),
-    
-    onSuccess: async () => {
-      toast('successfully submitted your review', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        type: "success",
-        });
+    onError: (error) => console.log(error),
+    onSuccess: async (data:any) => {
+      showToast(data.message,  'success');
       await refetch();
       handleClose();
     },
@@ -56,12 +46,12 @@ export const ReviewProduct: React.FC<ReviewProductInterface> = ({ id,  isOpen, h
 
   const handleSubmitReiew = async () => {
     const feedback = textArea.current?.value as string;
-    if(feedback.length < 10 && rating === 0){
-      setFeedbackErrro("Feedback must be 10 chars atleast");
+    if(feedback.length < 10 && rating === 0 ){
+      setFeedbackErrro("Feedback must have between 10 - 300 chars");
       setRatingError('Please add rating');
       return;
-    }if(feedback.length < 10 || feedback.length > 200 ) {
-      setFeedbackErrro("Feedback must be between 10 and 200 characters at least");
+    }if(feedback.length < 10 || feedback.length > 300 ) {
+      setFeedbackErrro("Feedback must have between 10 - 300 chars");
       return;
     }if(rating === 0){
       setRatingError('Please add rating');

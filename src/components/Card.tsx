@@ -10,6 +10,10 @@ import Link from 'next/link';
 import { averageReviews } from '@/utils/averageReviews';
 import { RootState, useAppDispatch, useAppSelector } from '@/redux/store';
 import { handleUserAddCart, IUSERCART } from '@/redux/slices/userCartSlice';
+import request from '@/utils/axios';
+import { showToast } from '@/helpers/toast';
+import { handleWishlistCount } from '@/redux/slices/wishlistSlice';
+// import { useRouter } from 'next/router';
 
 function Card({
   productName,
@@ -36,6 +40,22 @@ function Card({
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
     event.currentTarget.src = defaultProductImage.src;
   };
+const { wishNumber } = useAppSelector(
+  (state: RootState) => state.wishlist
+)
+
+const handleAddRemoveWish = async(event: { preventDefault: () => void; })=>{
+  event.preventDefault();
+  const response:any = await request.post('/wishes', { productId:id });
+ 
+  if(response.status == 200 || response.status == 203){
+    const { status } = response;
+    dispatch(handleWishlistCount(status  == 200 ? await wishNumber + 1 : await wishNumber - 1));
+    showToast(response.message, 'success')
+  }
+  console.log('this is response', response)
+  
+}
   return (
     <div className="relative w-full max-w-[80%] sm:max-w-48 sm:mb-10 min-w-[200px] mx-3 my-6 sm:h-[17rem] h-[19rem] bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out transform hover:scale-105">
       <Link href={`/products/${id}`}>
@@ -74,7 +94,7 @@ function Card({
           <Link href={`/products/${id}`}>
             <MdOutlineRemoveRedEye className="text-gray-600  hover:text-blue-600 cursor-pointer" size={20} />
           </Link>
-          <FaRegHeart className="text-gray-600 hover:text-red-500 cursor-pointer" size={20} />
+          <FaRegHeart className="text-gray-600 hover:text-red-500 cursor-pointer" size={20} onClick={handleAddRemoveWish}/>
           <MdOutlineShoppingCart className={` hover:text-green-500 cursor-pointer ${addProductToCart ||  carts.product.some(item => item.product === id) ?
             'text-red-600 pointer-events-none':'text-gray-600'}`} size={20} onClick={handleNewItem} />
         </div>
