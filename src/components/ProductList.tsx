@@ -22,14 +22,8 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav,searchResults }) => {
     switch (nav) {
       case 'All':
         return `/products?page=${activeButton}&limit=10`;
-      case 'Electronics':
-        return '/products/electronics?page=1&limit=10';
       case 'wishes':
-        return `/wishes?page=${activeButton}&limit=10`;
-      case 'Featured':
-        return '/products/Featured?page=1&limit=10';
-      case 'Featured':
-        return '/products/Featured?page=1&limit=10';
+        return `/wishes`;
       default:
         return `/products?page=${activeButton}&limit=10`;
     }
@@ -49,10 +43,10 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav,searchResults }) => {
         data = response.products;
         dispatch(storeAllProduct(data));
         return data;
-      } else if (response.data) {
+      } else if (response.wishes) {
         const allProduct: any = await request.get(`/products`);
         const filterdeArray = allProduct.products.filter((el1: any) =>
-          response.data.some((el: any) => el1.id === el.product.id),
+          response.wishes.some((el: any) => el1.id === el.product.id),
         );
         data = filterdeArray;
       }
@@ -62,7 +56,7 @@ const ProductList: React.FC<ProdductProps> = ({ activeNav,searchResults }) => {
       return data;
     },
   });
-
+  console.log('this is fetched data', data);
   if (isLoading) {
     return (
       <div data-testid="loading">
