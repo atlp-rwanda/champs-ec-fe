@@ -22,24 +22,30 @@ function About() {
   }, [dispatch]);
 
   if (error) return <div>Error: {error}</div>;
-  if (!user) return <div>No user found</div>;
-
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+  function convertToNormalDate(isoTimestamp:any) {
+    const date = new Date(isoTimestamp);
+    const options:any = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
   const items: any = [
     {
       icon: <Cake className="text-green-500" />,
-      details: `${user.User?.birthDate}`,
+      details: `${convertToNormalDate(user.User?.birthDate) || user.User?.birthDate || 'YYYY-MM-DD'} `,
     },
     {
       icon: <FaLocationDot className="text-green-500" />,
-      details: `${user.User?.whereYouLive}`,
+      details: `${user.User?.whereYouLive || "Where You Live"}`,
     },
     {
       icon: <FaEnvelope className="text-green-500" />,
-      details: `${user.User?.email}`,
+      details: `${user.User?.email || 'email'} `,
     },
     {
       icon: <FaPhone className="text-green-500" />,
-      details: `${user.User?.phone}`,
+      details: `${user.User?.phone || 'Contact Number'}`,
     },
   ];
 

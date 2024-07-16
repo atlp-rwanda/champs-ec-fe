@@ -92,8 +92,11 @@ function ProfileHeader() {
         <div className="flex flex-col sm:flex-row items-center px-4 sm:px-10 py-5">
           <img
             className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-white object-cover -mt-12 sm:-mt-16 md:-mt-20"
-            src={user.User?.profileImage}
+            src={user.User?.profileImage }
             alt="Profile"
+            onError={(e) => {
+              e.currentTarget.src = '/unknown.jpg';
+            }}
           />
 
           <div className="flex-grow mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
