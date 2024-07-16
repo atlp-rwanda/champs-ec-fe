@@ -18,18 +18,19 @@ function Page() {
       noStore();
       let data;
       const date = new Date();
-      const dataDateNow = date
-        .toLocaleDateString()
-        .replaceAll('/', '-')
-        .split('-');
-      const response: any = await request.get(
-        `/stats?start=2023-02-06&end=${dataDateNow[2]}-${dataDateNow[0].length > 1 ? dataDateNow[0] : '0' + dataDateNow[0]}-${dataDateNow[1].length > 1 ? dataDateNow[1] : '0' + dataDateNow[1]}`,
-      );
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+      const day = date.getDate().toString().padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+  
+      const response: any = await request.get(`/stats?start=2023-02-06&end=${formattedDate}`);
       data = response.data;
-
+      console.log("............", data);
+      console.log("statics are recorded properly here ...........................");
       return data;
     },
   });
+  
 
   useEffect(() => {
     const categ = async () => {
