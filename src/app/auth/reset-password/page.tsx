@@ -1,13 +1,15 @@
 'use client'
 import React from 'react';
 import InputBox from '@/components/InputBox';
-import {Button} from '@/components/Button';
+import {Button, GreenButton} from '@/components/Button';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import passwordValidation from '@/validations/ResetValidation';
 import ResetPassword from '@/hooks/reset';
 import PopUpModels from '@/components/PopUpModels';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 type FormField = z.infer<typeof passwordValidation>;
 
@@ -32,7 +34,9 @@ const resetpassword = () => {
 
   return (
     <>
-    <div className='  flex min-w-[100%] h-[100vh]  content-center justify-center  flex-col'>
+    <div>
+    <Header/>
+    <div className='  flex min-w-[100%] min-h-[70vh]  content-center justify-center  flex-col'>
       <div className='mt-7 flex content-center justify-center '>
       <div className="  w-full sm:max-w-xs md:max-w-md lg:max-w-lg px-4 items-center mb-5 text-center ">
           <h1 className="text-black text-[26px] ">
@@ -68,7 +72,7 @@ const resetpassword = () => {
       </h1>
     </div>
     <div className="w-[100%] mt-5">
-      <Button name="Reset" loading={loading} />
+    <GreenButton name="Reset" loading={loading}  />
     </div>
   </form>
 
@@ -83,6 +87,8 @@ const resetpassword = () => {
           iconImagelink="/Verified.png"
         />
       )}
+        <Footer />
+        </div>
   </>
   )
 }

@@ -39,7 +39,7 @@ function Page() {
   );
 
   const carts=cart as IUSERCART
-  const { id } = useParams();
+  const { id } :any= useParams();
   const handleSwiper = (swiper: any) => {
     setThumbsSwiper(swiper);
   };
