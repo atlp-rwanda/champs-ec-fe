@@ -12,6 +12,7 @@ import { IUpdateProductInput } from '@/redux/slices/UpdateProductSlice';
 
 export const handleUpdateProduct = async (data: IFormInput, id: string) => {
   console.log('-----------------', id);
+ // const router=useRouter()
 
   const formData = new FormData();
 
@@ -47,7 +48,9 @@ export const handleUpdateProduct = async (data: IFormInput, id: string) => {
 
   try {
     const response:any = await request.put(`/products/${id}`, formData);
+    
     console.log('RESPONSE', response.data);
+   // router.push('dashboard/products')
     return response.data;
   } catch (error) {
     console.error('Error updating product', error);

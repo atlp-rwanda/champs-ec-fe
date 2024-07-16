@@ -15,7 +15,7 @@ function recover() {
   const router = useRouter();
 
   const handlemoduleButton = () => {
-    router.push('/');
+
    setSuccess(false);
  };
 
