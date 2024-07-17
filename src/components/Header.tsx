@@ -35,14 +35,17 @@ import {
 } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 const Header = () => {
-  const { wishNumber } = useAppSelector(
-    (state: RootState) => state.wishlist
-  )
-  
-  const { isOrdersOverlayOpen, setIsOrdersOverlayOpen, toggleOrdersSlider } = OrdersOverlay();
+  const { wishNumber } = useAppSelector((state: RootState) => state.wishlist);
+
+  const { isOrdersOverlayOpen, setIsOrdersOverlayOpen, toggleOrdersSlider } =
+    OrdersOverlay();
   const [activelink, setActivelink] = useState('home');
 
-  const { isWishlistOverlayOpen, setIsWishlistOverlayOpen, toggleWishlistSlider } = WishlistOverlay();
+  const {
+    isWishlistOverlayOpen,
+    setIsWishlistOverlayOpen,
+    toggleWishlistSlider,
+  } = WishlistOverlay();
   const [showlModal, setShowmodal] = useState(false);
 
   const [showCart, setShowCart] = useState(false);
@@ -53,16 +56,16 @@ const Header = () => {
     'cart' | 'notification' | null
   >(null);
 
-  const handleShowWishlist=()=>{
+  const handleShowWishlist = () => {
     setIsOrdersOverlayOpen(false);
     setOverlayComponent(null);
     toggleWishlistSlider();
-  }
-  const handleShowOrders=()=>{
+  };
+  const handleShowOrders = () => {
     setIsWishlistOverlayOpen(false);
     setOverlayComponent(null);
     toggleOrdersSlider();
-  }
+  };
   const handleShowCart = () => {
     setIsWishlistOverlayOpen(false);
     setIsOrdersOverlayOpen(false);
@@ -89,7 +92,6 @@ const Header = () => {
   const handleshow = () => {
     setShowmodal(!showlModal);
   };
-
 
   const [viewMenu, setViewmenu] = useState(false);
   const [userdata, setUserdata] = useState<any | null>(null);
@@ -127,30 +129,35 @@ const Header = () => {
           <Link href="/">
             <Image src={logo} alt={'logo'} width={100} height={100} />
           </Link>
-          <div className="flex gap-5 justify-center items-center ">
+          <div className="flex gap-5 justify-center items-center">
             {userdata && userdata.User.Role.name === 'buyer' && (
               <>
-              <span className="flex items-center" onClick={handleShowCart}>
-                <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative  top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
-                  {cart?.product.length}
-                </i>
-                <MdOutlineShoppingCart className="hover:bg-black text-white cursor-pointer z-20" />
-              </span>
-               <span className='flex items-center mx-2  cursor-pointer' onClick={handleShowWishlist}>
-                <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
+                <span className="flex items-center" onClick={handleShowCart}>
+                  <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative  top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
+                    {cart?.product.length}
+                  </i>
+                  <MdOutlineShoppingCart className="hover:bg-black text-white cursor-pointer z-20" />
+                </span>
+                <span
+                  className="flex items-center mx-2  cursor-pointer"
+                  onClick={handleShowWishlist}
+                >
+                  <i className=" bg-black  border items-center border-slate-100 w-6 h-6 text-center rounded-[100%] relative top-[-10px] right-[-5px] text-[#ffff] text-[12px]">
                     {wishNumber}
                   </i>
                   <FaRegHeart className="hover:bg-black text-white cursor-pointer z-20" />
-              </span>
-             </>
+                </span>
+              </>
             )}
             {userdata ? (
               <>
-                <NotificationIcon toggleNotification={handleShowNotification} />
-                <IoMdMenu
-                  className="text-white text-2xl cursor-pointer sm:hidden  mxs-2 block"
-                  onClick={handleMenuToggle}
-                />
+                <span
+                  className="flex items-center sm:mx-2 mr-5 cursor-pointer"
+                >
+                  <NotificationIcon
+                    toggleNotification={handleShowNotification}
+                  />
+                </span>
               </>
             ) : (
               ''
@@ -277,7 +284,9 @@ const Header = () => {
                     ) : (
                       <>
                         <Dropdown
-                          onOpenChange={(isOpen: boolean) => dropDownShowEvent(isOpen)}
+                          onOpenChange={(isOpen: boolean) =>
+                            dropDownShowEvent(isOpen)
+                          }
                         >
                           <DropdownTrigger>
                             <Button variant="bordered">
@@ -349,7 +358,7 @@ const Header = () => {
           ''
         )}
       </div>
-    
+
       {overlayComponent && (
         <SideBarOverlay handleOpenOverlay={handleCloseOverlay}>
           {overlayComponent === 'cart' && (
