@@ -52,6 +52,10 @@ function useLogin() {
     } catch (error: any) {
       setLoading(false);
       console.log(error);
+      if (error.response.status === 401) {
+        setErrorMessage('Verify your Email');
+        return;
+      }
       setErrorMessage(`Invalid Email or Password`);
       return;
     }

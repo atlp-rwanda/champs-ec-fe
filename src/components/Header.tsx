@@ -152,7 +152,7 @@ const Header = () => {
             {userdata ? (
               <>
                 <span
-                  className="flex items-center sm:mx-2 mr-5 cursor-pointer"
+                  className="flex items-center sm:mx-4 mr-5 cursor-pointer"
                 >
                   <NotificationIcon
                     toggleNotification={handleShowNotification}
@@ -186,7 +186,7 @@ const Header = () => {
                   <>
                     <li className="text-black hover:text-blue-600">
                       <Link href="/dashboard" className="">
-                        Admin
+                        Dashboard
                       </Link>
                     </li>
                   </>

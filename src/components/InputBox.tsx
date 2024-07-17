@@ -6,7 +6,8 @@ interface Properties {
   value?:string;
   placeholder?: string;
   error?: string;
-  name?: string;  // Now optional
+  name?: string;
+  max?: any;  // Now optional
  
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }

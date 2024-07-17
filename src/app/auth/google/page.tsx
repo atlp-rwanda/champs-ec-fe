@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
+import request from '@/utils/axios';
 
 const GoogleAuthPage: React.FC = () => {
   const searchParams = useSearchParams();
@@ -12,10 +13,23 @@ const GoogleAuthPage: React.FC = () => {
   useEffect(() => {
     if (token != null) {
       localStorage.setItem('token', `Bearer ${token}`);
-      router.push('/');
+      const profileCheck = async () => {
+        const profile: any = await request.get(`/users/profile`);
+        const userData = JSON.stringify(profile);
+  
+        localStorage.setItem('profile', userData);
+        if (profile?.User?.Role.name !== 'buyer') {
+          router.push('/dashboard');
+        } else {
+          router.push('/');
+        }
+        
+      }
+    profileCheck();
     } else {
       router.push('/auth/login');
     }
+
   }, [token, router]);
 
   return (

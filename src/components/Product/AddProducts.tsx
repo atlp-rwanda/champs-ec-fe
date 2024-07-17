@@ -10,6 +10,8 @@ import type { AppDispatch, RootState } from '../../redux/store';
 import { productSchema } from "../../validations/productValidation";
 import { showToast } from '@/helpers/toast';
 import InputBox from '../InputBox';
+import { Router } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface IProduct {
   id: string;
@@ -32,14 +34,17 @@ interface ProductPopupProps {
 }
 
 const ProductPopup: React.FC<ProductPopupProps> = ({
+  
   isOpen = true,
   onClose,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
     getValues,
     trigger,
@@ -57,6 +62,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
   useEffect(() => {
     const cath = async () => {
       const data = await dispatch(fetchCategories());
+  
       console.log('dada', data);
     };
     cath();
@@ -83,13 +89,18 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
     data.productPictures = files;
 
     setLoading(true);
+  
     try {
       const resultAction = await dispatch(createProduct(data as IProduct));
       const result = unwrapResult(resultAction);
-      showToast(result.message, 'success');
+     
       console.log(result);
       console.log(result.message);
-      onClose();
+      showToast(result.message, 'success');
+      reset();
+        router.push('/dashboard/product');
+      
+  
     } catch (error: any) {
       console.error('Failed to create product:', error);
       let errorMessage = 'An unknown error occurred';
@@ -184,6 +195,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
   // if (!isOpen) return null;
 
   return (
+   
     <div
       className=" inset-0 flex items-center justify-start w-full mb-10 mt-10 "
       onClick={onClose}
@@ -359,7 +371,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
           <div className="flex flex-col md:flex-row justify-between">
             <button
               type="button"
-              onClick={onClose}
+              onClick={() => router.back()}
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-l-lg rounded-r-none flex-grow flex items-center justify-center mb-2 md:mb-0"
             >
               <span className="ml-2">Close</span>

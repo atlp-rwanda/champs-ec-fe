@@ -15,7 +15,8 @@ import type { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import InputBox from '@/components/InputBox';
-import UpdatePasswords from './updatepassword';
+import UpdatePasswords from '@/components/updatepassword';
+
 type FormSchemaType = z.infer<typeof updateSchema>;
 
 const UserProfileForm: React.FC = () => {
@@ -40,6 +41,7 @@ const UserProfileForm: React.FC = () => {
       firstName: '',
       lastName: '',
       phone: '',
+      address:'',
       birthDate: '',
       preferredLanguage: '',
       whereYouLive: '',
@@ -89,22 +91,36 @@ const UserProfileForm: React.FC = () => {
     fileInputRef.current?.click();
   };
 
-  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
-    if (!imageFile && !profileImage) {
-      toast.error(
-        'Please select a profile image before updating your profile.',
-      );
-      return;
-    }
+  const getExistingImage = async (): Promise<File | null> => {
+    if (!user?.User?.profileImage) return null;
 
+    try {
+      const response = await fetch(user.User.profileImage);
+      const blob = await response.blob();
+      return new File([blob], 'profile_image.jpg', { type: blob.type });
+    } catch (error) {
+      console.error('Error fetching existing image:', error);
+      return null;
+    }
+  };
+
+  const onSubmit: SubmitHandler<FormSchemaType> = async (data) => {
     const formDataToSend = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
       formDataToSend.append(key, value as string);
     });
 
+    let imageToUpload: File | null = null;
+
     if (imageFile) {
-      formDataToSend.append('profileImage', imageFile);
+      imageToUpload = imageFile;
+    } else {
+      imageToUpload = await getExistingImage();
+    }
+
+    if (imageToUpload) {
+      formDataToSend.append('profileImage', imageToUpload);
     }
 
     try {
@@ -112,7 +128,6 @@ const UserProfileForm: React.FC = () => {
       const response = await dispatch(updateUserProfile(formDataToSend));
       setIsLoading(false);
       if (updateUserProfile.fulfilled.match(response)) {
-        // Update only the User value in localStorage
         const currentProfile = JSON.parse(
           localStorage.getItem('profile') || '{}',
         );
@@ -151,11 +166,36 @@ const UserProfileForm: React.FC = () => {
   }
 
   if (!user) {
-    return <div>No user data available. Please try refreshing the page.</div>;
+    return(<div className="min-h-screen w-full justify-center items-center flex">
+                  <div className="border-t-4 border-b-4 border-blue-600 rounded-full w-20 h-20 animate-spin m-auto"></div>
+                </div>)
   }
-
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear() - 10; 
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+  function convertToNormalDate(isoTimestamp:any) {
+    const date = new Date(isoTimestamp);
+    const options:any = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
+  function formatDate(dateString: string) {
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const formattedDate = `${day}-${month}-${year}`;
+    
+    return formattedDate;
+  }
+  
   return (
     <div className="flex flex-col min-h-screen  w-full">
+     
       <main className="flex-grow p-4 sm:p-6">
         <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-md">
           <div className="flex flex-col md:flex-row">
@@ -167,6 +207,10 @@ const UserProfileForm: React.FC = () => {
                     src={profileImage}
                     alt="Profile"
                     onClick={handleImageClick}
+                    onError={(e) => {
+                      e.currentTarget.src = '/unknown.jpg';
+                    }}
+
                   />
                   <input
                     type="file"
@@ -218,7 +262,7 @@ const UserProfileForm: React.FC = () => {
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  {watchedValues.birthDate || 'YYYY-MM-DD'}
+                  {convertToNormalDate(watchedValues.birthDate) || watchedValues.birthDate || 'YYYY-MM-DD'}
                 </li>
                 <li className="flex items-center text-gray-600">
                   <svg
@@ -274,7 +318,7 @@ const UserProfileForm: React.FC = () => {
                 <li>
                   <button
                     onClick={() => setShowmodal(!showlModal)}
-                    className="cursor-pointer p-2  text-blue-500 hover:text-blue-600 hover:font-semibold duration-200"
+                    className="cursor-pointer p-2  text-blue-500 hover:text-blue-600 hover:font-semibold duration-200 "
                   >
                     Update Password
                   </button>
@@ -315,6 +359,8 @@ const UserProfileForm: React.FC = () => {
                     placeholder="Birth date"
                     {...register('birthDate')}
                     error={errors.birthDate?.message}
+                    
+                    max={getCurrentDate()}
                   />
                 </div>
                 <div className="mb-4">
@@ -322,8 +368,7 @@ const UserProfileForm: React.FC = () => {
                     nameuse="Address"
                     type="text"
                     placeholder="Address"
-                    {...register('whereYouLive')}
-                    error={errors.whereYouLive?.message}
+                  error ={errors?.address?.message}
                   />
                 </div>
                 <div className="mb-4">
@@ -384,7 +429,11 @@ const UserProfileForm: React.FC = () => {
           </div>
         </div>
       </main>
-      <UpdatePasswords handleshow={handleshow} showlModal={showlModal} />
+      <div className=''>
+      <UpdatePasswords handleshow={handleshow} showlModal={showlModal}/>
+      </div>
+      
+
     </div>
   );
 };
