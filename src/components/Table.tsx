@@ -129,7 +129,7 @@ const ProductsTable: React.FC<Properties> = ({ Role }) => {
                   <td className="px-6 py-4">{product.productName}</td>
                   <td className="px-6 py-4">{product.stockLevel}</td>
                   <td className="px-6 py-4">
-                    {product.productPrice} {product.productCurrency}
+                    {product.productPrice?.toLocaleString()} {product.productCurrency}
                   </td>
                   <td className="px-6 py-4">{product.productDiscount}</td>
                   <td className="py-4">

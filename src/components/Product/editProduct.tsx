@@ -16,6 +16,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import request from '@/utils/axios';
 import { handleUpdateProduct } from '@/hooks/update';
+//import router from 'next/router';
 
 interface IProduct {
   id: string;
@@ -45,7 +46,8 @@ const ProductPopup: React.FC<UpdateProductPopup> = ({
   // productId,
   product,
 }) => {
-  const { id } = useParams();
+  const router = useRouter();
+  const { id }: any = useParams();
   const productId: any = id;
   const [reuploadStatus, setReuploadStatus] = useState(
     'Wait for loading product image........',
@@ -179,6 +181,7 @@ const ProductPopup: React.FC<UpdateProductPopup> = ({
     try {
       const result = await handleUpdateProduct(data, productId);
       showToast('Product has been updated', 'success');
+      router.push('/dashboard');
       console.log(result);
 
       onClose();
