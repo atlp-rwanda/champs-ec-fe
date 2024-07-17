@@ -9,7 +9,7 @@ const handleFetchUserWishes = async ():Promise<number>=>{
         const response:any = await request.get('/wishes');
         console.log('this is data from wishlist', response);
         if(response.status == 200){
-            return response.wishes.length;
+            return response?.wishes?.length;
         }
     }
     return 0;
