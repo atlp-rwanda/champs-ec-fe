@@ -28,8 +28,10 @@ birthDate: z.string().optional(),
     .max(70, "No more than 70 characters for preferredLanguage"),
   whereYouLive: z
     .string({ required_error: "Where you live is required" })
-    .min(3, "Use at least 3 characters for whereYouLive")
     .max(70, "No more than 70 characters for whereYouLive"),
+    address: z
+    .string({ required_error: "Address is required" })
+    .max(70, "No more than 70 characters for Adress"),
   preferredCurrency: z
     .string({ required_error: "Preferred Currency is required" })
     .min(2, "Use at least 2 characters for preferredCurrency")
@@ -41,3 +43,8 @@ birthDate: z.string().optional(),
 });
 
 export default updateSchema;
+
+
+
+
+
