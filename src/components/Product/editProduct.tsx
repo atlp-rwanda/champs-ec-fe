@@ -181,7 +181,7 @@ const ProductPopup: React.FC<UpdateProductPopup> = ({
     try {
       const result = await handleUpdateProduct(data, productId);
       showToast('Product has been updated', 'success');
-      router.push('/dashboard');
+      router.push('/dashboard/product');
       console.log(result);
 
       onClose();
@@ -214,10 +214,7 @@ const ProductPopup: React.FC<UpdateProductPopup> = ({
       const file = e.target.files[0];
 
       const totalFiles = files.length + 1;
-      console.log(
-        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++filessss',
-        files,
-      );
+
       // Check for maximum file limit
       if (totalFiles > 8) {
         setUploadError('You can upload a maximum of 8 pictures.');
@@ -475,7 +472,9 @@ const ProductPopup: React.FC<UpdateProductPopup> = ({
               onClick={onClose}
               className="bg-blue-500 text-white px-4 py-3 rounded-l-lg rounded-r-none flex-grow flex items-center justify-center mb-2 md:mb-0"
             >
-              <span className="ml-2">Close</span>
+              <span className="ml-2" onClick={() => router.back()}>
+                Close
+              </span>
             </button>
             <button
               type="submit"

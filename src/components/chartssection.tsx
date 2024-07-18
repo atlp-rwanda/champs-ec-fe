@@ -18,55 +18,47 @@ export const options = {
   title: '',
 };
 const Chartssection: React.FC<Params> = ({ user, data, categories, users }) => {
-  
   const ProductCategory = useRef<HTMLInputElement>(null);
   const data1 = [
     ['Task', 'Hours per Day'],
     [
       'availableProducts',
-      data?.availableProducts > 1 ? data?.availableProducts : 0.2,
+      data?.availableProducts >= 1 ? data?.availableProducts : 0,
     ],
-    [
-      'expiredProducts',
-      data?.expiredProducts > 1 ? data?.expiredProducts : 0.2,
-    ],
-    ['wishesStats', data?.wishesStats > 1 ? data?.wishesStats : 0.2],
-    ['productsStats', data?.productsStats > 1 ? data?.productsStats : 0.2],
+    ['expiredProducts', data?.expiredProducts >= 1 ? data?.expiredProducts : 0],
+    ['wishesStats', data?.wishesStats >= 1 ? data?.wishesStats : 0],
+    ['productsStats', data?.productsStats >= 1 ? data?.productsStats : 0],
   ];
-
-
 
   const mutation = useMutation({
     mutationFn: (product_categories: string) => {
-      return request.post(`/categories`, {categoryName:product_categories})
+      return request.post(`/categories`, { categoryName: product_categories });
     },
     onError: (error: any) => {
       showToast(error.response.data.error, 'error');
     },
 
-      onSuccess: async (result:any) => {
-        window.location.reload();
-      },
+    onSuccess: async (result: any) => {
+      window.location.reload();
+    },
 
-      onSettled: (result, error) => {
-        showToast(error.response.data.message, 'error');
-      },
-  })
+    onSettled: (result, error) => {
+      showToast(error.response.data.message, 'error');
+    },
+  });
 
-  const handleAddCategory= async () => {
-
-    const product_categories=ProductCategory.current?.value as string
-    if(product_categories.length>2){
-  
-     await mutation.mutate(product_categories);
-    
-    }else{
-      showToast('Product category must be atleast 3 characters length', 'error');
+  const handleAddCategory = async () => {
+    const product_categories = ProductCategory.current?.value as string;
+    if (product_categories.length > 2) {
+      await mutation.mutate(product_categories);
+    } else {
+      showToast(
+        'Product category must be atleast 3 characters length',
+        'error',
+      );
     }
     //alert(product_categories)
-    
   };
-
 
   return (
     <div className="flex gap-7 sm:w-[80%] h-full sm:flex-row flex-col w-full sm:justify-start sm:items-start justify-center items-center ">
@@ -127,14 +119,22 @@ const Chartssection: React.FC<Params> = ({ user, data, categories, users }) => {
           <h1 className="font-semibold text-1xl text-left mx-4 w-full mb-3">
             All Categolie On Market
           </h1>
-
-          <div className=' flex flex-col min-w-[80%] md:min-w-[80%] md:w-[80%] md:flex-row items-center justify-evenly py-2 mb-2 gap-4'>
-              <input className=' w-[100%] md:w-[70%] h-12  shadow-lg border border-slate-500' ref={ProductCategory}/> 
-              <button className='sm:min-w-[30%] min-w-[100%] h-12 bg-primaryBlue px-4 text-white text-sm' onClick={handleAddCategory}>Add Category</button>
-          </div>
+          {user && user?.Role?.name === 'admin' && (
+            <div className=" flex flex-col min-w-[80%] md:min-w-[80%] md:w-[80%] md:flex-row items-center justify-evenly py-2 mb-2 gap-4">
+              <input
+                className=" w-[100%] md:w-[70%] h-12  shadow-lg border border-slate-500"
+                ref={ProductCategory}
+              />
+              <button
+                className="sm:min-w-[30%] min-w-[100%] h-12 bg-primaryBlue px-4 text-white text-sm"
+                onClick={handleAddCategory}
+              >
+                Add Category
+              </button>
+            </div>
+          )}
 
           <div className=" w-[80%] p-2 rounded-sm overflow-auto h-[150px]">
-            
             <ul className="flex flex-col gap-3">
               {categories &&
                 categories?.map((el: any) => (

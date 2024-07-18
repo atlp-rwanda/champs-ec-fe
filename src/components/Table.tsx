@@ -61,10 +61,42 @@ const ProductsTable: React.FC<Properties> = ({ Role }) => {
         <div className="border-t-4 border-b-4 border-blue-600 rounded-full w-20 h-20 animate-spin m-auto"></div>
       </div>
     );
-  if (error) return <span>Error: {error.message}</span>;
+  if (error)
+    return (
+      <div className="w-full">
+        {Role === 'seller' && (
+          <div className="w-full">
+            {' '}
+            <Link href="/dashboard/product/create">
+              <button className="bg-blue-500 p-3 px-5 text-white font-semibold cursor-pointer  hover:bg-blue-700 duration-200">
+                Add New Product
+              </button>
+            </Link>
+          </div>
+        )}
+        <div className="capitalize flex flex-col items-center w-full h-full font-bold text-gray-400 text-3xl">
+          <img
+            src="/empty.avif"
+            alt="Not found"
+            className="w-[140px] h-[50%]"
+          />
+          No Product Available
+        </div>
+      </div>
+    );
   return (
     <>
       <div className=" overflow-x-auto shadow-md sm:rounded-lg sm:w-[80%] w-full">
+        {Role === 'seller' && (
+          <div className="w-full">
+            {' '}
+            <Link href="/dashboard/product/create">
+              <button className="bg-blue-500 p-3 px-5 text-white font-semibold cursor-pointer  hover:bg-blue-700 duration-200">
+                Add New Product
+              </button>
+            </Link>
+          </div>
+        )}
         <table className="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
           <thead className="text-xs text-gray-500 uppercase bg-gray-100 dark:text-gray-900">
             <tr>
@@ -103,7 +135,7 @@ const ProductsTable: React.FC<Properties> = ({ Role }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map(
+            {data?.map(
               (
                 product: {
                   id: string;
@@ -129,7 +161,8 @@ const ProductsTable: React.FC<Properties> = ({ Role }) => {
                   <td className="px-6 py-4">{product.productName}</td>
                   <td className="px-6 py-4">{product.stockLevel}</td>
                   <td className="px-6 py-4">
-                    {product.productPrice?.toLocaleString()} {product.productCurrency}
+                    {product.productPrice?.toLocaleString()}{' '}
+                    {product.productCurrency}
                   </td>
                   <td className="px-6 py-4">{product.productDiscount}</td>
                   <td className="py-4">

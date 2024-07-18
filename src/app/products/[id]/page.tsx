@@ -28,23 +28,19 @@ import ReviewWrapper from '@/components/ReviewsWrapper';
 //import StripeProvider from '@/components/StripeProvider';
 
 function Page() {
-  const { wishNumber } = useAppSelector(
-    (state: RootState) => state.wishlist
-  )
+  const { wishNumber } = useAppSelector((state: RootState) => state.wishlist);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const [addProductToCart, setAddProductToCart]=useState(false)
-  
-  const {cart} = useAppSelector(
-    (state: RootState) => state.userCartData,
-  );
+  const [addProductToCart, setAddProductToCart] = useState(false);
 
-  const carts=cart as IUSERCART
-  const { id } :any= useParams();
+  const { cart } = useAppSelector((state: RootState) => state.userCartData);
+
+  const carts = cart as IUSERCART;
+  const { id }: any = useParams();
   const handleSwiper = (swiper: any) => {
     setThumbsSwiper(swiper);
   };
   const _id: string = id.toLocaleString();
-  const { data, isLoading, error , refetch} = useQuery<any>({
+  const { data, isLoading, error, refetch } = useQuery<any>({
     queryKey: ['product', id],
     queryFn: async () => {
       try {
@@ -71,17 +67,20 @@ function Page() {
     const productId = data.product.id;
     dispatch(handleUserAddCart({ productPrice, productId }));
   };
-  const handleAddRemoveWish = async(event: { preventDefault: () => void; })=>{
+  const handleAddRemoveWish = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const response:any = await request.post('/wishes', { productId:id });
-    if(response.status == 200 || response.status == 203){
+    const response: any = await request.post('/wishes', { productId: id });
+    if (response.status == 200 || response.status == 203) {
       const { status } = response;
-      dispatch(handleWishlistCount(status  == 200 ? await wishNumber + 1 : await wishNumber - 1));
-      showToast(response.message, 'success')
+      dispatch(
+        handleWishlistCount(
+          status == 200 ? (await wishNumber) + 1 : (await wishNumber) - 1,
+        ),
+      );
+      showToast(response.message, 'success');
     }
-    console.log('this is response', response)
-    
-  }
+
+  };
   return (
     <div>
       {/* // <StripeProvider> */}
@@ -163,18 +162,22 @@ function Page() {
                 </div>
                 <div className="w-full">
                   <div>
-                    <h1 className="font-bold mt-5 text-2xl capitalize">
+                    <h1 className="font-bold mt-5 text-2xl capitalize-first">
                       {productName}
                     </h1>
                   </div>
                   <div className="flex flex-col gap-4">
                     <div className="flex gap-2 mt-5">
-                      <div className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer" onClick={handleAddRemoveWish}>
+                      <div
+                        className="p-3 rounded-full bg-gray-200 hover:bg-green-500 hover:text-white cursor-pointer"
+                        onClick={handleAddRemoveWish}
+                      >
                         <FaRegHeart />
                       </div>
-                      <div className={`p-3 rounded-full  hover:bg-green-500 hover:text-white cursor-pointer  '${(addProductToCart || carts.product.some(item => item.product ===data.product.id)) ?' bg-red-500 pointer-events-none':'pointer-events-auto bg-gray-200'}`}>
+                      <div
+                        className={`p-3 rounded-full  hover:bg-green-500 hover:text-white cursor-pointer  '${addProductToCart || carts.product.some((item) => item.product === data.product.id) ? ' bg-red-500 pointer-events-none' : 'pointer-events-auto bg-gray-200'}`}
+                      >
                         <MdOutlineShoppingCart
-                        
                           onClick={() => {
                             handleNewItem();
                           }}
@@ -227,10 +230,13 @@ function Page() {
                 </div>
               </div>
               <div className="w-full flex flex-col mt-10">
-              <ReviewWrapper productId={_id.trim()} refetch={refetch} reviews={reviews} />
+                <ReviewWrapper
+                  productId={_id.trim()}
+                  refetch={refetch}
+                  reviews={reviews}
+                />
               </div>
             </div>
-           
           </div>
         )}
       </>

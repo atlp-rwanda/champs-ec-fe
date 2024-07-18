@@ -61,7 +61,7 @@ const HeaderDash: React.FC<HeaderInterface> = ({ pageName }) => {
           />
           <div className="flex flex-col justify-center">
             <h1 className="font-semibold text-[13px] sm:text-[15px] uppercase">
-              {userdata?.firstName ? userdata?.firstName : 'waiting...'}
+              {userdata?.firstName ? userdata?.firstName : ''}
             </h1>
             <h2 className="text-secondaryGrey capitalize">
               {userdata?.Role?.name}
