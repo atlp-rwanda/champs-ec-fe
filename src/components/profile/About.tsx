@@ -7,37 +7,48 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
 import { getUserProfile } from '@/redux/slices/profileSlice';
 import request from '@/utils/axios';
-
 function About() {
   const dispatch = useDispatch<AppDispatch>();
   const { user, loading, error } = useSelector(
     (state: RootState) => state.userProfile,
   );
-
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getUserProfile());
     };
     fetchData();
   }, [dispatch]);
-
   if (error) return <div>Error: {error}</div>;
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        {' '}
+        <div className="animate-pulse space-y-4">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="flex flex-col space-y-2">
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
-  function convertToNormalDate(isoTimestamp:any) {
+  function convertToNormalDate(isoTimestamp: any) {
     const date = new Date(isoTimestamp);
-    const options:any = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
   }
   const items: any = [
     {
       icon: <Cake className="text-green-500" />,
-      details: `${convertToNormalDate(user.User?.birthDate) || user.User?.birthDate || 'YYYY-MM-DD'} `,
+      details: user.User?.birthDate
+        ? convertToNormalDate(user.User.birthDate)
+        : 'YYYY-MM-DD',
     },
     {
       icon: <FaLocationDot className="text-green-500" />,
-      details: `${user.User?.whereYouLive || "Where You Live"}`,
+      details: `${user.User?.whereYouLive || 'Where You Live'}`,
     },
     {
       icon: <FaEnvelope className="text-green-500" />,
@@ -48,7 +59,6 @@ function About() {
       details: `${user.User?.phone || 'Contact Number'}`,
     },
   ];
-
   return (
     <div className="bg-white shadow-md pl-5 pr-2 p-6 rounded-lg max-h-72">
       <h3 className="font-semibold text-secondaryBlue text-[1rem] pr-5">
@@ -72,5 +82,4 @@ function About() {
     </div>
   );
 }
-
 export default About;

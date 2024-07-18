@@ -19,6 +19,7 @@ import { averageReviews } from '@/utils/averageReviews';
 import request from '@/utils/axios';
 import ConfirmDelete from './confirmDeletePopup';
 import Link from 'next/link';
+import ReviewCard from './ReviewCard';
 interface Properties {
   role: any;
 }
@@ -55,7 +56,14 @@ const Singleproduct: React.FC<Properties> = ({ role }) => {
       }
     },
   });
-  if (error) return <span>Error: {error.message}</span>;
+
+  if (error)
+    return (
+      <div className="capitalize flex flex-col items-center w-full h-full font-bold text-gray-400 text-3xl">
+        <img src="/empty.avif" alt="Not found" className="w-[140px] h-[50%]" />
+        Error Happening 💀
+      </div>
+    );
   const handleSwiper = (swiper: any) => {
     setThumbsSwiper(swiper);
   };
@@ -66,9 +74,15 @@ const Singleproduct: React.FC<Properties> = ({ role }) => {
     productDescription,
     reviews,
   } = data?.product || {};
+  if (isLoading)
+    return (
+      <div className="min-h-screen w-full justify-center items-center flex">
+        <div className="border-t-4 border-b-4 border-blue-600 rounded-full w-20 h-20 animate-spin m-auto"></div>
+      </div>
+    );
   return (
     <>
-      <div className=" mb-5 mt-5 flex flex-col justify-start  w-[80%] sm:max-w-[1000px] items-start">
+      <div className=" sm:mb-5 mb-10 mt-5 flex flex-col justify-start  w-[80%] sm:max-w-[1000px] items-start">
         <div className="w-full  flex flex-col justify-center  items-center gap-5">
           <div className="w-full flex sm:flex-row flex-col ">
             <div className="w-[100%] sm:w-1/2">
@@ -137,7 +151,7 @@ const Singleproduct: React.FC<Properties> = ({ role }) => {
             </div>
             <div className="sm:ml-10 ml-0 flex flex-col gap-5">
               <div>
-                <h1 className="font-bold mt-5 text-2xl capitalize">
+                <h1 className="font-bold mt-5 text-2xl capitalize-first">
                   {productName}
                 </h1>
               </div>
@@ -197,6 +211,24 @@ const Singleproduct: React.FC<Properties> = ({ role }) => {
       ) : (
         ''
       )}
+      <div className="w-[100%] sm:w-[50%] px-9 pb-4 sm:px-0 flex flex-col sm:mt-5 mb-7">
+        <h2 className="font-medium text-2xl mr-5">Reviews:</h2>
+        <div className="my-5 mb-5">
+          {reviews && reviews.length > 0 ? (
+            reviews.map((review: any) => (
+              <ReviewCard
+                rating={review.rating}
+                feedback={review.feedback}
+                image={review.userProfile.profileImage}
+                firstName={review.userProfile.firstName}
+                lastName={review.userProfile.lastName}
+              />
+            ))
+          ) : (
+            <p className="text-red-500">No ratings yet.</p>
+          )}
+        </div>
+      </div>{' '}
     </>
   );
 };

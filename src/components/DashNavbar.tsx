@@ -162,7 +162,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
                       </span>
                     </li>
                   </Link>
-                  <Link href="/dashboard/product/create">
+                  {/* <Link href="/dashboard/product/create">
                     <li
                       key="product"
                       className={`flex bg-primary/80 ${activelink === 'addproduct' ? 'text-yellow-400' : 'text-white'} text-sm hover:text-yellow-400 duration-200  bg-transparent rounded-md  hover:bg-primary p-2 cursor-pointer hover:bg-light-white items-center gap-x-4  bg-light-white`}
@@ -174,7 +174,7 @@ const DashNavbar: React.FC<NewType> = ({ role }) => {
                         Create Product
                       </span>
                     </li>
-                  </Link>
+                  </Link> */}
                 </>
               )}
             </div>

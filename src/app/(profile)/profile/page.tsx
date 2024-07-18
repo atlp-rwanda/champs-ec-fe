@@ -1,7 +1,6 @@
 'use client';
 // pages/profile.tsx
 import About from '@/components/profile/About';
-import ActiveUser from '@/components/profile/ActiveUsers';
 import Order from '@/components/profile/Order';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import Wishlist from '@/components/profile/wishlist';
@@ -23,7 +22,6 @@ const ProfilePage = () => {
           </div>
           <div className="md:col-span-1 flex flex-col gap-4 mb-4">
             <Order />
-
           </div>
         </div>
       </div>

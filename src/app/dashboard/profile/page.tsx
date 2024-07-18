@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import LayoutDashboard from '@/components/LayoutDashboard';
 import About from '@/components/profile/About';
-import ActiveUser from '@/components/profile/ActiveUsers';
 import Order from '@/components/profile/Order';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import Wishlist from '@/components/profile/wishlist';

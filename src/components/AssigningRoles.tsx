@@ -54,7 +54,7 @@ const AssigningRole: React.FC<AssignRoleInterface> = ({
     <>
       {isLoading || mutation.isPending ? (
         <div>
-          <div className="border-t-4 border-b-4 border-black rounded-full w-5 h-5 animate-spin m-auto"></div>
+          <div className="border-t-4 border-b-4 border-blue-600 rounded-full w-5 h-5 animate-spin m-auto"></div>
         </div>
       ) : (
         <select

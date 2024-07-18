@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { HiDotsHorizontal } from 'react-icons/hi';
 import { VscTag } from 'react-icons/vsc';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
@@ -10,7 +9,6 @@ import { Cylinder, Trash, Loader } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
-
 interface Product {
   id: string;
   productThumbnail: string;
@@ -19,7 +17,6 @@ interface Product {
   productPrice: number;
   productCurrency: string;
 }
-
 interface Wish {
   id: string;
   userId: string;
@@ -28,7 +25,30 @@ interface Wish {
   updatedAt: string;
   product: Product;
 }
-
+const WishlistSkeleton = () => (
+  <div className="bg-white shadow-md rounded-lg">
+    <div className="w-full pl-16 py-4 border-b mb-4">
+      <div className="h-6 bg-gray-200 rounded w-1/4"></div>
+    </div>
+    <div className="animate-pulse space-y-8 px-16">
+      {[...Array(3)].map((_, index) => (
+        <div key={index} className="flex flex-col space-y-4 border-b pb-4">
+          <div className="flex justify-between w-full items-center">
+            <div className="h-6 w-6 bg-gray-200 rounded-full"></div>
+          </div>
+          <div className="w-full aspect-video bg-gray-200 rounded-md"></div>
+          <div className="w-full flex justify-between items-center">
+            <div className="h-6 bg-gray-200 rounded w-1/3"></div>
+            <div className="flex gap-8">
+              <div className="h-6 bg-gray-200 rounded w-16"></div>
+              <div className="h-6 bg-gray-200 rounded w-16"></div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 const Wishlist: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user, loading, error } = useSelector(
@@ -36,7 +56,6 @@ const Wishlist: React.FC = () => {
   );
   const [wishlist, setWishlist] = useState<Wish[]>([]);
   const [loadingWishId, setLoadingWishId] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,7 +66,6 @@ const Wishlist: React.FC = () => {
     };
     fetchData();
   }, [dispatch]);
-
   const getWishlist = async () => {
     try {
       const response: any = await request.get('/wishes');
@@ -56,11 +74,9 @@ const Wishlist: React.FC = () => {
       console.error(err);
     }
   };
-
   useEffect(() => {
     getWishlist();
   }, []);
-
   const removeWish = async (wishId: string) => {
     setLoadingWishId(wishId);
     try {
@@ -74,10 +90,8 @@ const Wishlist: React.FC = () => {
       setLoadingWishId(null);
     }
   };
-
   if (error) return <div>Error: {error}</div>;
-  if (!user) return <div>No user found</div>;
-
+  if (!user || loading) return <WishlistSkeleton />;
   return (
     <div className="bg-white shadow-md rounded-lg">
       <div className="w-full pl-16 py-4 border-b mb-4">
@@ -95,7 +109,6 @@ const Wishlist: React.FC = () => {
               className="flex flex-col items-center gap-4 border-b pb-4"
             >
               <div className="flex justify-between w-full items-center">
-                {/* <HiDotsHorizontal className='text-green-500 text-2xl font-semibold' /> */}
                 <button
                   onClick={() => removeWish(wish.productId)}
                   className="text-red-500 text-2xl font-semibold"
@@ -144,5 +157,4 @@ const Wishlist: React.FC = () => {
     </div>
   );
 };
-
 export default Wishlist;

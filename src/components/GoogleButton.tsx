@@ -6,7 +6,7 @@ const GoogleButton: React.FC = () => {
     <img
       src="/google.jpg"
       alt="Google"
-      className=" cursor-pointer"
+      className=" cursor-pointer hover:scale-110"
       width={50}
       height={50}
       onClick={() => (window.location.href = `${api_base_url}/users/google`)}
